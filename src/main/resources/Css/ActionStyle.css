@@ -1,0 +1,24 @@
+/* Boutons Modifier et Supprimer */
+.button-modifier {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 6px 12px;
+    -fx-background-radius: 6px;
+}
+
+.button-modifier:hover {
+    -fx-background-color: #2980b9;
+}
+
+.button-supprimer {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 6px 12px;
+    -fx-background-radius: 6px;
+}
+
+.button-supprimer:hover {
+    -fx-background-color: #c0392b;
+}

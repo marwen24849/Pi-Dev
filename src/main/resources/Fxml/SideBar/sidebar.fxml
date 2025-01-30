@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" stylesheets="@sidebar.css"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.appbar.SidebarController">
+    <children>
+        <VBox fx:id="sidebar" prefWidth="250.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <children>
+                <HBox  styleClass="sidebar-header">
+                    <ImageView fx:id="logoImageView" fitHeight="40" fitWidth="40">
+                  <image>
+                     <Image url="@preview.jpg" />
+                  </image></ImageView>
+                    <Label styleClass="sidebar-title" text="SGRH" />
+                </HBox>
+                <Separator styleClass="sidebar-separator" />
+
+                <VBox>
+                    <MenuButton styleClass="sidebar-menu" text="Gestion Questions">
+                        <items>
+                            <MenuItem onAction="#handleAddQuestions" styleClass="menu-item" text="Ajouter Question" />
+                            <MenuItem onAction="#handleListQuestions" styleClass="menu-item" text="Liste Questions" />
+                        </items>
+                    </MenuButton>
+                    <MenuButton styleClass="sidebar-menu" text="Gestion Quiz">
+                        <items>
+                            <MenuItem onAction="#handleAddQuiz" styleClass="menu-item" text="Ajouter Quiz" />
+                            <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste Quiz" />
+                        </items>
+                    </MenuButton>
+                </VBox>
+            </children>
+        </VBox>
+
+        <AnchorPane fx:id="contentArea" styleClass="content-area" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+
+        </AnchorPane>
+
+        <Button fx:id="toggleButton" onAction="#handleToggleSidebar" styleClass="toggle-button" text="≡" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
+    </children>
+</AnchorPane>

@@ -1,0 +1,29 @@
+services:
+  mysql-service:
+    image: mysql:8.0.27
+    ports:
+      - 3307:3306
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: RH
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - Rh-and-mysql-volume:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8087:8080
+    depends_on:
+      - mysql-service
+networks:
+  default:
+    name: shared-network
+
+
+volumes:
+  Rh-and-mysql-volume:
+    external: true

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="10" style="-fx-padding: 20;" stylesheets="@../../Css/EditForm.css" fx:controller="esprit.tn.pidevrh.question.QuestionUpdateController">
+    <Label text="Modifier la Question" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <TextField fx:id="titleField" promptText="Titre de la question" />
+    <TextField fx:id="option1Field" promptText="Option 1" />
+    <TextField fx:id="option2Field" promptText="Option 2" />
+    <TextField fx:id="option3Field" promptText="Option 3" />
+    <TextField fx:id="option4Field" promptText="Option 4" />
+    <TextField fx:id="rightAnswerField" promptText="Bonne réponse" />
+    <TextField fx:id="scoreField" promptText="Score" />
+    <TextField fx:id="categoryField" promptText="Catégorie" />
+    <TextField fx:id="difficultyField" promptText="Difficulté" />
+    <HBox spacing="10">
+        <Button text="Enregistrer" onAction="#handleSave" />
+        <Button text="Annuler" onAction="#handleCancel" style="-fx-background-color: #ff0000; -fx-text-fill: white;"/>
+    </HBox>
+</VBox>

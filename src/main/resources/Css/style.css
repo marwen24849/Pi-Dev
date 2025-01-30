@@ -1,0 +1,52 @@
+/* Général */
+* {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-smoothing-type: lcd;
+}
+
+/* Titre principal */
+.main-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 10px;
+}
+
+/* Conteneur du formulaire */
+.form-container {
+    -fx-padding: 20px;
+    -fx-background-color: #f7f9fc;
+    -fx-border-color: #d1dce5;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+/* Champs de texte */
+.text-field {
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-border-color: #d1dce5;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.text-field:focused {
+    -fx-border-color: #4caf50;
+    -fx-border-width: 2px;
+}
+
+/* Bouton de soumission */
+.submit-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.submit-button:hover {
+    -fx-background-color: #45a049;
+    -fx-cursor: hand;
+}
