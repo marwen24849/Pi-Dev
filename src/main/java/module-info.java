@@ -9,6 +9,7 @@ module esprit.tn.pidevrh {
     requires java.sql;
     requires java.net.http;
 
+    opens esprit.tn.pidevrh.leave to javafx.fxml;  // Fix: Allow JavaFX access to controllers
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;
     exports esprit.tn.pidevrh.question to javafx.fxml;
@@ -19,4 +20,5 @@ module esprit.tn.pidevrh {
     opens esprit.tn.pidevrh.quiz to javafx.fxml, java.base, javafx.base;
     exports esprit.tn.pidevrh.login to javafx.fxml;
     opens esprit.tn.pidevrh.login to javafx.fxml, java.base;
+    exports esprit.tn.pidevrh.leave;  // Export leave module
 }
