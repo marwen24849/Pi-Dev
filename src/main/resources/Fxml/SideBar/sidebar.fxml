@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" stylesheets="@sidebar.css"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.appbar.SidebarController">
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" stylesheets="@sidebar.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.appbar.SidebarController">
     <children>
         <VBox fx:id="sidebar" prefWidth="250.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
             <children>
@@ -34,6 +34,13 @@
                     <MenuButton styleClass="sidebar-menu" text="Gestion Quiz">
                         <items>
                             <MenuItem onAction="#handleAddQuiz" styleClass="menu-item" text="Ajouter Quiz" />
+                            <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste Quiz" />
+                        </items>
+                    </MenuButton>
+
+                    <MenuButton styleClass="sidebar-menu" text="Gestion Formation">
+                        <items>
+                            <MenuItem onAction="#handleAddFormation" styleClass="menu-item" text="Ajouter Formation" />
                             <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste Quiz" />
                         </items>
                     </MenuButton>
