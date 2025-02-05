@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="20" alignment="CENTER" prefWidth="600" prefHeight="500"
+      xmlns="http://javafx.com/javafx/8" stylesheets="@result-styles.css"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.response.ResultController">
+
+    <!-- Titre -->
+    <Label text="Résultats du Quiz" styleClass="title-label"/>
+
+    <!-- Carte Résultats -->
+    <VBox styleClass="result-card">
+        <Label fx:id="scoreLabel" styleClass="score-label"/>
+        <Label fx:id="percentageLabel" styleClass="percentage-label"/>
+        <Label fx:id="resultLabel" styleClass="final-result-label"/>
+    </VBox>
+
+    <!-- Séparateur -->
+    <Separator styleClass="separator"/>
+
+    <!-- Réponses données -->
+    <Label text="Réponses données" styleClass="subtitle-label"/>
+    <ListView fx:id="responsesListView" styleClass="responses-list"/>
+
+</VBox>
