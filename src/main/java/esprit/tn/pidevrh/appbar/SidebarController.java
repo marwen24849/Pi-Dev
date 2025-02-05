@@ -117,4 +117,8 @@ public class SidebarController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public void handleAddFormation() {
+        loadContent("/Fxml/Formation/formation.fxml");
+    }
 }

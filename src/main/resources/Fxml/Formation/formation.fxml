@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.pidevrh.formation.FormationController">
+
+
+    <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+
+        <!-- Titre -->
+        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 10px;" text="Ajouter une Formation" />
+
+        <!-- Formulaire -->
+        <GridPane hgap="15.0" style="-fx-padding: 20px; -fx-background-color: #f7f9fc; -fx-border-color: #d1dce5; -fx-border-radius: 10px; -fx-background-radius: 10px;" vgap="15.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="150.0" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <Label style="-fx-font-size: 14px;" text="Titre  :" />
+            <TextField fx:id="titleField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" />
+
+            <Label style="-fx-font-size: 14px;" text="Description :" GridPane.rowIndex="1" />
+            <TextField fx:id="description" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label style="-fx-font-size: 14px;" text="Durée :" GridPane.rowIndex="2" />
+            <TextField fx:id="duration" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+
+
+        </GridPane>
+
+        <!-- Bouton -->
+        <Button fx:id="addFormation" onAction="#handleAddFormation" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Formation" />
+    </VBox>
+
+</AnchorPane>

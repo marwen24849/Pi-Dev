@@ -21,4 +21,6 @@ module esprit.tn.pidevrh {
     opens esprit.tn.pidevrh.response to javafx.fxml, java.base, javafx.base;
     exports esprit.tn.pidevrh.login to javafx.fxml;
     opens esprit.tn.pidevrh.login to javafx.fxml, java.base;
+    exports esprit.tn.pidevrh.formation to javafx.fxml;
+    opens esprit.tn.pidevrh.formation to javafx.fxml, java.base, javafx.base;
 }
