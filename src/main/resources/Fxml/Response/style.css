@@ -1,0 +1,78 @@
+/* ---- Styles Généraux ---- */
+* {
+    -fx-font-family: "Poppins", sans-serif;
+    -fx-font-smoothing-type: lcd;
+}
+
+/* ---- Conteneur principal ---- */
+.main-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 30px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- Numéro de la Question ---- */
+.question-number {
+    -fx-font-size: 18px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+/* ---- Question ---- */
+.question-label {
+    -fx-background-color: #f8f9fa;
+    -fx-font-size: 22px;
+    -fx-text-fill: #34495e;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+}
+
+/* ---- Boîte des Options ---- */
+.option-box {
+    -fx-background-color: #f8f9fa;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 20px;
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+}
+
+/* ---- Boutons des Options ---- */
+.option-button {
+    -fx-font-size: 16px;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 10px;
+    -fx-wrap-text: true;
+    -fx-max-width: 500px;
+}
+
+.option-button:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ---- Boutons ---- */
+.button, .submit-button {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 24px;
+    -fx-background-radius: 8px;
+}
+
+.button:hover, .submit-button:hover {
+    -fx-background-color: #1f618d;
+    -fx-cursor: hand;
+}
+
+/* ---- Bouton Désactivé ---- */
+.submit-button:disabled {
+    -fx-background-color: #bdc3c7;
+    -fx-text-fill: #7f8c8d;
+}

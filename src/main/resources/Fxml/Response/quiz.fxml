@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="25" alignment="CENTER" prefWidth="600" prefHeight="500"
+      xmlns="http://javafx.com/javafx/8" stylesheets="@style.css"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.response.ResponseController">
+
+    <!-- Numéro de la question -->
+    <Label fx:id="questionNumberLabel" styleClass="question-number"/>
+
+    <!-- Question -->
+    <Label fx:id="questionLabel" text="Quelle est la capitale de la France ?" styleClass="question-label"/>
+
+    <!-- Boîte des options -->
+    <VBox spacing="15" styleClass="option-box">
+        <RadioButton fx:id="option1" styleClass="option-button"/>
+        <RadioButton fx:id="option2" styleClass="option-button"/>
+        <RadioButton fx:id="option3" styleClass="option-button"/>
+        <RadioButton fx:id="option4" styleClass="option-button"/>
+    </VBox>
+
+    <!-- Boutons de navigation -->
+    <HBox spacing="20" alignment="CENTER">
+        <Button fx:id="nextButton" text="Suivant" onAction="#handleNext" styleClass="button"/>
+        <Button fx:id="submitButton" text="Soumettre" onAction="#handleSubmit" disable="true" styleClass="submit-button"/>
+    </HBox>
+
+</VBox>
