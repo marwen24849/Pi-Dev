@@ -3,58 +3,83 @@ package esprit.tn.pidevrh.leave;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class LeaveRequestController {
     @FXML private ComboBox<String> congeComboBox;
+    @FXML private TextField autreCongeField;
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
     @FXML private TextArea justificationField;
     @FXML private Button submitButton;
+    @FXML private Button uploadButton;
+    private File selectedFile;
 
     @FXML
     public void initialize() {
-        // Populate leave types in ComboBox
         congeComboBox.getItems().addAll("Vacances", "Maladie", "Autre");
+        congeComboBox.setOnAction(event -> handleCongeSelection());
+        uploadButton.setDisable(true);
+        autreCongeField.setDisable(true);
+    }
+
+    @FXML
+    private void handleCongeSelection() {
+        String selectedType = congeComboBox.getValue();
+        if ("Maladie".equals(selectedType)) {
+            uploadButton.setDisable(false);
+            autreCongeField.setDisable(true);
+            autreCongeField.clear();
+        } else if ("Autre".equals(selectedType)) {
+            autreCongeField.setDisable(false);
+            uploadButton.setDisable(true);
+            selectedFile = null;
+        } else {
+            uploadButton.setDisable(true);
+            autreCongeField.setDisable(true);
+            autreCongeField.clear();
+            selectedFile = null;
+        }
     }
 
     @FXML
     public void handleSubmit() {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            String leaveType = congeComboBox.getValue();
-            if (leaveType == null) {
-                showAlert("Error", "Please select a leave type!", Alert.AlertType.ERROR);
-                return;
-            }
+        LocalDate startDate = startDatePicker.getValue();
+        LocalDate endDate = endDatePicker.getValue();
+        LocalDate today = LocalDate.now();
 
-            String sql = "INSERT INTO demande_conge (user_id, conge_id, justification, status, date_debut, date_fin) VALUES (?, ?, ?, 'PENDING', ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, 1); // Static user_id, replace with session user ID
-            stmt.setInt(2, getCongeId(leaveType)); // Get conge_id from type
-            stmt.setString(3, justificationField.getText());
-            stmt.setDate(4, java.sql.Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(5, java.sql.Date.valueOf(endDatePicker.getValue()));
+        if (startDate == null || endDate == null || startDate.isBefore(today) || endDate.isBefore(startDate)) {
+            showAlert("Erreur", "Veuillez sélectionner des dates valides !", Alert.AlertType.ERROR);
+            return;
+        }
 
-            stmt.executeUpdate();
-            showAlert("Success", "Leave request submitted successfully!", Alert.AlertType.INFORMATION);
-        } catch (SQLException e) {
-            showAlert("Error", "Database error: " + e.getMessage(), Alert.AlertType.ERROR);
+        String leaveType = congeComboBox.getValue();
+        if (leaveType == null || ("Maladie".equals(leaveType) && selectedFile == null) ||
+                ("Autre".equals(leaveType) && autreCongeField.getText().trim().isEmpty())) {
+            showAlert("Erreur", "Veuillez remplir tous les champs obligatoires !", Alert.AlertType.ERROR);
+            return;
+        }
+
+        showAlert("Succès", "Demande de congé soumise avec succès !", Alert.AlertType.INFORMATION);
+    }
+    @FXML
+    public void handleUpload() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if (selectedFile != null) {
+            showAlert("Fichier sélectionné", "Certificat médical sélectionné : " + selectedFile.getName(), Alert.AlertType.INFORMATION);
         }
     }
 
-    // Convert Leave Type to ID
-    private int getCongeId(String type) {
-        return switch (type) {
-            case "Vacances" -> 1;
-            case "Maladie" -> 2;
-            default -> 3; // "Autre"
-        };
-    }
 
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);

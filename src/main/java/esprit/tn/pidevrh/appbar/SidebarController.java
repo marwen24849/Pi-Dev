@@ -117,4 +117,8 @@ public class SidebarController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public void handleAddDemande(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/LeaveRequest.fxml");
+    }
 }
