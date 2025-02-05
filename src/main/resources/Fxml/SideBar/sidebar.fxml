@@ -37,10 +37,18 @@
                             <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste Quiz" />
                         </items>
                     </MenuButton>
+
                     <MenuButton styleClass="sidebar-menu" text="Gestion Formation">
                         <items>
                             <MenuItem onAction="#handleAddFormation" styleClass="menu-item" text="Ajouter Formation" />
                             <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste Quiz" />
+                        </items>
+                    </MenuButton>
+
+                    <MenuButton styleClass="sidebar-menu" text="Demande Congé">
+                        <items>
+                            <MenuItem onAction="#handleAddDemande" styleClass="menu-item" text="Ajouter Demande" />
+                            <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste des demandes" />
                         </items>
                     </MenuButton>
                 </VBox>
