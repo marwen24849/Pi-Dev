@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="10" style="-fx-padding: 20;" stylesheets="@../../Css/EditForm.css" fx:controller="esprit.tn.pidevrh.quiz.QuizUpdateController">
+    <Label text="Modifier la Quiz" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <!-- Titre du Quiz -->
+    <Label text="Titre du Quiz :"/>
+    <TextField fx:id="titleField" GridPane.columnIndex="1"/>
+
+    <Label text="Pourcentage de Succès Minimum :" GridPane.rowIndex="3"/>
+    <ComboBox fx:id="percentageComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3"
+              promptText="Sélectionnez un pourcentage"/>
+
+    <HBox spacing="10">
+        <Button fx:id="EditQuiz" text="Edit Quiz" onAction="#handleSave"/>
+        <Button text="Annuler" onAction="#handleCancel" style="-fx-background-color: #ff0000; -fx-text-fill: white;"/>
+    </HBox>
+</VBox>

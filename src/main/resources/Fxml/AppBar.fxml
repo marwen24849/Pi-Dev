@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox alignment="CENTER" spacing="20" style="-fx-background-color: #2C3E50; -fx-padding: 10;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.appbar.AppBarController">
+    <Button text="Ajouter Quiz" fx:id="addQuiz" onAction="#handleAddQuiz" styleClass="nav-button" />
+    <Button text="Lister Quiz" styleClass="nav-button" />
+    <Button text="Ajouter Question" fx:id="addQuestion" onAction="#handleAddQuestions" styleClass="nav-button" />
+    <Button text="Lister Questions" fx:id="list" onAction="#handleListQuestions"  />
+</HBox>

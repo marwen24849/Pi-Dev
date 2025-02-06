@@ -1,0 +1,122 @@
+
+* {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-smoothing-type: lcd;
+}
+
+
+.sidebar {
+    -fx-background-color: #f9fafc;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-border-color: #dce4ec;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+}
+
+.sidebar-header {
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+.sidebar-title {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.sidebar-header {
+    -fx-spacing: 10;
+    -fx-alignment: center; /* Aligner à gauche */
+    -fx-padding: 10;
+}
+
+
+/* Separator */
+.sidebar-separator {
+    -fx-background-color: #000000;
+
+}
+
+/* Menu button styles */
+.sidebar-menu {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 16px;
+    -fx-pref-width: 200px;
+    -fx-alignment: center-left;
+    -fx-padding: 10 0 10 15;
+    -fx-border-radius: 5px;
+}
+
+.sidebar-menu:hover {
+    -fx-background-color: #e3e8f1; /* Couleur douce pour le survol */
+    -fx-text-fill: #2c3e50;
+    -fx-cursor: hand;
+}
+
+/* Menu items styles */
+.menu-item {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 14px;
+    -fx-padding: 5 15;
+    -fx-border-radius: 5px;
+}
+
+.menu-item:hover {
+    -fx-background-color: #e3e8f1;
+    -fx-text-fill: #2c3e50;
+    -fx-cursor: hand;
+}
+
+/* Main content area */
+.content-area {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20;
+    -fx-border-color: #dce4ec;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+
+/* Main title styles */
+.main-title {
+    -fx-font-size: 24px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+}
+
+/* Toggle button styles */
+.toggle-button {
+    -fx-background-color: #4caf50; /* Vert apaisant */
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-padding: 8 12;
+    -fx-background-radius: 20;
+    -fx-border-color: #45a049;
+    -fx-border-width: 0px;
+    -fx-font-weight: bold;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #45a049; /* Couleur plus vive pour le survol */
+    -fx-border-color: #2c3e50;
+    -fx-cursor: hand;
+}
+
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        -fx-pref-width: 180px;
+    }
+
+    .sidebar-menu {
+        -fx-font-size: 14px;
+    }
+
+    .toggle-button {
+        -fx-font-size: 16px;
+        -fx-padding: 6 10;
+    }
+}

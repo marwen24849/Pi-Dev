@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.pidevrh.question.QuestionController">
+
+    <!-- Navbar -->
+<!--    <fx:include source="../AppBar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />-->
+
+    <!-- Contenu principal -->
+    <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+
+        <!-- Titre -->
+        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 10px;" text="Ajouter une Question" />
+
+        <!-- Formulaire -->
+        <GridPane hgap="15.0" style="-fx-padding: 20px; -fx-background-color: #f7f9fc; -fx-border-color: #d1dce5; -fx-border-radius: 10px; -fx-background-radius: 10px;" vgap="15.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="150.0" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <Label style="-fx-font-size: 14px;" text="Titre de la question :" />
+            <TextField fx:id="titleField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" />
+
+            <Label style="-fx-font-size: 14px;" text="Option 1 :" GridPane.rowIndex="1" />
+            <TextField fx:id="option1Field" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label style="-fx-font-size: 14px;" text="Option 2 :" GridPane.rowIndex="2" />
+            <TextField fx:id="option2Field" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label style="-fx-font-size: 14px;" text="Option 3 :" GridPane.rowIndex="3" />
+            <TextField fx:id="option3Field" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+            <Label style="-fx-font-size: 14px;" text="Option 4 :" GridPane.rowIndex="4" />
+            <TextField fx:id="option4Field" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+            <Label style="-fx-font-size: 14px;" text="Bonne réponse :" GridPane.rowIndex="5" />
+            <TextField fx:id="rightAnswerField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+            <Label style="-fx-font-size: 14px;" text="Score :" GridPane.rowIndex="6" />
+            <TextField fx:id="scoreField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+            <Label style="-fx-font-size: 14px;" text="Catégorie :" GridPane.rowIndex="7" />
+            <TextField fx:id="categoryField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+            <Label style="-fx-font-size: 14px;" text="Niveau de difficulté :" GridPane.rowIndex="8" />
+            <TextField fx:id="difficultyField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+
+        <!-- Bouton -->
+        <Button fx:id="addQuestionButton" onAction="#handleAddQuestion" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Question" />
+    </VBox>
+
+</AnchorPane>

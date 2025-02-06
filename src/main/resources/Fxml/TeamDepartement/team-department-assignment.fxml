@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="esprit.tn.pidevrh.teams_departements.TeamDepartmentAssignmentController" spacing="10" styleClass="main-layout" stylesheets="@../../Css/team-dep.css">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <TableView fx:id="table" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="nameCol" text="Team Name" minWidth="150">
+                <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="membersCol" text="Members" minWidth="100">
+                <cellValueFactory><PropertyValueFactory property="members"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="departmentCol" text="Department" minWidth="150">
+                <cellValueFactory><PropertyValueFactory property="department"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="teamMembersCol" text="Team Members" minWidth="150" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" styleClass="input-box">
+        <TextField fx:id="nameInput" promptText="Team Name"/>
+        <TextField fx:id="membersInput" promptText="Number of Members"/>
+        <Button text="Add Team" onAction="#handleAddTeam"/>
+    </HBox>
+
+</VBox>

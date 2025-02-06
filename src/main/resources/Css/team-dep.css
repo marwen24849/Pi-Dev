@@ -1,0 +1,102 @@
+.main-layout {
+    -fx-background-color: #f5f6fa;
+    -fx-padding: 20;
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #487eb0;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #dcdde1;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI";
+}
+
+.table-view .table-cell {
+    -fx-padding: 15 10;
+    -fx-border-color: transparent;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #2d3436; /* Default text color */
+}
+
+.table-row-cell:filled {
+    -fx-background-color: white;
+    -fx-border-color: #dcdde1;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Add these new rules to handle selection states */
+.table-row-cell:filled:selected,
+.table-row-cell:filled:focused {
+    -fx-background-color: #f5f6fa;
+    -fx-background-insets: 0;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:filled:hover {
+    -fx-background-color: #f5f6fa;
+}
+
+/* Ensure text remains visible when selected */
+.table-row-cell:filled:selected .table-cell,
+.table-row-cell:filled:focused .table-cell {
+    -fx-text-fill: #2d3436; /* Dark text color */
+}
+
+.input-box {
+    -fx-spacing: 15;
+    -fx-padding: 15;
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+.modern-textfield {
+    -fx-background-color: #f5f6fa;
+    -fx-background-radius: 5;
+    -fx-padding: 12;
+    -fx-font-size: 14;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 5;
+}
+
+.modern-textfield:focused {
+    -fx-border-color: #487eb0;
+    -fx-effect: dropshadow(gaussian, rgba(72,126,176,0.2), 10, 0, 0, 2);
+}
+
+.modern-button {
+    -fx-background-color: linear-gradient(to bottom right, #487eb0, #40739e);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-background-radius: 5;
+    -fx-padding: 12 25;
+    -fx-cursor: hand;
+}
+
+.modern-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #40739e, #487eb0);
+    -fx-effect: dropshadow(gaussian, rgba(72,126,176,0.3), 10, 0, 0, 3);
+}
+
+.modern-button:pressed {
+    -fx-background-color: #487eb0;
+    -fx-translate-y: 1;
+}

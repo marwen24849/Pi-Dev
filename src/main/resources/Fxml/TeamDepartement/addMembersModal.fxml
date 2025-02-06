@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MultipleSelectionModel?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="esprit.tn.pidevrh.teams_departements.AddMembersModalController" spacing="10" styleClass="modal-layout">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Select Users to Add to the Team:" styleClass="modal-title"/>
+    <ListView fx:id="userListView" styleClass="modal-list-view">
+        <selectionModel>
+        </selectionModel>
+    </ListView>
+
+    <HBox spacing="10" styleClass="modal-button-box">
+        <Button text="Add Selected" onAction="#handleAddSelected"/>
+        <Button text="Cancel" onAction="#handleCancel"/>
+    </HBox>
+</VBox>
