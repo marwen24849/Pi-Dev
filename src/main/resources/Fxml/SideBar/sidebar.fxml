@@ -50,20 +50,18 @@
 
                             <!-- Demande Congé -->
                             <VBox fx:id="demandeCongeContainer">
-                                <Button fx:id="demandeCongeButton" text="🗂️ Demande Congé"
+                                <Button fx:id="demandeCongeButton" text="📋 Demande Congé"
                                         styleClass="sidebar-menu" onAction="#toggleDemandeCongeMenu"/>
                                 <VBox fx:id="demandeCongeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
-                                    <Button onAction="#handleAddDemande" text="📄 Ajouter Demande" styleClass="menu-item"/>
+                                    <Button onAction="#handleAddDemande" text="➕ Ajouter Demande" styleClass="menu-item"/>
+                                    <Button onAction="#handleALisDemande" text="📄 List Demande" styleClass="menu-item"/>
                                 </VBox>
                             </VBox>
                         </VBox>
                     </content>
                 </ScrollPane>
 
-                <!-- Logout Button (Fixed at Bottom) -->
-                <Button fx:id="logoutButton" text="🚪 Log Out"
-                        styleClass="sidebar-menu sidebar-logout"
-                        />
+
             </VBox>
 
         </VBox>
