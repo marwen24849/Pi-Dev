@@ -50,12 +50,23 @@
 
                             <!-- Demande Congé -->
                             <VBox fx:id="demandeCongeContainer">
-                                <Button fx:id="demandeCongeButton" text="🗂️ Demande Congé"
+                                <Button fx:id="demandeCongeButton" text="🗂️ Demande Congéee"
                                         styleClass="sidebar-menu" onAction="#toggleDemandeCongeMenu"/>
                                 <VBox fx:id="demandeCongeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
                                     <Button onAction="#handleAddDemande" text="📄 Ajouter Demande" styleClass="menu-item"/>
                                 </VBox>
                             </VBox>
+
+                            <!-- Gestion Formation -->
+                            <VBox fx:id="gestionFormationContainer">
+                                <Button fx:id="gestionFormationButton" text="📚 Gestion Formation"
+                                        styleClass="sidebar-menu" onAction="#toggleFormationMenu"/>
+                                <VBox fx:id="gestionFormationMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handleAddFormation" text="➕ Ajouter Formation" styleClass="menu-item"/>
+                                    <Button onAction="#handleListFormation" text="📜 Liste Formation" styleClass="menu-item"/>
+                                </VBox>
+                            </VBox>
+
                         </VBox>
                     </content>
                 </ScrollPane>

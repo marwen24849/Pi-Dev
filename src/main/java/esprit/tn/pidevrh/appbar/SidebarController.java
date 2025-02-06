@@ -18,7 +18,7 @@ import java.io.IOException;
 public class SidebarController {
 
     @FXML
-    private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu;
+    private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu , gestionFormationMenu;
 
     @FXML
     private Button toggleButton;
@@ -42,6 +42,7 @@ public class SidebarController {
         toggleMenuVisibility(gestionQuestionsMenu, false);
         toggleMenuVisibility(gestionQuizMenu, false);
         toggleMenuVisibility(demandeCongeMenu, false);
+        toggleMenuVisibility(gestionFormationMenu, false);
         handleToggleSidebar();
     }
 
@@ -67,6 +68,7 @@ public class SidebarController {
         AnchorPane.setLeftAnchor(contentArea, sidebarWidth);
     }
 
+
     private void toggleMenuVisibility(VBox menu, boolean isVisible) {
         menu.setVisible(isVisible);
         menu.setManaged(isVisible);
@@ -76,7 +78,10 @@ public class SidebarController {
     private void toggleGestionQuestionsMenu() {
         toggleMenuVisibility(gestionQuestionsMenu, !gestionQuestionsMenu.isVisible());
     }
-
+    @FXML
+    private void toggleFormationMenu() {
+        toggleMenuVisibility(gestionFormationMenu, !gestionFormationMenu.isVisible());
+    }
     @FXML
     private void toggleGestionQuizMenu() {
         toggleMenuVisibility(gestionQuizMenu, !gestionQuizMenu.isVisible());
@@ -111,7 +116,10 @@ public class SidebarController {
     public void handleAddDemande(ActionEvent actionEvent) {
         loadContent("/Fxml/Leave/LeaveRequest.fxml");
     }
-
+    @FXML
+    public void handleListFormation(ActionEvent actionEvent) {
+        loadContent("/Fxml/Formation/ListFormation.fxml");
+    }
     private void loadContent(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
