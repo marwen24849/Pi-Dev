@@ -176,33 +176,7 @@
     -fx-pref-height: 0px;
     -fx-opacity: 0;
 }
-/* Logout Button */
-.sidebar-logout {
-    -fx-background-color: #e74c3c; /* Red button */
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-padding: 12px 20px;
-    -fx-border-radius: 8px;
-    -fx-pref-width: 230px;
-    -fx-alignment: center;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
-    -fx-transition: background-color 0.3s ease-in-out, scale 0.3s ease-in-out;
-}
 
-/* Hover & Pressed Effects */
-.sidebar-logout:hover {
-    -fx-background-color: #c0392b;
-    -fx-cursor: hand;
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
-.sidebar-logout:pressed {
-    -fx-background-color: #a93226;
-    -fx-scale-x: 0.95;
-    -fx-scale-y: 0.95;
-}
 
 /* Responsive Sidebar */
 @media screen and (max-width: 768px) {

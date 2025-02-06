@@ -111,6 +111,10 @@ public class SidebarController {
     public void handleAddDemande(ActionEvent actionEvent) {
         loadContent("/Fxml/Leave/LeaveRequest.fxml");
     }
+    @FXML
+    public void handleALisDemande(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/ListRequest.fxml");
+    }
 
     private void loadContent(String fxmlPath) {
         try {
@@ -138,4 +142,6 @@ public class SidebarController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
 }
