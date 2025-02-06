@@ -143,5 +143,12 @@ public class SidebarController {
         alert.showAndWait();
     }
 
+    public void handleAddFormation() {
+        loadContent("/Fxml/Formation/formation.fxml");
+    }
+    public void handleAddDemande() {
+        loadContent("/Fxml/Leave/LeaveRequest.fxml");
+
+    }
 
 }
