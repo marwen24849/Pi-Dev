@@ -8,46 +8,54 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
-import java.util.Objects;
 
 public class SidebarController {
 
     @FXML
-    private VBox sidebar;
+    private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu;
 
     @FXML
     private Button toggleButton;
 
     @FXML
-    private AnchorPane contentArea;
-
-    private boolean isSidebarOpen = false;
+    private ScrollPane sidebarScrollPane;
 
     @FXML
-    private AnchorPane content;
+    private AnchorPane contentArea;
+
+    private boolean isSidebarOpen = true; // Sidebar starts open
 
     @FXML
     public void initialize() {
-        // Pas besoin de l'écouteur ici pour setResizable.
-        // Cela peut être fait dans loadContent.
+        if (sidebarWrapper == null) {
+            System.err.println("Error: Sidebar is null! Check FXML fx:id.");
+            return;
+        }
+
+        sidebarWrapper.setTranslateX(0);
+        toggleMenuVisibility(gestionQuestionsMenu, false);
+        toggleMenuVisibility(gestionQuizMenu, false);
+        toggleMenuVisibility(demandeCongeMenu, false);
         handleToggleSidebar();
-
-
     }
 
     @FXML
     private void handleToggleSidebar() {
-        TranslateTransition transition = new TranslateTransition(Duration.millis(300), sidebar);
+        TranslateTransition transition = new TranslateTransition(Duration.millis(300), sidebarWrapper);
+        double sidebarWidth = sidebarWrapper.getPrefWidth();
+
         if (isSidebarOpen) {
-            transition.setToX(-sidebar.getPrefWidth());
+            transition.setToX(-sidebarWidth);
+            toggleButton.setText("☰"); // Collapse icon
         } else {
             transition.setToX(0);
+            toggleButton.setText("≡"); // Expand icon
         }
         transition.play();
         isSidebarOpen = !isSidebarOpen;
@@ -55,23 +63,35 @@ public class SidebarController {
     }
 
     private void adjustContentArea() {
-        if (isSidebarOpen) {
-            AnchorPane.setLeftAnchor(contentArea, sidebar.getPrefWidth());
-        } else {
-            AnchorPane.setLeftAnchor(contentArea, 0.0);
-        }
-        Scene scene = contentArea.getScene();
-        if (scene != null) {
-            Stage stage = (Stage) scene.getWindow();
-            stage.setResizable(true);
-        }
+        double sidebarWidth = isSidebarOpen ? sidebarWrapper.getPrefWidth() : 0;
+        AnchorPane.setLeftAnchor(contentArea, sidebarWidth);
     }
 
+    private void toggleMenuVisibility(VBox menu, boolean isVisible) {
+        menu.setVisible(isVisible);
+        menu.setManaged(isVisible);
+    }
+
+    @FXML
+    private void toggleGestionQuestionsMenu() {
+        toggleMenuVisibility(gestionQuestionsMenu, !gestionQuestionsMenu.isVisible());
+    }
+
+    @FXML
+    private void toggleGestionQuizMenu() {
+        toggleMenuVisibility(gestionQuizMenu, !gestionQuizMenu.isVisible());
+    }
+
+    @FXML
+    private void toggleDemandeCongeMenu() {
+        toggleMenuVisibility(demandeCongeMenu, !demandeCongeMenu.isVisible());
+    }
 
     @FXML
     public void handleListQuestions() {
         loadContent("/Fxml/Question/ListQuestions.fxml");
     }
+
     @FXML
     public void handleListQuiz() {
         loadContent("/Fxml/Quiz/ListQuiz.fxml");
@@ -87,17 +107,19 @@ public class SidebarController {
         loadContent("/Fxml/Quiz/Quiz.fxml");
     }
 
+    @FXML
+    public void handleAddDemande(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/LeaveRequest.fxml");
+    }
+
     private void loadContent(String fxmlPath) {
         try {
-            // Charger le FXML et créer un Parent
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            // Effacer le contenu actuel de la zone de contenu et ajouter le nouveau
             contentArea.getChildren().clear();
             contentArea.getChildren().add(root);
 
-            // Définir les contraintes d'ancrage pour que le contenu s'adapte à la taille de contentArea
             AnchorPane.setTopAnchor(root, 0.0);
             AnchorPane.setRightAnchor(root, 0.0);
             AnchorPane.setBottomAnchor(root, 0.0);
@@ -105,10 +127,9 @@ public class SidebarController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Erreur", "Impossible de charger la vue demandée.");
+            showAlert("Erreur", "Impossible de charger la vue demandée: " + fxmlPath);
         }
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -117,4 +138,13 @@ public class SidebarController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public void handleAddFormation() {
+        loadContent("/Fxml/Formation/formation.fxml");
+    }
+    public void handleAddDemande() {
+        loadContent("/Fxml/Leave/LeaveRequest.fxml");
+
+    }
+
 }
