@@ -2,12 +2,18 @@ module esprit.tn.pidevrh {
     requires javafx.controls;
     requires javafx.fxml;
 
+
     requires org.controlsfx.controls;
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires javafx.graphics;
     requires java.sql;
     requires java.net.http;
+    requires java.desktop;
+    requires mysql.connector.java;
+    requires jbcrypt;
+    requires jdk.jdi;
+    requires java.mail;
 
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;
