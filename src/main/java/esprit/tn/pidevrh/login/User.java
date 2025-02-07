@@ -7,22 +7,19 @@ public class User {
     private String email;
     private String password;
     private Role role;
-    private String verificationToken ;
-    private boolean isVerified ;
+
 
     // Constructors
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password, Role role , String verificationToken, boolean isVerified) {
+    public User(Long id, String firstName, String lastName, String email, String password, Role role ) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.verificationToken = verificationToken;
-        this.isVerified = isVerified;
     }
     public enum Role {
         USER,
