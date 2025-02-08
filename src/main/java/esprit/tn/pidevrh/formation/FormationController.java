@@ -40,6 +40,12 @@ public class FormationController {
             showAlert("Erreur", "Tous les champs doivent être remplis.");
             return;
         }
+        try {
+            Integer.parseInt(duration.getText());
+        } catch (NumberFormatException e) {
+            notNumberAlert("Erreur", "La durée doit être un nombre entier.");
+            return;
+        }
         try(Connection conn = DatabaseConnection.getConnection()){
             String sql = "insert into formation (title, description, duration) VALUES (?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -47,7 +53,7 @@ public class FormationController {
             ps.setString(2, description.getText());
             ps.setInt(3, Integer.parseInt(duration.getText()));
             ps.executeUpdate();
-            showAlert("Succès", "La Formation a été ajoutée avec succès !");
+            addedAlert("Succès", "La Formation a été ajoutée avec succès !");
             initialize();
         }catch(SQLException e){
             showAlert("Erreur SQL", "Erreur lors de l'ajout de la formation dans la base de données.");
@@ -56,11 +62,26 @@ public class FormationController {
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
+    private void notNumberAlert(String title, String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void addedAlert(String title, String message){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
 }

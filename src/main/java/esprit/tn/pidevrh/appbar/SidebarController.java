@@ -118,7 +118,7 @@ public class SidebarController {
     }
     @FXML
     public void handleListFormation(ActionEvent actionEvent) {
-        loadContent("/Fxml/Formation/ListFormation.fxml");
+        loadContent("/Fxml/Formations/ListFormation.fxml");
     }
     private void loadContent(String fxmlPath) {
         try {
