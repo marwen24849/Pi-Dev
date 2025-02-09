@@ -3,6 +3,7 @@ package esprit.tn.pidevrh.formation;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import esprit.tn.pidevrh.question.Question;
 import esprit.tn.pidevrh.question.QuestionUpdateController;
+import esprit.tn.pidevrh.session.SessionListController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,6 +38,8 @@ public class FormationListController {
     private TableColumn<Formation, Void> actionColumn;
 
     @FXML
+    private TableColumn<Formation, Void> sessionColumn;
+    @FXML
     private ComboBox<String> titleFilter;
 
     @FXML
@@ -48,6 +51,7 @@ public class FormationListController {
         ObservableList<Formation> formationsObservableList = loadFormations();
         formationTableView.setItems(formationsObservableList);
         actionColumn.setCellFactory(createActionColumnFactory());
+        sessionColumn.setCellFactory(createSessionColumnFactory());
         titleFilter.setValue("Toutes les formations");
 
         filterButton.setOnAction(event -> {
@@ -74,8 +78,10 @@ public class FormationListController {
         configureTitleFilter(formationsObservableList.stream().map(Formation::getTitre).distinct());
     }
     private void configureTitleFilter(Stream<String> stringStream) {
+        titleFilter.getItems().clear();
         titleFilter.getItems().add("Toutes les formations");
         stringStream.forEach(title -> titleFilter.getItems().add(title));
+        titleFilter.setValue("Toutes les formations");
 
     }
 
@@ -174,6 +180,42 @@ public class FormationListController {
         }
 
         return formations;
+    }
+    // Create the session column button
+    private Callback<TableColumn<Formation, Void>, TableCell<Formation, Void>> createSessionColumnFactory() {
+        return param -> new TableCell<Formation, Void>() {
+            private final Button manageButton = new Button("Manage Sessions");
+
+            {
+                manageButton.setOnAction(event -> handleManageSessions(getTableView().getItems().get(getIndex())));
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(new HBox(10, manageButton));
+                }
+            }
+        };
+    }
+
+    // Handle the click event to open the session management window
+    private void handleManageSessions(Formation formation) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Session/SessionList.fxml"));
+            Parent root = loader.load();
+            SessionListController sessionListController = loader.getController();
+            sessionListController.setFormation(formation); // Pass the selected formation to session controller
+            Stage stage = new Stage();
+            stage.setTitle("Manage Sessions - " + formation.getTitre());
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

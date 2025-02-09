@@ -8,6 +8,8 @@ module esprit.tn.pidevrh {
     requires javafx.graphics;
     requires java.sql;
     requires java.net.http;
+    requires jdk.jdi;
+    requires static lombok;
 
     opens esprit.tn.pidevrh.leave to javafx.fxml;  // Fix: Allow JavaFX access to controllers
     opens esprit.tn.pidevrh to javafx.fxml;
@@ -25,7 +27,8 @@ module esprit.tn.pidevrh {
 
     exports esprit.tn.pidevrh.formation to javafx.fxml;
     opens esprit.tn.pidevrh.formation to javafx.fxml, java.base, javafx.base;
-
+    exports esprit.tn.pidevrh.session;  // Export the session package for FXML access
+    opens esprit.tn.pidevrh.session to javafx.fxml;  // Allows FXMLLoader to access the session controller
     exports esprit.tn.pidevrh.leave;  // Export leave module
 
 }

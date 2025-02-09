@@ -21,8 +21,9 @@
         <columns>
             <TableColumn fx:id="titleColumn" prefWidth="250.0" text="Titre" />
             <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Description" />
-            <TableColumn fx:id="durationColumn" prefWidth="150.0" text="Duree" />
+            <TableColumn fx:id="durationColumn" prefWidth="150.0" text="Durée (semaines)" />
             <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" />
+            <TableColumn text="Manage Sessions" prefWidth="150.0" fx:id="sessionColumn"/>
         </columns>
     </TableView>
 
