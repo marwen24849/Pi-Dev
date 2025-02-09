@@ -15,11 +15,12 @@
     <children>
         <VBox fx:id="sidebar" prefWidth="250.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
             <children>
-                <HBox  styleClass="sidebar-header">
+                <HBox styleClass="sidebar-header">
                     <ImageView fx:id="logoImageView" fitHeight="40" fitWidth="40">
-                  <image>
-                     <Image url="@preview.jpg" />
-                  </image></ImageView>
+                        <image>
+                            <Image url="@preview.jpg" />
+                        </image>
+                    </ImageView>
                     <Label styleClass="sidebar-title" text="SGRH" />
                 </HBox>
                 <Separator styleClass="sidebar-separator" />
@@ -38,11 +39,12 @@
                         </items>
                     </MenuButton>
                 </VBox>
+
+                <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Logout" AnchorPane.leftAnchor="20" AnchorPane.bottomAnchor="10" />
             </children>
         </VBox>
 
         <AnchorPane fx:id="contentArea" styleClass="content-area" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-
         </AnchorPane>
 
         <Button fx:id="toggleButton" onAction="#handleToggleSidebar" styleClass="toggle-button" text="≡" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />

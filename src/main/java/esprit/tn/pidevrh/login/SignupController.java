@@ -69,7 +69,7 @@ public class SignupController {
         }
     }
 
-    private String generateVerificationCode() {
+    public  String generateVerificationCode() {
         SecureRandom random = new SecureRandom();
         int code = random.nextInt(999999);
         return String.format("%06d", code);
@@ -126,7 +126,7 @@ public class SignupController {
         }
     }
 
-    private String hashPassword(String password) {
+    public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 

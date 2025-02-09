@@ -47,7 +47,7 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="418.0" spacing="10.0">
                     <children>
-                        <TextField fx:id="usernameField" prefHeight="45.0" prefWidth="305.0" promptText="Username">
+                        <TextField fx:id="emailField" prefHeight="45.0" prefWidth="305.0" promptText="Email">
                             <font>
                                 <Font name="Tahoma" size="25.0" />
                             </font>
@@ -65,12 +65,12 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                     <children>
-                        <Button prefHeight="55.0" prefWidth="180.0" styleClass="btn-login" text="Login" />
+                        <Button prefHeight="55.0" prefWidth="180.0" styleClass="btn-login" fx:id="loginButton" text="Login" onAction="#handleLoginClick"/>
                         <Button prefHeight="55.0" prefWidth="180.0" styleClass="btn-login" text="Exit" />
                     </children>
                 </HBox>
                 <HBox spacing="10">
-                    <Button text="Forgot Password?" styleClass="link-button" fx:id="forgotPasswordButton" />
+                    <Button text="Forgot Password?" styleClass="link-button" fx:id="forgotPasswordButton" onAction="#handleForgotPasswordClick"/>
                     <Button text="Sign Up" styleClass="link-button" fx:id="signUpButton" onAction="#handleSignUpClick"/>
                 </HBox>
 

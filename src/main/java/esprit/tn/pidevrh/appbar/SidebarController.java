@@ -1,5 +1,6 @@
 package esprit.tn.pidevrh.appbar;
 
+import esprit.tn.pidevrh.login.SessionManager;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -17,6 +19,9 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SidebarController {
+
+    @FXML
+    private Button logoutButton;
 
     @FXML
     private VBox sidebar;
@@ -106,6 +111,34 @@ public class SidebarController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Erreur", "Impossible de charger la vue demandée.");
+        }
+    }
+
+    @FXML
+    public void handleLogout(ActionEvent event) {
+        // Create a confirmation alert
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirm Logout");
+        confirmationAlert.setHeaderText("Are you sure you want to log out?");
+        confirmationAlert.setContentText("Click OK to log out or Cancel to stay logged in.");
+
+
+        ButtonType result = confirmationAlert.showAndWait().orElse(ButtonType.CANCEL);
+
+
+        if (result == ButtonType.OK) {
+            SessionManager.getInstance().logout();
+            System.out.println("User logged out!");
+
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/login/Login.fxml"));
+                Stage stage = (Stage) logoutButton.getScene().getWindow();
+                stage.setScene(new Scene(loader.load()));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
