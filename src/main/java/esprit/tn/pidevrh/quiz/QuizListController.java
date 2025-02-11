@@ -49,7 +49,7 @@ public class QuizListController {
     private TableView<Quiz> quizTableView;
 
     @FXML
-    private TableColumn<?, ?> questions;
+    private TableColumn<Quiz, Void> questions;
 
     @FXML
     private TableColumn<Quiz, String> titleColumn;
@@ -73,6 +73,7 @@ public class QuizListController {
             }
         });
         actionColumn.setCellFactory(createActionColumnFactory());
+        questions.setCellFactory(createActionColumListQuestions());
 
         configureCategoryFilter(quizObservableList.stream().map(Quiz::getCategory).distinct());
     }
@@ -88,6 +89,8 @@ public class QuizListController {
         difficultylevel.setCellValueFactory(new PropertyValueFactory<>("difficultylevel"));
 
     }
+
+
     private Callback<TableColumn<Quiz, Void>, TableCell<Quiz, Void>> createActionColumnFactory() {
         return param -> new TableCell<Quiz, Void>() {
             private final Button updateButton = new Button("✏️"); // Icône de modification
@@ -111,6 +114,45 @@ public class QuizListController {
                 }
             }
         };
+    }
+
+    private Callback<TableColumn<Quiz, Void>, TableCell<Quiz, Void>> createActionColumListQuestions() {
+        return param -> new TableCell<Quiz, Void>() {
+            private final Button listQuestions = new Button("Questions"); // Icône de modification
+
+            {
+                //listQuestions.getStyleClass().add("button-modifier");
+
+                listQuestions.setOnAction(event -> handleListQuestion(getTableView().getItems().get(getIndex())));
+
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(new HBox(10, listQuestions));
+                }
+            }
+        };
+    }
+
+    private void handleListQuestion(Quiz quiz) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Quiz/ListQuestions.fxml"));
+            Parent root = loader.load();
+            ListQuestionQuiz controller = loader.getController();
+            controller.setQuiz(quiz.getId());
+            Stage stage = new Stage();
+            stage.setTitle("List Question");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+            initialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

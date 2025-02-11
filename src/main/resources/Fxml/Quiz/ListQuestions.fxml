@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Pos?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.quiz.ListQuestionQuiz">
+
+    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;" text="Liste des Questions" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0" />
+
+
+
+    <TableView fx:id="questionTableView" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0" AnchorPane.bottomAnchor="100.0">
+        <columns>
+            <TableColumn fx:id="titleColumn" prefWidth="250.0" text="Titre" />
+            <TableColumn fx:id="option1Column" prefWidth="150.0" text="Option 1" />
+            <TableColumn fx:id="option2Column" prefWidth="150.0" text="Option 2" />
+            <TableColumn fx:id="option3Column" prefWidth="150.0" text="Option 3" />
+            <TableColumn fx:id="option4Column" prefWidth="150.0" text="Option 4" />
+            <TableColumn fx:id="rightAnswerColumn" prefWidth="150.0" text="Bonne Réponse" />
+            <TableColumn fx:id="scoreColumn" prefWidth="100.0" text="Score" />
+            <TableColumn fx:id="categoryColumn" prefWidth="150.0" text="Catégorie" />
+            <TableColumn fx:id="difficultyColumn" prefWidth="100.0" text="Difficulté" />
+            <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" />
+        </columns>
+    </TableView>
+
+</AnchorPane>
