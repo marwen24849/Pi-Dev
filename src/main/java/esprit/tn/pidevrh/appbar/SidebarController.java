@@ -1,6 +1,7 @@
 package esprit.tn.pidevrh.appbar;
 
 import esprit.tn.pidevrh.login.SessionManager;
+import esprit.tn.pidevrh.login.User;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -38,12 +40,24 @@ public class SidebarController {
     private AnchorPane content;
 
     @FXML
+    private Label userNameLabel ;
+
+    @FXML
     public void initialize() {
-        // Pas besoin de l'écouteur ici pour setResizable.
-        // Cela peut être fait dans loadContent.
+        displayLoggedInUser() ;
+
         handleToggleSidebar();
 
 
+    }
+    @FXML
+    private void displayLoggedInUser() {
+        User loggedInUser = SessionManager.getInstance().getUser();
+        if (loggedInUser != null) {
+            userNameLabel.setText(loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+        } else {
+            userNameLabel.setText("Unknown User");
+        }
     }
 
     @FXML

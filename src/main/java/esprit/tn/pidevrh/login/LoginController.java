@@ -2,7 +2,6 @@ package esprit.tn.pidevrh.login;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import esprit.tn.pidevrh.email.EmailService;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class LoginController {
 
@@ -32,13 +32,12 @@ public class LoginController {
     @FXML
     private Button signUpButton;
 
+
+
+
+
     @FXML
-    private Button forgotPasswordButton;
-
-
-
-    @FXML
-    private void handleLoginClick(ActionEvent event) {
+    private void handleLoginClick() {
         String email = emailField.getText();
         String password = passwordField.getText();
 
@@ -53,7 +52,7 @@ public class LoginController {
             SessionManager.getInstance().setUser(user);
 
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/Fxml/SideBar/sidebar.fxml"));
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Fxml/SideBar/sidebar.fxml")));
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
@@ -108,11 +107,12 @@ public class LoginController {
     }
 
     @FXML
-    private void handleSignUpClick(ActionEvent event) {
+    private void handleSignUpClick() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Fxml/login/Signup.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Fxml/login/Signup.fxml")));
             Stage stage = (Stage) signUpButton.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setFullScreen(true);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,7 +120,7 @@ public class LoginController {
     }
 
     @FXML
-    public void handleForgotPasswordClick(ActionEvent event) {
+    public void handleForgotPasswordClick() {
         showForgotPasswordPopUp();
     }
 

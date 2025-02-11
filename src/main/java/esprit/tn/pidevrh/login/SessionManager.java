@@ -1,7 +1,5 @@
 package esprit.tn.pidevrh.login;
 
-import esprit.tn.pidevrh.login.User;
-
 public class SessionManager {
     private static SessionManager instance;
     private User user;

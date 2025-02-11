@@ -23,6 +23,7 @@ public class Login extends Application {
         stage.setTitle("Login");
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.setFullScreen(true);
 
         stage.show();
     }

@@ -40,9 +40,16 @@
                     </MenuButton>
                 </VBox>
 
-                <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Logout" AnchorPane.leftAnchor="20" AnchorPane.bottomAnchor="10" />
+
+                <HBox fx:id="userInfoBox" styleClass="user-info" spacing="10" AnchorPane.bottomAnchor="50">
+                    <Label fx:id="userNameLabel" text="Guest" styleClass="user-name"/>
+                </HBox>
+
+
             </children>
+
         </VBox>
+        <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Logout" AnchorPane.leftAnchor="20" AnchorPane.bottomAnchor="10" />
 
         <AnchorPane fx:id="contentArea" styleClass="content-area" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
         </AnchorPane>

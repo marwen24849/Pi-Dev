@@ -17,6 +17,8 @@ import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Objects;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class SignupController {
@@ -35,9 +37,10 @@ public class SignupController {
     @FXML
     public void handleLoginClick(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Fxml/login/Login.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Fxml/login/Login.fxml")));
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setFullScreen(true);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

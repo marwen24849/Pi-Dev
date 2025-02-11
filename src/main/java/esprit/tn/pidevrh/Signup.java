@@ -24,6 +24,7 @@ public class Signup extends Application {
         stage.setTitle("Sign Up");
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.setFullScreen(true);
 
         stage.show();
     }
