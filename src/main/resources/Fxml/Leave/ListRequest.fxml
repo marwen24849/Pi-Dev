@@ -3,25 +3,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../Css/ActionStyle.css" fx:controller="esprit.tn.pidevrh.leave.LeaveDisplayController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../../Css/ActionStyle.css"
+            fx:controller="esprit.tn.pidevrh.leave.LeaveDisplayController">
 
-    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;" text="Liste des Congés" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0" />
-    <HBox spacing="10.0" alignment="CENTER_LEFT" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="120.0" AnchorPane.rightAnchor="20.0">
+    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+           text="Liste des Congés"
+           AnchorPane.leftAnchor="20.0"
+           AnchorPane.topAnchor="80.0" />
+
+    <HBox spacing="10.0" alignment="CENTER_LEFT"
+          AnchorPane.leftAnchor="20.0"
+          AnchorPane.topAnchor="120.0"
+          AnchorPane.rightAnchor="20.0">
         <Label text="Filtrer par statut :" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
         <ComboBox fx:id="statusFilter" promptText="Choisir un statut" style="-fx-font-size: 14px; -fx-padding: 5px;" />
-        <Button text="Filtrer" fx:id="filterButton" style="-fx-background-color: #92e038; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
+        <Button text="Filtrer" fx:id="filterButton"
+                style="-fx-background-color: #92e038; -fx-text-fill: white;
+                       -fx-font-size: 14px; -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
     </HBox>
-    <TableView fx:id="leaveTable" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0" AnchorPane.bottomAnchor="100.0">
-        <columns>
-            <TableColumn fx:id="typeColumn" prefWidth="150.0" text="Type de Congé" />
-            <TableColumn fx:id="autreColumn" prefWidth="150.0" text="Autre Type" />
-            <TableColumn fx:id="justificationColumn" prefWidth="200.0" text="Justification" />
-            <TableColumn fx:id="statusColumn" prefWidth="120.0" text="Statut" />
-            <TableColumn fx:id="startDateColumn" prefWidth="120.0" text="Date de Début" />
-            <TableColumn fx:id="endDateColumn" prefWidth="120.0" text="Date de Fin" />
-            <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" />
-        </columns>
-    </TableView>
-    <Pagination fx:id="pagination" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0" pageCount="10" currentPageIndex="0" style="-fx-font-size: 14px;" />
+
+    <ListView fx:id="leaveListView"
+              AnchorPane.leftAnchor="20.0"
+              AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="160.0"
+              AnchorPane.bottomAnchor="100.0"
+              style="-fx-font-size: 14px; -fx-padding: 5px;" />
+
+    <Pagination fx:id="pagination"
+                AnchorPane.leftAnchor="20.0"
+                AnchorPane.rightAnchor="20.0"
+                AnchorPane.bottomAnchor="20.0"
+                pageCount="10"
+                currentPageIndex="0"
+                style="-fx-font-size: 14px;" />
 
 </AnchorPane>
