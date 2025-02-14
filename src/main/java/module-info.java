@@ -11,9 +11,10 @@ module esprit.tn.pidevrh {
     requires com.fasterxml.jackson.databind;
     requires okhttp3;
     requires redis.clients.jedis;
+    requires annotations;
 
 
-    opens esprit.tn.pidevrh.leave to javafx.fxml;  // Fix: Allow JavaFX access to controllers
+    opens esprit.tn.pidevrh.leave to javafx.fxml;
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;
     exports esprit.tn.pidevrh.question to javafx.fxml;
