@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class SidebarController {
 
@@ -30,15 +29,8 @@ public class SidebarController {
     private boolean isSidebarOpen = false;
 
     @FXML
-    private AnchorPane content;
-
-    @FXML
     public void initialize() {
-        // Pas besoin de l'écouteur ici pour setResizable.
-        // Cela peut être fait dans loadContent.
         handleToggleSidebar();
-
-
     }
 
     @FXML
@@ -67,11 +59,11 @@ public class SidebarController {
         }
     }
 
-
     @FXML
     public void handleListQuestions() {
         loadContent("/Fxml/Question/ListQuestions.fxml");
     }
+
     @FXML
     public void handleListQuiz() {
         loadContent("/Fxml/Quiz/ListQuiz.fxml");
@@ -87,17 +79,30 @@ public class SidebarController {
         loadContent("/Fxml/Quiz/Quiz.fxml");
     }
 
+    @FXML
+    public void handleDepartments(ActionEvent actionEvent) {
+        loadContent("/Fxml/TeamDepartement/DepartmentView.fxml");
+    }
+
+    @FXML
+    public void handleTeam(ActionEvent actionEvent) {
+        loadContent("/Fxml/TeamDepartement/team-department-assignment.fxml");
+    }
+
+    //"Gestion de Projet"
+    @FXML
+    public void handleProjectManagement(ActionEvent actionEvent) {
+        loadContent("/Fxml/Projet/projet.fxml");
+    }
+
     private void loadContent(String fxmlPath) {
         try {
-            // Charger le FXML et créer un Parent
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            // Effacer le contenu actuel de la zone de contenu et ajouter le nouveau
             contentArea.getChildren().clear();
             contentArea.getChildren().add(root);
 
-            // Définir les contraintes d'ancrage pour que le contenu s'adapte à la taille de contentArea
             AnchorPane.setTopAnchor(root, 0.0);
             AnchorPane.setRightAnchor(root, 0.0);
             AnchorPane.setBottomAnchor(root, 0.0);
@@ -108,7 +113,6 @@ public class SidebarController {
             showAlert("Erreur", "Impossible de charger la vue demandée.");
         }
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

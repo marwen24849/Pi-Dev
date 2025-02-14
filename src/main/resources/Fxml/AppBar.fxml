@@ -7,4 +7,5 @@
     <Button text="Lister Quiz" styleClass="nav-button" />
     <Button text="Ajouter Question" fx:id="addQuestion" onAction="#handleAddQuestions" styleClass="nav-button" />
     <Button text="Lister Questions" fx:id="list" onAction="#handleListQuestions"  />
+    <Button text="Départements" fx:id="departmentButton" onAction="#handleDepartments" styleClass="nav-button" />
 </HBox>

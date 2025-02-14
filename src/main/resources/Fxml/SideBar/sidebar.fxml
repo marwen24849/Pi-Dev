@@ -11,15 +11,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" stylesheets="@sidebar.css"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.appbar.SidebarController">
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" stylesheets="@sidebar.css"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.appbar.SidebarController">
     <children>
-        <VBox fx:id="sidebar" prefWidth="250.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+        <VBox fx:id="sidebar" prefWidth="250.0" styleClass="sidebar"
+              AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
             <children>
-                <HBox  styleClass="sidebar-header">
+                <HBox styleClass="sidebar-header">
                     <ImageView fx:id="logoImageView" fitHeight="40" fitWidth="40">
-                  <image>
-                     <Image url="@preview.jpg" />
-                  </image></ImageView>
+                        <image>
+                            <Image url="@preview.jpg" />
+                        </image>
+                    </ImageView>
                     <Label styleClass="sidebar-title" text="SGRH" />
                 </HBox>
                 <Separator styleClass="sidebar-separator" />
@@ -37,14 +40,31 @@
                             <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste Quiz" />
                         </items>
                     </MenuButton>
+
+                    <MenuButton styleClass="sidebar-menu" text="Gestion Equipe Et Departement">
+                        <items>
+                            <MenuItem onAction="#handleTeam" styleClass="menu-item" text="Gestion D'équipe" />
+                            <MenuItem onAction="#handleDepartments" styleClass="menu-item" text="Gestion Department" />
+                        </items>
+                    </MenuButton>
+
+                    <!-- ✅ New "Gestion Projet" Menu -->
+                    <MenuButton styleClass="sidebar-menu" text="Gestion Projet">
+                        <items>
+                            <MenuItem onAction="#handleProjectManagement" styleClass="menu-item" text="Gestion de Projet" />
+                        </items>
+                    </MenuButton>
+
                 </VBox>
             </children>
         </VBox>
 
-        <AnchorPane fx:id="contentArea" styleClass="content-area" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-
+        <AnchorPane fx:id="contentArea" styleClass="content-area"
+                    AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250"
+                    AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
         </AnchorPane>
 
-        <Button fx:id="toggleButton" onAction="#handleToggleSidebar" styleClass="toggle-button" text="≡" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
+        <Button fx:id="toggleButton" onAction="#handleToggleSidebar" styleClass="toggle-button"
+                text="≡" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
     </children>
 </AnchorPane>

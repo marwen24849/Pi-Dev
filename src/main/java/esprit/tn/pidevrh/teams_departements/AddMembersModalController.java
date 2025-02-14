@@ -9,10 +9,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.regex.Pattern;
 
 public class AddMembersModalController {
 
@@ -67,14 +65,69 @@ public class AddMembersModalController {
     @FXML
     private void handleAddSelected() {
         ObservableList<User> selectedUsers = userListView.getSelectionModel().getSelectedItems();
-        if (!selectedUsers.isEmpty()) {
-            for (User selectedUser : selectedUsers) {
-                assignUserToTeam(selectedUser, selectedTeam);
-            }
-            stage.close(); // Close the modal after assignment
-        } else {
+
+        if (selectedUsers.isEmpty()) {
             showAlert("No Selection", "Please select at least one user to add to the team.");
+            return;
         }
+
+        int maxMembers = getMaxMembersForTeam(selectedTeam);
+        int currentTeamSize = getCurrentTeamSize(selectedTeam);
+        int remainingSlots = maxMembers - currentTeamSize;
+
+        if (selectedUsers.size() > remainingSlots) {
+            showAlert("Limit Reached", "You can only add " + remainingSlots + " more member(s) to this team.");
+            return;
+        }
+
+        boolean success = assignUsersToTeam(selectedUsers, selectedTeam);
+        if (success) {
+            showSuccessAlert("Users Added", "Successfully added " + selectedUsers.size() + " user(s) to " + selectedTeam.getName());
+            stage.close(); // Close modal only after confirmation
+        } else {
+            showAlert("Database Error", "Failed to assign users to the team.");
+        }
+    }
+
+    private int getCurrentTeamSize(Team team) {
+        String query = "SELECT COUNT(*) AS count FROM user WHERE id_equipe = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, team.getId());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0; // Default if something goes wrong
+    }
+
+    private int getMaxMembersForTeam(Team team) {
+        String query = "SELECT members FROM equipe WHERE id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, team.getId());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("members"); // Use 'members' instead of 'max_members'
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 100; // Default if something goes wrong
+    }
+
+
+    private void showSuccessAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     @FXML
@@ -82,17 +135,30 @@ public class AddMembersModalController {
         stage.close(); // Close the modal without doing anything
     }
 
-    private void assignUserToTeam(User user, Team team) {
-        try (Connection connection = DatabaseConnection.getConnection();
-             Statement statement = connection.createStatement()) {
+    private boolean assignUsersToTeam(ObservableList<User> users, Team team) {
+        String query = "UPDATE user SET id_equipe = ? WHERE id = ?";
 
-            String query = String.format("UPDATE user SET id_equipe = %d WHERE id = %d", team.getId(), user.getId());
-            statement.executeUpdate(query);
-            System.out.println("User " + user.getName() + " assigned to team " + team.getName());
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            for (User user : users) {
+                preparedStatement.setInt(1, team.getId());
+                preparedStatement.setInt(2, user.getId());
+                preparedStatement.addBatch(); // Batch processing
+            }
+
+            preparedStatement.executeBatch();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
+
+    public static boolean isValidTeamName(String name) {
+        return name != null && !name.trim().isEmpty() && Pattern.matches("^[a-zA-Z0-9 ]+$", name);
+    }
+
 
     public static class User {
         private final int id;

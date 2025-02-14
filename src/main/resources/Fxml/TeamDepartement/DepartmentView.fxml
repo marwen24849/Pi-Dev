@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../../Css/ActionStyle.css" fx:controller="esprit.tn.pidevrh.teams_departements.DepartmentController">
+
+    <!-- Title Label -->
+    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+           text="Gestion des Départements"
+           AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
+
+    <!-- Input Fields -->
+    <HBox spacing="10.0" alignment="CENTER_LEFT"
+          AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0" AnchorPane.rightAnchor="20.0">
+        <Label text="Nom:" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
+        <TextField fx:id="nameField" promptText="Nom du département" style="-fx-font-size: 14px;" />
+        <Label text="Description:" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
+        <TextField fx:id="descriptionField" promptText="Description" style="-fx-font-size: 14px;" />
+        <Button text="Ajouter" fx:id="addButton" style="-fx-background-color: #92e038; -fx-text-fill: white;" />
+    </HBox>
+
+    <!-- ListView -->
+    <ListView fx:id="departmentListView"
+              AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="130.0" AnchorPane.bottomAnchor="60.0">
+
+    </ListView>
+
+    <!-- Refresh Button -->
+    <Button text="Rafraîchir" fx:id="refreshButton" style="-fx-background-color: #3498db; -fx-text-fill: white;"
+            AnchorPane.leftAnchor="20.0" AnchorPane.bottomAnchor="20.0" />
+
+</AnchorPane>

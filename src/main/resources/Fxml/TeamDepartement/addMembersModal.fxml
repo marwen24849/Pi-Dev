@@ -15,8 +15,6 @@
 
     <Label text="Select Users to Add to the Team:" styleClass="modal-title"/>
     <ListView fx:id="userListView" styleClass="modal-list-view">
-        <selectionModel>
-        </selectionModel>
     </ListView>
 
     <HBox spacing="10" styleClass="modal-button-box">
