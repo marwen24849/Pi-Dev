@@ -38,22 +38,18 @@
                             <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste Quiz" />
                         </items>
                     </MenuButton>
-                </VBox>
 
+                    <Button fx:id="userListButton" text="Users List" styleClass="sidebar-menu" onAction="#handleUserList"  />
+                </VBox>
 
                 <HBox fx:id="userInfoBox" styleClass="user-info" spacing="10" AnchorPane.bottomAnchor="50">
                     <Label fx:id="userNameLabel" text="Guest" styleClass="user-name"/>
                 </HBox>
-
-
             </children>
-
         </VBox>
         <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Logout" AnchorPane.leftAnchor="20" AnchorPane.bottomAnchor="10" />
-
         <AnchorPane fx:id="contentArea" styleClass="content-area" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
         </AnchorPane>
-
         <Button fx:id="toggleButton" onAction="#handleToggleSidebar" styleClass="toggle-button" text="≡" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
     </children>
 </AnchorPane>

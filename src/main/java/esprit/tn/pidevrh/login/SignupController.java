@@ -2,7 +2,6 @@ package esprit.tn.pidevrh.login;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import esprit.tn.pidevrh.email.EmailService;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,7 +34,7 @@ public class SignupController {
     private TextField passwordField;
 
     @FXML
-    public void handleLoginClick(ActionEvent actionEvent) {
+    public void handleLoginClick() {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Fxml/login/Login.fxml")));
             Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -47,7 +46,7 @@ public class SignupController {
         }
     }
 
-    public void handleSignupClick(ActionEvent event) {
+    public void handleSignupClick() {
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
         String email = emailField.getText().trim();

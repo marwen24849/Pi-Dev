@@ -106,6 +106,9 @@ public class SidebarController {
         loadContent("/Fxml/Quiz/Quiz.fxml");
     }
 
+    @FXML
+    public void handleUserList(){loadContent("/Fxml/Users_list/users_list.fxml");}
+
     private void loadContent(String fxmlPath) {
         try {
             // Charger le FXML et créer un Parent
@@ -129,8 +132,7 @@ public class SidebarController {
     }
 
     @FXML
-    public void handleLogout(ActionEvent event) {
-        // Create a confirmation alert
+    public void handleLogout() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirm Logout");
         confirmationAlert.setHeaderText("Are you sure you want to log out?");

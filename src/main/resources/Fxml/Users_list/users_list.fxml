@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@users_list.css"
+            fx:controller="esprit.tn.pidevrh.login.UserListController">
+
+    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+           text="Liste des Utilisateurs" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0" />
+
+    <TableView fx:id="userTableView" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+               AnchorPane.topAnchor="100.0" AnchorPane.bottomAnchor="80.0">
+        <columns>
+            <TableColumn fx:id="idColumn" prefWidth="100.0" text="ID" />
+            <TableColumn fx:id="firstNameColumn" prefWidth="150.0" text="Prénom" />
+            <TableColumn fx:id="lastNameColumn" prefWidth="150.0" text="Nom" />
+            <TableColumn fx:id="emailColumn" prefWidth="200.0" text="Email" />
+            <TableColumn fx:id="roleColumn" prefWidth="120.0" text="Rôle" />
+            <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" />
+        </columns>
+    </TableView>
+
+
+
+</AnchorPane>

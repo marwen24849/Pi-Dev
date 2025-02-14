@@ -21,13 +21,15 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
+
     public enum Role {
         USER,
         ADMIN
 
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
