@@ -2,33 +2,27 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Pos?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.question.QuestionListController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            fx:controller="esprit.tn.pidevrh.question.QuestionListController">
 
-   <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;" text="Liste des Questions" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0" />
+   <!-- Titre de la page -->
+   <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+          text="Liste des Questions" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0"/>
 
-   <HBox spacing="10.0" alignment="CENTER_LEFT" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="120.0" AnchorPane.rightAnchor="20.0">
-      <Label text="Filtrer par catégorie :" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
-      <ComboBox fx:id="categoryFilter" promptText="Choisir une catégorie" style="-fx-font-size: 14px; -fx-padding: 5px;" />
-      <Button text="Filtrer" fx:id="filterButton" style="-fx-background-color: #92e038; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
+   <!-- Filtre par catégorie -->
+   <HBox alignment="CENTER_LEFT" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0">
+      <Label style="-fx-font-size: 14px; -fx-text-fill: #34495E;" text="Filtrer par catégorie :"/>
+      <ComboBox fx:id="categoryFilter" promptText="Choisir une catégorie" style="-fx-font-size: 14px; -fx-padding: 5px;"/>
+      <Button fx:id="filterButton" style="-fx-background-color: #92e038; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px 10px; -fx-background-radius: 5px;" text="Filtrer"/>
    </HBox>
 
-   <TableView fx:id="questionTableView" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0" AnchorPane.bottomAnchor="100.0">
-      <columns>
-         <TableColumn fx:id="titleColumn" prefWidth="250.0" text="Titre" />
-         <TableColumn fx:id="option1Column" prefWidth="150.0" text="Option 1" />
-         <TableColumn fx:id="option2Column" prefWidth="150.0" text="Option 2" />
-         <TableColumn fx:id="option3Column" prefWidth="150.0" text="Option 3" />
-         <TableColumn fx:id="option4Column" prefWidth="150.0" text="Option 4" />
-         <TableColumn fx:id="rightAnswerColumn" prefWidth="150.0" text="Bonne Réponse" />
-         <TableColumn fx:id="scoreColumn" prefWidth="100.0" text="Score" />
-         <TableColumn fx:id="categoryColumn" prefWidth="150.0" text="Catégorie" />
-         <TableColumn fx:id="difficultyColumn" prefWidth="100.0" text="Difficulté" />
-         <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" />
-      </columns>
-   </TableView>
+   <!-- Liste des questions -->
+   <ListView fx:id="questionListView" style="-fx-border-color: #ccc; -fx-background-color: #f9f9f9;"
+             AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0"/>
 
-   <Pagination fx:id="pagination" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0" pageCount="10" currentPageIndex="0" style="-fx-font-size: 14px;" />
-
+   <!-- Pagination -->
+   <Pagination fx:id="pagination" layoutX="20.0" layoutY="557.0" style="-fx-font-size: 14px;"
+               AnchorPane.bottomAnchor="-15.399999999999977" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"/>
 </AnchorPane>
