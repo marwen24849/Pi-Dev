@@ -1,7 +1,6 @@
 package esprit.tn.pidevrh.login;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,28 +15,7 @@ import java.sql.SQLException;
 public class UserListController {
 
     @FXML
-    private TableView<User> userTableView;
-
-    @FXML
-    private TableColumn<User, Long> idColumn;
-
-    @FXML
-    private TableColumn<User, String> firstNameColumn;
-
-    @FXML
-    private TableColumn<User, String> lastNameColumn;
-
-    @FXML
-    private TableColumn<User, String> emailColumn;
-
-    @FXML
-    private TableColumn<User, String> roleColumn;
-
-    @FXML
-    private TableColumn<User, Void> actionColumn;
-
-    @FXML
-    private Pagination pagination;
+    private ListView<HBox> userListView;
 
     @FXML
     public void initialize() {
@@ -45,7 +23,7 @@ public class UserListController {
     }
 
     private void loadUsers() {
-        ObservableList<User> userList = FXCollections.observableArrayList();
+        ObservableList<HBox> userList = FXCollections.observableArrayList();
 
         String query = "SELECT * FROM user";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -57,50 +35,31 @@ public class UserListController {
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
                 String email = rs.getString("email");
-                String password = rs.getString("password");  // Retrieve the password
+                String password = rs.getString("password");
                 String roleString = rs.getString("role");
 
                 User.Role role = User.Role.valueOf(roleString);
-
                 User user = new User(id, firstName, lastName, email, password, role);
 
-                userList.add(user);
+                HBox userItem = createUserItem(user);
+                userList.add(userItem);
             }
 
         } catch (SQLException e) {
             showAlert("Erreur", "Impossible de charger les utilisateurs: " + e.getMessage());
         }
 
-        userTableView.setItems(userList);
-
-        idColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getId()));
-        firstNameColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getFirstName()));
-        lastNameColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getLastName()));
-        emailColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getEmail()));
-        roleColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getRole()).asString());
-
-        actionColumn.setCellFactory(param -> new TableCell<User, Void>() {
-            private final Button deleteButton = new Button("🗑️");
-
-            {
-                deleteButton.setOnAction(event -> {
-                    User user = getTableView().getItems().get(getIndex());
-                    handleDelete(user);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(new HBox(10, deleteButton));
-                }
-            }
-        });
+        userListView.setItems(userList);
     }
 
+    private HBox createUserItem(User user) {
+        Label userInfo = new Label(user.getId() + " | " + user.getFirstName() + " " + user.getLastName() + " | " + user.getEmail() + " | " + user.getRole());
+        Button deleteButton = new Button("🗑️");
+
+        deleteButton.setOnAction(event -> handleDelete(user));
+        HBox userItem = new HBox(10, userInfo, deleteButton);
+        return userItem;
+    }
 
     private void handleDelete(User user) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
