@@ -1,85 +1,114 @@
-
+/* General Styles */
 * {
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-font-smoothing-type: lcd;
 }
 
-
+/* Sidebar */
 .sidebar {
     -fx-background-color: #f9fafc;
-    -fx-padding: 20;
-    -fx-spacing: 20;
+    -fx-padding: 15;
+    -fx-spacing: 10;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);
-    -fx-border-color: #dce4ec;
-    -fx-border-width: 1px;
+    -fx-border-color: transparent; /* Removes border */
     -fx-border-radius: 10px;
 }
 
+/* Sidebar Header (Fixed) */
 .sidebar-header {
     -fx-spacing: 10;
     -fx-alignment: center;
+    -fx-padding: 15;
 }
 
 .sidebar-title {
     -fx-text-fill: #2c3e50;
-    -fx-font-size: 20px;
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
 }
-.sidebar-header {
-    -fx-spacing: 10;
-    -fx-alignment: center; /* Aligner à gauche */
-    -fx-padding: 10;
-}
-
 
 /* Separator */
 .sidebar-separator {
-    -fx-background-color: #000000;
-
+    -fx-background-color: #bdc3c7;
+    -fx-padding: 1px;
 }
 
-/* Menu button styles */
+/* Sidebar Menu Buttons */
 .sidebar-menu {
     -fx-background-color: transparent;
     -fx-text-fill: #2c3e50;
-    -fx-font-size: 16px;
-    -fx-pref-width: 200px;
     -fx-alignment: center-left;
-    -fx-padding: 10 0 10 15;
-    -fx-border-radius: 5px;
+    -fx-border-radius: 8px;
+    -fx-border-color: transparent; /* Invisible border */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 14px 20px; /* Consistent padding */
+    -fx-pref-width: 230px; /* Fixed width */
+    -fx-max-width: 230px;
+    -fx-min-width: 230px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 5, 0, 0, 2);
+    -fx-transition: background-color 0.3s ease-in-out, scale 0.3s ease-in-out;
 }
 
+/* Hover effect */
 .sidebar-menu:hover {
-    -fx-background-color: #e3e8f1; /* Couleur douce pour le survol */
-    -fx-text-fill: #2c3e50;
-    -fx-cursor: hand;
-}
-
-/* Menu items styles */
-.menu-item {
-    -fx-text-fill: #6c757d;
-    -fx-font-size: 14px;
-    -fx-padding: 5 15;
-    -fx-border-radius: 5px;
-}
-
-.menu-item:hover {
     -fx-background-color: #e3e8f1;
     -fx-text-fill: #2c3e50;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
 
-/* Main content area */
+/* Active (Clicked) Effect */
+.sidebar-menu:pressed {
+    -fx-background-color: #d6e1f2;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Submenu */
+.submenu {
+    -fx-padding: 12px 0px; /* Adds space inside the submenu */
+    -fx-background-color: #f5f7fa;
+    -fx-border-radius: 5px;
+    -fx-transition: all 0.3s ease-in-out;
+    -fx-spacing: 10px; /* Adds spacing between submenu items */
+    -fx-margin: 12px 0px; /* Adds top and bottom margin for spacing */
+}
+
+/* Submenu Items */
+.submenu .menu-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #34495e;
+    -fx-font-size: 14px;
+    -fx-padding: 12px 20px; /* Same padding as sidebar menu */
+    -fx-pref-width: 230px; /* Match sidebar-menu width */
+    -fx-max-width: 230px;
+    -fx-min-width: 230px;
+    -fx-border-radius: 5px;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.submenu .menu-item:hover {
+    -fx-background-color: #d6e1f2;
+    -fx-text-fill: #2c3e50;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* Content Area */
 .content-area {
     -fx-background-color: #ffffff;
     -fx-padding: 20;
-    -fx-border-color: #dce4ec;
+    -fx-border-color: transparent;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
 }
 
-/* Main title styles */
+/* Title Styling */
 .main-title {
     -fx-font-size: 24px;
     -fx-text-fill: #2c3e50;
@@ -87,35 +116,114 @@
     -fx-padding: 10;
 }
 
+
 .toggle-button {
     -fx-background-color: #4caf50;
     -fx-text-fill: #ffffff;
+
     -fx-font-size: 18px;
-    -fx-padding: 8 12;
-    -fx-background-radius: 20;
-    -fx-border-color: #45a049;
+    -fx-padding: 10px 14px;
+    -fx-background-radius: 20px;
     -fx-border-width: 0px;
     -fx-font-weight: bold;
+    -fx-transition: background-color 0.3s ease-in-out, scale 0.3s ease-in-out;
 }
 
 .toggle-button:hover {
     -fx-background-color: #45a049;
+
     -fx-border-color: #2c3e50;
+
     -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }
 
+/* Scroll Pane (Smooth Vertical Scroll Only) */
+.sidebar-scroll {
+    -fx-background-color: #f9fafc;
+    -fx-padding: 0;
+    -fx-border-width: 0px;
+    -fx-hbar-policy: never; /* Hides horizontal scrollbar */
+    -fx-vbar-policy: as-needed; /* Shows vertical scrollbar only when needed */
+    -fx-fit-to-width: true;
+    -fx-fit-to-height: false;
+    -fx-overflow-y: auto; /* Enables smooth scrolling */
+}
 
+/* Styling the Vertical Scroll Bar */
+.sidebar-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+/* Scroll Thumb */
+.sidebar-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(44, 62, 80, 0.5); /* Dark semi-transparent */
+    -fx-background-radius: 5px;
+    -fx-pref-width: 8px;
+}
+
+/* Hover Effect on Scroll Thumb */
+.sidebar-scroll .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgba(44, 62, 80, 0.8); /* Darker when hovered */
+}
+
+/* Styling the Scroll Track */
+.sidebar-scroll .scroll-bar:vertical .track {
+    -fx-background-color: rgba(200, 200, 200, 0.3);
+    -fx-background-radius: 5px;
+}
+
+/* Remove Horizontal Scrollbar */
+.sidebar-scroll .scroll-bar:horizontal {
+    -fx-pref-height: 0px;
+    -fx-opacity: 0;
+}
+/* Logout Button */
+.sidebar-logout {
+    -fx-background-color: #e74c3c; /* Red button */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 20px;
+    -fx-border-radius: 8px;
+    -fx-pref-width: 230px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+    -fx-transition: background-color 0.3s ease-in-out, scale 0.3s ease-in-out;
+}
+
+/* Hover & Pressed Effects */
+.sidebar-logout:hover {
+    -fx-background-color: #c0392b;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.sidebar-logout:pressed {
+    -fx-background-color: #a93226;
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+/* Responsive Sidebar */
 @media screen and (max-width: 768px) {
     .sidebar {
         -fx-pref-width: 180px;
     }
 
-    .sidebar-menu {
-        -fx-font-size: 14px;
+    .sidebar-title {
+        -fx-font-size: 18px;
+    }
+
+    .menu-item {
+        -fx-font-size: 13px;
     }
 
     .toggle-button {
         -fx-font-size: 16px;
-        -fx-padding: 6 10;
+        -fx-padding: 6px 10px;
     }
 }
