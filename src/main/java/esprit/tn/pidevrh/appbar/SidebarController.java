@@ -109,6 +109,9 @@ public class SidebarController {
     @FXML
     public void handleUserList(){loadContent("/Fxml/Users_list/users_list.fxml");}
 
+    @FXML
+    public void  handleReclamation(){ loadContent("/Fxml/Reclamation/Reclamation.fxml");}
+
     private void loadContent(String fxmlPath) {
         try {
             // Charger le FXML et créer un Parent

@@ -1,8 +1,6 @@
 module esprit.tn.pidevrh {
     requires javafx.controls;
     requires javafx.fxml;
-
-
     requires org.controlsfx.controls;
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
@@ -14,6 +12,7 @@ module esprit.tn.pidevrh {
     requires jbcrypt;
     requires jdk.jdi;
     requires java.mail;
+    requires org.json;
 
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;
@@ -27,4 +26,7 @@ module esprit.tn.pidevrh {
     opens esprit.tn.pidevrh.response to javafx.fxml, java.base, javafx.base;
     exports esprit.tn.pidevrh.login to javafx.fxml;
     opens esprit.tn.pidevrh.login to javafx.fxml, java.base;
+
+
+    opens esprit.tn.pidevrh.Reclamation to javafx.fxml;
 }
