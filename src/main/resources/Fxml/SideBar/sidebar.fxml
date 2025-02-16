@@ -41,7 +41,9 @@
 
                     <Button fx:id="userListButton" text="Users List" styleClass="sidebar-menu" onAction="#handleUserList"  />
 
-                    <Button fx:id="RecalmationtButton" text="Reclamation" styleClass="sidebar-menu" onAction="#handleReclamation"  />
+                    <Button fx:id="RecalmationtButton" text="Reclamation" styleClass="sidebar-menu" onAction="#handleReclamation" />
+
+                    <Button fx:id="RecalmationtList" text="Liste des Reclamations" styleClass="sidebar-menu" onAction="#handleReclamationList"  />
                 </VBox>
 
                 <HBox fx:id="userInfoBox" styleClass="user-info" spacing="10" AnchorPane.bottomAnchor="50">
