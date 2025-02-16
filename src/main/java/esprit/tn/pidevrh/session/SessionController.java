@@ -22,8 +22,9 @@ public class SessionController {
     @FXML
     private DatePicker date;
 
-    @Setter
-    private int currentFormationId;
+    private long formationId;
+
+
 
 
 
@@ -34,33 +35,41 @@ public class SessionController {
 
     }
 
+    public void setFormationId(long formationId) {
+        this.formationId = formationId;
+    }
 
     @FXML
-    void handleAddSession(ActionEvent event) {
+    void handleAddSession() {
+        // Check if all fields are filled out
         if (salle.getText().isEmpty() || date.getValue() == null) {
             showAlert("Erreur", "Tous les champs doivent être remplis.");
             return;
         }
+
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String sql = "insert into session (salle, date) VALUES (?, ?)";
+            // SQL query to insert the session into the database
+            String sql = "INSERT INTO session (formation_id, salle, date) VALUES (?, ?, ?)";
 
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, salle.getText());
-            ps.setDate(2, Date.valueOf(date.getValue()));
+            ps.setLong(1, formationId);  // Use the current formationId here
+            ps.setString(2, salle.getText());
+            ps.setDate(3, Date.valueOf(date.getValue()));
 
-            // Check the SQL and parameters before execution
+            // Check the SQL and parameters before execution (for debugging)
             System.out.println("SQL: " + sql);
-            System.out.println("Parameters: " + salle.getText() + ", " + Date.valueOf(date.getValue()));
+            System.out.println("Parameters: " + formationId + ", " + salle.getText() + ", " + Date.valueOf(date.getValue()));
 
+            // Execute the query
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 addedAlert("Succès", "La Session a été ajoutée avec succès !");
-                initialize();
+                initialize();  // Reset the form after successful addition
             } else {
                 showAlert("Erreur", "Aucune session ajoutée.");
             }
         } catch (SQLException e) {
-            // Log the error message to help with troubleshooting
+            // Log the error and show alert if something goes wrong
             e.printStackTrace();
             showAlert("Erreur SQL", "Erreur lors de l'ajout de la session dans la base de données. Détails : " + e.getMessage());
         }

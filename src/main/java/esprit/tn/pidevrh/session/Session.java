@@ -1,17 +1,15 @@
 package esprit.tn.pidevrh.session;
 
-import javafx.scene.control.DatePicker;
-
 import java.time.LocalDate;
 
 public class Session {
     private Long id;
-    private int salle;
+    private String salle;
     private LocalDate date;
 
     public Session(){}
 
-    public Session(int salle, LocalDate date) {
+    public Session(String salle, LocalDate date) {
         this.salle = salle;
         this.date = date;
     }
@@ -24,11 +22,11 @@ public class Session {
         this.id = id;
     }
 
-    public int getSalle() {
+    public String getSalle() {
         return salle;
     }
 
-    public void setSalle(int salle) {
+    public void setSalle(String salle) {
         this.salle = salle;
     }
 

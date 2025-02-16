@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="10" style="-fx-padding: 20;" fx:controller="esprit.tn.pidevrh.session.SessionUpdateController">
+    <Label text="Modifier la Session" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <!-- Salle Field -->
+    <TextField fx:id="salleField" promptText="Salle de la session" />
+
+    <!-- Date Field -->
+    <DatePicker fx:id="datePicker" promptText="Sélectionner la date" />
+
+    <HBox spacing="10">
+        <!-- Save Button -->
+        <Button text="Enregistrer" onAction="#handleSave" />
+
+        <!-- Cancel Button -->
+        <Button text="Annuler" onAction="#handleCancel" style="-fx-background-color: #ff0000; -fx-text-fill: white;" />
+    </HBox>
+</VBox>

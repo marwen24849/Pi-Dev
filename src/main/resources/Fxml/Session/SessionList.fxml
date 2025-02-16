@@ -6,10 +6,9 @@
 <VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.session.SessionListController">
     <Label text="Sessions for the selected Formation" />
 
-    <TableView fx:id="sessionTableView" prefWidth="248.0">
+    <TableView fx:id="sessionTableView" prefWidth="282.0">
         <columns>
             <TableColumn fx:id="dateColumn" text="Date" />
-            <TableColumn fx:id="timeColumn" text="Time" />
             <TableColumn fx:id="salleColumn" text="Salle" />
         </columns>
 

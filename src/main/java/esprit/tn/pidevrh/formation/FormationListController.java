@@ -1,8 +1,7 @@
 package esprit.tn.pidevrh.formation;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
-import esprit.tn.pidevrh.question.Question;
-import esprit.tn.pidevrh.question.QuestionUpdateController;
+import esprit.tn.pidevrh.session.SessionController;
 import esprit.tn.pidevrh.session.SessionListController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -187,7 +186,14 @@ public class FormationListController {
             private final Button manageButton = new Button("Manage Sessions");
 
             {
-                manageButton.setOnAction(event -> handleManageSessions(getTableView().getItems().get(getIndex())));
+                manageButton.setOnAction(event ->{
+                    Formation selectedFormation = getTableView().getItems().get(getIndex());
+                    if(selectedFormation != null) {
+                        long formationId = selectedFormation.getId();
+                        handleManageSessions(formationId);
+                    }
+                        });
+
             }
 
             @Override
@@ -203,14 +209,15 @@ public class FormationListController {
     }
 
     // Handle the click event to open the session management window
-    private void handleManageSessions(Formation formation) {
+    private void handleManageSessions(long formationId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Session/SessionList.fxml"));
             Parent root = loader.load();
-            SessionListController sessionListController = loader.getController();
-            sessionListController.setFormation(formation); // Pass the selected formation to session controller
+            // Get the controller and pass the formation ID
+            SessionListController controller = loader.getController();
+            controller.setFormationId(formationId);
             Stage stage = new Stage();
-            stage.setTitle("Manage Sessions - " + formation.getTitre());
+            stage.setTitle("Manage Sessions - Formation ID:" + formationId);
             stage.setScene(new Scene(root));
             stage.showAndWait();
         } catch (IOException e) {
