@@ -10,7 +10,6 @@ module esprit.tn.pidevrh {
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
     requires okhttp3;
-    requires redis.clients.jedis;
     requires annotations;
 
 

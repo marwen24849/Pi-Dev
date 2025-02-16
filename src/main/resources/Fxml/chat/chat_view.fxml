@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="esprit.tn.pidevrh.chat.ChatController" stylesheets="@chat.css">
+<VBox prefHeight="600" prefWidth="800" spacing="10" style="-fx-background-color: #f0f0f0;" stylesheets="@chat.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.chat.ChatController">
 
-    <VBox spacing="10" alignment="CENTER" prefWidth="400" prefHeight="500" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0">
-        <ListView fx:id="chatListView" VBox.vgrow="ALWAYS" style="-fx-background-color: #F9F9F9; -fx-padding: 10px;"/>
-        <HBox spacing="10" style="-fx-padding: 10px;">
-            <TextField fx:id="userInputField" HBox.hgrow="ALWAYS" promptText="Tapez votre message..."
-                       style="-fx-background-radius: 15px; -fx-padding: 8px; -fx-border-color: #CCC; -fx-border-radius: 15px;"/>
-            <Button text="Envoyer" onAction="#handleSendMessage"
-                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 15px; -fx-padding: 8px 15px;"/>
-        </HBox>
-    </VBox>
-</AnchorPane>
+    <!-- Zone de chat -->
+    <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background: #ffffff; -fx-border-color: #cccccc;">
+        <VBox fx:id="chatBox" prefHeight="870.0" prefWidth="795.0" spacing="10" style="-fx-background-color: #ffffff;">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+        </VBox>
+    </ScrollPane>
+
+    <!-- Barre de saisie -->
+    <HBox spacing="10" style="-fx-background-color: #ffffff; -fx-padding: 10;">
+        <TextField fx:id="messageField" promptText="Écrivez votre message..." style="-fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 5 10;" HBox.hgrow="ALWAYS" />
+        <Button fx:id="sendButton" style="-fx-background-radius: 15px; -fx-padding: 5 15;" text="Envoyer">
+            <graphic>
+                <ImageView fitHeight="20" fitWidth="20" />
+            </graphic>
+        </Button>
+    </HBox>
+
+</VBox>

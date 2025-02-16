@@ -8,11 +8,9 @@
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.appbar.SidebarController">
 
     <children>
-        <!-- Sidebar Wrapper -->
         <VBox fx:id="sidebarWrapper" prefWidth="250.0" styleClass="sidebar"
               AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
 
-            <!-- Fixed Sidebar Header -->
             <VBox styleClass="sidebar-header">
                 <ImageView fx:id="logoImageView" fitHeight="60" fitWidth="60">
                     <image>
@@ -55,6 +53,13 @@
                                 <VBox fx:id="demandeCongeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
                                     <Button onAction="#handleAddDemande" text="📄 Ajouter Demande" styleClass="menu-item"/>
                                 </VBox>
+                            </VBox>
+
+
+                            <VBox fx:id="assistant">
+                                <Button fx:id="assistant" text="🤖 Assistant"
+                                        styleClass="sidebar-menu" onAction="#handleAssistant"/>
+
                             </VBox>
                         </VBox>
                     </content>

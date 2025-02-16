@@ -139,13 +139,12 @@
     -fx-scale-y: 1.1;
 }
 
-/* Scroll Pane (Smooth Vertical Scroll Only) */
 .sidebar-scroll {
     -fx-background-color: #f9fafc;
     -fx-padding: 0;
     -fx-border-width: 0px;
-    -fx-hbar-policy: never; /* Hides horizontal scrollbar */
-    -fx-vbar-policy: as-needed; /* Shows vertical scrollbar only when needed */
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: as-needed;
     -fx-fit-to-width: true;
     -fx-fit-to-height: false;
     -fx-overflow-y: auto; /* Enables smooth scrolling */

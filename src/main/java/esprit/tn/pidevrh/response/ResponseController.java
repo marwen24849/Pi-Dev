@@ -3,9 +3,13 @@ package esprit.tn.pidevrh.response;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import esprit.tn.pidevrh.question.Question;
 import esprit.tn.pidevrh.quiz.Quiz;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -31,6 +35,14 @@ public class ResponseController implements Initializable {
     private int currentQuestionIndex = 0;
     private Map<Long, String> userAnswers = new HashMap<>();
 
+    private Timeline timeoutTimer;
+    @FXML
+    private Label timeRemainingLabel;
+
+    private Timeline countdownTimer;
+    private int timeRemaining = 30;
+    private static final int TIMEOUT_SECONDS = 30;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         optionsGroup = new ToggleGroup();
@@ -39,8 +51,62 @@ public class ResponseController implements Initializable {
         option3.setToggleGroup(optionsGroup);
         option4.setToggleGroup(optionsGroup);
         submitButton.setDisable(true);
+        initializeTimeoutTimer();
+        initializeCountdownTimer();
+
     }
 
+    private void startCountdownTimer() {
+        timeRemaining = 30;
+        updateTimeRemainingLabel();
+        countdownTimer.playFromStart();
+    }
+
+    private void initializeCountdownTimer() {
+        countdownTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            timeRemaining--;
+            updateTimeRemainingLabel();
+
+            if (timeRemaining <= 0) {
+                countdownTimer.stop();
+                handleTimeout();
+            }
+        }));
+        countdownTimer.setCycleCount(Timeline.INDEFINITE);
+    }
+
+
+    private void updateTimeRemainingLabel() {
+        Platform.runLater(() -> {
+            timeRemainingLabel.setText("Temps restant : " + timeRemaining + " secondes");
+        });
+    }
+
+
+
+    private void initializeTimeoutTimer() {
+        timeoutTimer = new Timeline(new KeyFrame(Duration.seconds(TIMEOUT_SECONDS), e -> {
+            handleTimeout();
+        }));
+        timeoutTimer.setCycleCount(1);
+    }
+
+    private void startTimeoutTimer() {
+        timeoutTimer.stop();
+        timeoutTimer.playFromStart();
+    }
+
+
+    private void handleTimeout() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Temps écoulé");
+            alert.setHeaderText(null);
+            alert.setContentText("Vous avez dépassé le temps imparti de " + TIMEOUT_SECONDS + " secondes. Le quiz est terminé.");
+            alert.showAndWait();
+            calculateResult();
+        });
+    }
 
     public void initializeQuiz(Long quizId) {
         this.quiz = getQuizById(quizId);
@@ -52,9 +118,9 @@ public class ResponseController implements Initializable {
             submitButton.setDisable(true);
         } else {
             loadQuestion();
+            startCountdownTimer();
         }
     }
-
 
     private Quiz getQuizById(Long quizId) {
         Quiz quiz = new Quiz();
@@ -75,7 +141,6 @@ public class ResponseController implements Initializable {
         }
         return quiz;
     }
-
 
     private List<Question> getQuestionsQuiz(Long quizId) {
         List<Question> questions = new ArrayList<>();
@@ -102,7 +167,6 @@ public class ResponseController implements Initializable {
         return questions;
     }
 
-
     private void loadQuestion() {
         if (currentQuestionIndex < questions.size()) {
             Question question = questions.get(currentQuestionIndex);
@@ -123,24 +187,25 @@ public class ResponseController implements Initializable {
                 nextButton.setDisable(true);
                 submitButton.setDisable(false);
             }
+
+            startTimeoutTimer();
         }
     }
-
 
     @FXML
     private void handleNext() {
         saveAnswer();
         currentQuestionIndex++;
         loadQuestion();
+        startTimeoutTimer();
     }
-
 
     @FXML
     private void handleSubmit() {
         saveAnswer();
         calculateResult();
+        timeoutTimer.stop();
     }
-
 
     private void saveAnswer() {
         Question question = questions.get(currentQuestionIndex);
@@ -148,8 +213,8 @@ public class ResponseController implements Initializable {
         if (selectedOption != null) {
             userAnswers.put(question.getId(), selectedOption.getText());
         }
+        startTimeoutTimer();
     }
-
 
     private void calculateResult() {
         int totalScore = 0;
@@ -197,7 +262,6 @@ public class ResponseController implements Initializable {
             ps.setString(1, key);
             ps.setLong(2, quiz.getId());
             ps.setLong(3, resultatId);
-            //ps.setLong(4, 1); // Remplacez par l'ID de l'utilisateur connecté
             ps.executeUpdate();
             for (Map.Entry<Long, String> entry : userAnswers.entrySet()) {
                 System.out.println(key);
@@ -213,7 +277,7 @@ public class ResponseController implements Initializable {
         try (Connection conn = DatabaseConnection.getConnection()) {
             String query = "INSERT INTO response_responses (response_id, answer, question) VALUES (?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1,responseId);
+            ps.setString(1, responseId);
             ps.setString(2, entry.getValue());
             ps.setString(3, questions.stream().filter(q -> q.getId() == entry.getKey()).findFirst().get().getTitle());
             ps.executeUpdate();
@@ -222,7 +286,6 @@ public class ResponseController implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     private void showResult(int totalScore, double percentage, boolean passed) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

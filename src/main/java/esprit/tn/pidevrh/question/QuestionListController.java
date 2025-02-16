@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -103,6 +102,8 @@ public class QuestionListController {
     private void updateFilteredPage(ObservableList<Question> filteredList, int pageIndex) {
         int fromIndex = pageIndex * ITEMS_PER_PAGE;
         int toIndex = Math.min(fromIndex + ITEMS_PER_PAGE, filteredList.size());
+        if(fromIndex > toIndex)
+            return;
         questionListView.setItems(FXCollections.observableArrayList(filteredList.subList(fromIndex, toIndex)));
     }
 
