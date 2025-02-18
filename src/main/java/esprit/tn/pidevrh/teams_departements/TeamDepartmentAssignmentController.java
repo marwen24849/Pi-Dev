@@ -34,7 +34,7 @@ public class TeamDepartmentAssignmentController {
     @FXML
     public void initialize() {
         fetchDepartmentsFromDatabase();
-        initializeSampleData();
+        //initializeSampleData();
         fetchTeamsFromDatabase();
         updateListView();
     }

@@ -4,9 +4,19 @@ import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,12 +36,18 @@ public class ProjetController {
     @FXML private DatePicker dateDebutPicker;
     @FXML private DatePicker dateFinPicker;
     @FXML private Button addProjectButton;
-    @FXML private TableView<Projet> projectTableView;
-    @FXML private TableColumn<Projet, String> nomColumn;
-    @FXML private TableColumn<Projet, String> equipeColumn;
-    @FXML private TableColumn<Projet, String> responsableColumn;
-    @FXML private TableColumn<Projet, LocalDateTime> dateDebutColumn;
-    @FXML private TableColumn<Projet, LocalDateTime> dateFinColumn;
+
+    @FXML
+    private Button deleteProjectButton;
+    @FXML
+    private Button updateProjectButton;
+
+    //@FXML private TableView<Projet> projectTableView;
+   // @FXML private TableColumn<Projet, String> nomColumn;
+   // @FXML private TableColumn<Projet, String> equipeColumn;
+   // @FXML private TableColumn<Projet, String> responsableColumn;
+   // @FXML private TableColumn<Projet, LocalDateTime> dateDebutColumn;
+   // @FXML private TableColumn<Projet, LocalDateTime> dateFinColumn;
 
     private ObservableList<Projet> projetList = FXCollections.observableArrayList();
 
@@ -52,25 +68,86 @@ public class ProjetController {
 */
    @FXML
    public void initialize() {
-       // Initialize ListView with project data
+       // Load projects and available teams
        loadProjects();
        loadAvailableTeams();
 
-
-       // Use a cell factory to customize the list view
+       // Use a cell factory to customize the ListView with buttons for each item
        projectListView.setCellFactory(param -> new ListCell<String>() {
+           private final VBox cardContainer = new VBox(10);
+           private final Label projectNameLabel = new Label();
+           private final Label teamIdLabel = new Label();
+           private final Label projectManagerLabel = new Label();
+           private final Label dateLabel = new Label();
+           private final Button deleteButton = new Button("Delete");
+           private final Button updateButton = new Button("Update");
+           private final HBox buttonContainer = new HBox(10);
+
+           {
+               // Styling for the card
+               cardContainer.setStyle("-fx-background-color: #f9fafc; -fx-border-color: #dfe4ea; -fx-border-radius: 5px; -fx-padding: 10px;");
+               cardContainer.setPrefHeight(120);
+
+               // Styling for labels
+               projectNameLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50;");
+               teamIdLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
+               projectManagerLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
+               dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
+
+               // Styling for buttons
+               deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-border-radius: 5px;");
+               updateButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-border-radius: 5px;");
+               buttonContainer.setAlignment(Pos.CENTER);
+               buttonContainer.getChildren().addAll(updateButton, deleteButton);
+
+               // Add all components to the card
+               cardContainer.getChildren().addAll(
+                       projectNameLabel,
+                       teamIdLabel,
+                       projectManagerLabel,
+                       dateLabel,
+                       buttonContainer
+               );
+           }
+
            @Override
            protected void updateItem(String item, boolean empty) {
                super.updateItem(item, empty);
+
                if (empty || item == null) {
-                   setText(null);
+                   setGraphic(null);
                } else {
-                   setText(item);
-                   setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50; -fx-padding: 10px; -fx-background-color: #f9fafc;");
+                   // Parse the project details from the string
+                   String[] parts = item.split(" - ");
+                   if (parts.length >= 4) {
+                       String projectName = parts[0];
+                       String teamName = parts[1];
+                       String projectManager = parts[2];
+                       String dates = parts[3];
+
+                       // Set the text for each label
+                       projectNameLabel.setText("Project Name: " + projectName);
+                       teamIdLabel.setText("Team ID: " + teamName);
+                       projectManagerLabel.setText("Project Manager: " + projectManager);
+                       dateLabel.setText("Dates: " + dates);
+
+                       // Add action to delete button
+                       deleteButton.setOnAction(event -> handleDeleteProject(projectName));
+
+                       // Add action to update button
+                       updateButton.setOnAction(event -> handleUpdateProject(item));
+
+                       // Set the card as the graphic for the list cell
+                       setGraphic(cardContainer);
+                   }
                }
            }
        });
    }
+
+
+
+
 
 
    /* @FXML
@@ -274,4 +351,71 @@ public class ProjetController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
+    private void handleDeleteProject(String projectName) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String deleteSQL = "DELETE FROM projet WHERE nom_projet = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setString(1, projectName);
+            preparedStatement.executeUpdate();
+
+            // Reload the projects in the ListView
+            loadProjects();
+            showAlert("Succès", "Projet supprimé avec succès!", Alert.AlertType.INFORMATION);
+        } catch (SQLException e) {
+            showAlert("Erreur", "Erreur lors de la suppression du projet: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+
+
+    private void handleUpdateProject(String selectedProject) {
+        String[] parts = selectedProject.split(" - ");
+        if (parts.length >= 4) {
+            String projectName = parts[0];
+            String teamName = parts[1];
+            String projectManager = parts[2];
+            String dates = parts[3];
+
+            // Split the dates into start and end
+            String[] dateParts = dates.split(" to ");
+            String startDate = dateParts[0];
+            String endDate = dateParts[1];
+            System.out.println(parts);
+
+            // Debugging: Check if the FXML file is found
+            //URL url = getClass().getResource("/Fxml/Projet/edit_projet_modal.fxml");
+            URL url = getClass().getResource("/Fxml/Projet/edit_project_modal.fxml");
+            /*if (url == null) {
+                System.err.println("FXML file not found!");
+                return;
+            } else {
+                System.out.println("FXML file found at: " + url);
+            }*/
+
+            // Open the edit modal with the project details
+            try {
+                FXMLLoader loader = new FXMLLoader(url);
+                Parent root = loader.load();
+
+                // Pass the project details to the EditProjectController
+                EditProjectController controller = loader.getController();
+                controller.initialize(projectName, teamName, projectManager, startDate, endDate);
+
+                // Show the modal dialog
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Modifier le Projet");
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+
+                // Reload the projects after the modal is closed
+                loadProjects();
+            } catch (IOException e) {
+                showAlert("Erreur", "Erreur lors de l'ouverture de la fenêtre d'édition: " + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
+    }
+
 }
