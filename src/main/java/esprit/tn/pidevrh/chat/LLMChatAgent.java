@@ -34,7 +34,6 @@ public class LLMChatAgent {
                 messagesArray.add(chatNode);
             }
 
-            // Ajouter le message de l'utilisateur
             ObjectNode userMessageNode = objectMapper.createObjectNode();
             userMessageNode.put("role", "user");
             userMessageNode.put("content", userMessage);
@@ -55,7 +54,6 @@ public class LLMChatAgent {
                 if (jsonResponse.has("choices") && jsonResponse.get("choices").size() > 0) {
                     String assistantResponse = jsonResponse.get("choices").get(0).get("message").get("content").asText();
 
-                    // Sauvegarder les messages dans la BD
                     chatService.saveMessage(new Chat(userId, "user", userMessage));
                     chatService.saveMessage(new Chat(userId, "assistant", assistantResponse));
 

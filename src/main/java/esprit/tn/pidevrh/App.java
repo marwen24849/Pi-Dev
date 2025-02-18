@@ -14,11 +14,11 @@ import java.util.Objects;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Response/quiz.fxml"));
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Resultat/result.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Response/quiz.fxml"));
         Parent root = loader.load();
-        ResponseController controller = loader.getController();
-        controller.initializeQuiz(5L);
+        ResultController controller = loader.getController();
+        controller.initializeData(20L);
 
         Scene scene = new Scene(root);
         //scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/Css/style.css")).toExternalForm());

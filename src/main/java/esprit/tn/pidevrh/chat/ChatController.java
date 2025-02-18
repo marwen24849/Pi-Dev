@@ -14,6 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.geometry.Pos;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,13 +29,16 @@ public class ChatController {
     private Button sendButton;
 
     private final LLMChatAgent chatAgent = new LLMChatAgent();
+    private final ChatService chatService = new ChatService();
     private final String userId = "1";
 
     @FXML
     private void initialize() {
         sendButton.setOnAction(event -> sendMessage());
         messageField.setOnAction(event -> sendMessage());
-    }
+        List<Chat> chatHistory = chatService.getChatHistory(userId, 50);
+        Collections.reverse(chatHistory);
+        chatHistory.forEach(chat -> displayMessage(chat.getContent(), chat.getRole()));    }
 
     private void sendMessage() {
         String userMessage = messageField.getText().trim();
@@ -90,6 +95,7 @@ public class ChatController {
             codeArea.setEditable(false);
             codeArea.setWrapText(true);
             codeArea.getStyleClass().add("code-block");
+            codeArea.setMinHeight(100);
             nodes.add(codeArea);
 
             lastEnd = matcher.end();
@@ -114,7 +120,7 @@ public class ChatController {
             }
 
             Text styledText;
-            if (matcher.group(2) != null) { // Gras (**texte**)
+            if (matcher.group(2) != null) {
                 styledText = new Text(matcher.group(2));
                 styledText.setStyle("-fx-font-weight: bold;");
             } else {

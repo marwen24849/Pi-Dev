@@ -21,17 +21,17 @@ import java.sql.SQLException;
 public class ListQuestionQuiz {
 
     private Long idQuiz;
-    private static final String QUIZ_TITLE_STATIC = "Nom du Quiz"; // Valeur statique
+
 
     @FXML
-    private Label quizTitleLabel; // Titre du quiz
+    private Label quizTitleLabel;
 
     @FXML
     private ListView<Question> questionListView;
 
-    public void setQuiz(Long idQuiz) {
+    public void setQuiz(Long idQuiz, String titre) {
         this.idQuiz = idQuiz;
-        quizTitleLabel.setText("Quiz : " + QUIZ_TITLE_STATIC); // Mettre à jour le titre
+        quizTitleLabel.setText("Quiz : " + titre);
         questionListView.setItems(loadQuestions(idQuiz));
         questionListView.setCellFactory(param -> new QuestionCell());
     }

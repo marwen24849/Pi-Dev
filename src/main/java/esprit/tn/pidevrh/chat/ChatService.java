@@ -33,7 +33,6 @@ public class ChatService {
             stmt.setString(1, userId);
             stmt.setInt(2, limit);
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 Chat chat = new Chat(rs.getString("user_id"),
                         rs.getString("role"),

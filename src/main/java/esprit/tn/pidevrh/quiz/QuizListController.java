@@ -33,7 +33,7 @@ public class QuizListController {
 
     private final ObservableList<Quiz> quizObservableList = FXCollections.observableArrayList();
 
-    private static final int ITEMS_PER_PAGE = 3;
+    private static final int ITEMS_PER_PAGE = 5;
 
     @FXML
     public void initialize() {
@@ -68,6 +68,7 @@ public class QuizListController {
                 quiz.setTitle(resultSet.getString("title"));
                 quiz.setDifficultylevel(resultSet.getString("difficultylevel"));
                 quiz.setCategory(resultSet.getString("category"));
+                quiz.setTime(resultSet.getInt("quizTime"));
                 quiz.setMinimumSuccessPercentage(resultSet.getDouble("minimum_success_percentage"));
                 quizObservableList.add(quiz);
             }
@@ -136,11 +137,15 @@ public class QuizListController {
                 Label categoryLabel = new Label("Catégorie : " + quiz.getCategory());
                 categoryLabel.setStyle("-fx-text-fill: #8e44ad;");
 
+                Label percentageLabel = new Label("Validation : " + quiz.getMinimumSuccessPercentage() + "%");
+                percentageLabel.setStyle("-fx-text-fill: #2980b9;");
+
+                Label quizTime = new Label("Duréé Quiz : " + quiz.getTime() + "%");
+                quizTime.setStyle("-fx-text-fill: #2980b9;");
+
                 Label difficultyLabel = new Label("Difficulté : " + quiz.getDifficultylevel());
                 difficultyLabel.setStyle("-fx-text-fill: #c0392b;");
 
-                Label percentageLabel = new Label("Validation : " + quiz.getMinimumSuccessPercentage() + "%");
-                percentageLabel.setStyle("-fx-text-fill: #2980b9;");
 
                 Button updateButton = new Button("✏️ Modifier");
                 Button deleteButton = new Button("🗑️ Supprimer");
@@ -152,7 +157,7 @@ public class QuizListController {
                 viewQuestionsLink.setStyle("-fx-text-fill: #3498db; -fx-font-size: 14px;");
                 viewQuestionsLink.setOnAction(event -> handleViewQuestions(quiz));
                 HBox buttonBox = new HBox(10, updateButton, deleteButton, viewQuestionsLink);
-                VBox vbox = new VBox(5, titleLabel, categoryLabel, difficultyLabel, percentageLabel, buttonBox);
+                VBox vbox = new VBox(6, titleLabel, categoryLabel, percentageLabel,quizTime,difficultyLabel, buttonBox);
                 vbox.setStyle("-fx-padding: 10px; -fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7; -fx-border-radius: 5px;");
                 setGraphic(vbox);
             }
@@ -163,7 +168,7 @@ public class QuizListController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Quiz/ListQuestions.fxml"));
                 Parent root = loader.load();
                 ListQuestionQuiz controller = loader.getController();
-                controller.setQuiz(quiz.getId());
+                controller.setQuiz(quiz.getId(), quiz.getTitle());
 
                 Stage stage = new Stage();
                 stage.setTitle("Questions du Quiz : " + quiz.getTitle());

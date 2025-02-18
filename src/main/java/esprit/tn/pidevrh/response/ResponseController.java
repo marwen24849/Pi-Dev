@@ -40,8 +40,8 @@ public class ResponseController implements Initializable {
     private Label timeRemainingLabel;
 
     private Timeline countdownTimer;
-    private int timeRemaining = 30;
-    private static final int TIMEOUT_SECONDS = 30;
+    private int timeRemaining ;
+    private  int TIMEOUT_SECONDS ;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,7 +57,7 @@ public class ResponseController implements Initializable {
     }
 
     private void startCountdownTimer() {
-        timeRemaining = 30;
+        //timeRemaining = 30;
         updateTimeRemainingLabel();
         countdownTimer.playFromStart();
     }
@@ -117,6 +117,9 @@ public class ResponseController implements Initializable {
             nextButton.setDisable(true);
             submitButton.setDisable(true);
         } else {
+            int time = quiz.getTime()*60;
+            this.timeRemaining = time;
+            TIMEOUT_SECONDS =time;
             loadQuestion();
             startCountdownTimer();
         }
@@ -135,6 +138,7 @@ public class ResponseController implements Initializable {
                 quiz.setCategory(rs.getString("category"));
                 quiz.setDifficultylevel(rs.getString("difficultylevel"));
                 quiz.setMinimumSuccessPercentage(rs.getDouble("minimum_success_percentage"));
+                quiz.setTime(rs.getInt("quizTime"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
