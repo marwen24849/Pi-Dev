@@ -147,4 +147,7 @@ public class SidebarController {
 
     }
 
+    public void handleAssistant(ActionEvent actionEvent) {
+        loadContent("/Fxml/chat/chat_view.fxml");
+    }
 }

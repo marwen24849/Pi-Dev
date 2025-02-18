@@ -14,7 +14,6 @@ public class MainApp extends Application {
         primaryStage.setTitle("RH Leave Management");
         primaryStage.show();
     }
-    //test
 
     public static void main(String[] args) {
         launch(args);

@@ -1,79 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.quiz.QuizController"
-            style="-fx-background-color: #f9fafc;">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f9fafc;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.quiz.QuizController">
 
     <!-- Contenu principal -->
-    <VBox alignment="CENTER" spacing="20.0" AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <!-- Titre -->
-        <Label text="Ajouter un Nouveau Quiz"
-               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Ajouter un Nouveau Quiz" />
 
-        <!-- Formulaire -->
-        <GridPane hgap="15.0" vgap="15.0"
-                  style="-fx-padding: 20px; -fx-background-color: #ffffff;
-                         -fx-border-color: #dce4ec; -fx-border-radius: 12px;
-                         -fx-background-radius: 12px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+
+        <GridPane hgap="15.0" prefHeight="403.0" prefWidth="800.0" style="-fx-padding: 20px; -fx-background-color: #ffffff;                          -fx-border-color: #dce4ec; -fx-border-radius: 12px;                          -fx-background-radius: 12px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);" vgap="15.0">
             <columnConstraints>
-                <ColumnConstraints minWidth="150.0" halignment="RIGHT" />
+                <ColumnConstraints halignment="RIGHT" minWidth="150.0" />
                 <ColumnConstraints hgrow="ALWAYS" />
             </columnConstraints>
 
-            <!-- Titre du Quiz -->
-            <Label text="Titre du Quiz :"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
-            <TextField fx:id="titleField" GridPane.columnIndex="1"
-                       style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                              -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                              -fx-padding: 8px;" />
 
-            <!-- Catégorie -->
-            <Label text="Catégorie :" GridPane.rowIndex="1"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
-            <ComboBox fx:id="categoryComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1"
-                      promptText="Sélectionnez une catégorie"
-                      style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                             -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                             -fx-padding: 8px;" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="Titre du Quiz :" />
+            <TextField fx:id="titleField" style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;                               -fx-border-color: #dce4ec; -fx-border-radius: 8px;                               -fx-padding: 8px;" GridPane.columnIndex="1" />
 
-            <!-- Niveau de Difficulté -->
-            <Label text="Niveau de Difficulté :" GridPane.rowIndex="2"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
-            <ComboBox fx:id="difficultyLevelField" GridPane.columnIndex="1" GridPane.rowIndex="2"
-                      promptText="Sélectionnez une difficulté"
-                      style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                             -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                             -fx-padding: 8px;" />
 
-            <!-- Pourcentage de Succès Minimum -->
-            <Label text="Pourcentage de Succès Minimum :" GridPane.rowIndex="3"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
-            <ComboBox fx:id="percentageComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3"
-                      promptText="Sélectionnez un pourcentage"
-                      style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                             -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                             -fx-padding: 8px;" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="Catégorie :" GridPane.rowIndex="1" />
+            <ComboBox fx:id="categoryComboBox" prefHeight="47.0" prefWidth="503.0" promptText="Sélectionnez une catégorie" style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;                              -fx-border-color: #dce4ec; -fx-border-radius: 8px;                              -fx-padding: 8px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <!-- Nombre de Questions -->
-            <Label text="Nombre de Questions :" GridPane.rowIndex="4"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
-            <TextField fx:id="questionCountField" GridPane.columnIndex="1" GridPane.rowIndex="4"
-                       style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                              -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                              -fx-padding: 8px;" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="Niveau de Difficulté :" GridPane.rowIndex="2" />
+            <ComboBox fx:id="difficultyLevelField" prefHeight="47.0" prefWidth="503.0" promptText="Sélectionnez une difficulté" style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;                              -fx-border-color: #dce4ec; -fx-border-radius: 8px;                              -fx-padding: 8px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="Pourcentage de Succès Minimum :" GridPane.rowIndex="3" />
+            <ComboBox fx:id="percentageComboBox" prefHeight="47.0" prefWidth="502.0" promptText="Sélectionnez un pourcentage" style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;                              -fx-border-color: #dce4ec; -fx-border-radius: 8px;                              -fx-padding: 8px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="quiz durée :" GridPane.rowIndex="4" />
+            <TextField fx:id="quizTime" style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;                               -fx-border-color: #dce4ec; -fx-border-radius: 8px;                               -fx-padding: 8px;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="Nombre de Questions :" GridPane.rowIndex="5" />
+            <TextField fx:id="questionCountField" style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;                               -fx-border-color: #dce4ec; -fx-border-radius: 8px;                               -fx-padding: 8px;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
 
-        <!-- Bouton -->
-        <Button fx:id="addQuizButton" text="Ajouter Quiz"
-                onAction="#handleAddQuiz"
-                style="-fx-background-color: #4caf50; -fx-text-fill: white;
-                       -fx-font-size: 16px; -fx-font-weight: bold;
-                       -fx-padding: 12px 24px; -fx-background-radius: 8px;"
-                 />
+
+        <Button fx:id="addQuizButton" onAction="#handleAddQuiz" style="-fx-background-color: #4caf50; -fx-text-fill: white;                        -fx-font-size: 16px; -fx-font-weight: bold;                        -fx-padding: 12px 24px; -fx-background-radius: 8px;" text="Ajouter Quiz" />
     </VBox>
 
 </AnchorPane>
