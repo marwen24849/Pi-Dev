@@ -159,13 +159,10 @@ public class LoginController {
 
         if (userExists) {
             String emailBody = "Your verification code is: " + verificationCode;
-            boolean emailSent = EmailService.sendEmail(email, "Password Reset Request", emailBody);
+            new Thread(()-> EmailService.sendEmail(email, "Password Reset Request", emailBody)).start();
 
-            if (emailSent) {
-                showVerificationPopUp(verificationCode, email);
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to send verification email.");
-            }
+            showVerificationPopUp(verificationCode, email);
+
         } else {
             showAlert(Alert.AlertType.ERROR, "User Not Found", "No matching user found with this email, first name, and last name.");
         }

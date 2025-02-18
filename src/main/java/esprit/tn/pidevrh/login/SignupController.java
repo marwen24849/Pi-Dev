@@ -62,13 +62,11 @@ public class SignupController {
         String verificationCode = generateVerificationCode();
         String emailBody = "Your verification code is: " + verificationCode;
 
-        boolean emailSent = EmailService.sendEmail(email, "Verify Your Account", emailBody);
+        new Thread(() -> EmailService.sendEmail(email, "Verify Your Account", emailBody)).start();
 
-        if (emailSent) {
-            showVerificationPopUp(verificationCode, firstName, lastName, email, password, defaultRole);
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to send verification email.");
-        }
+
+        showVerificationPopUp(verificationCode, firstName, lastName, email, password, defaultRole);
+
     }
 
     public  String generateVerificationCode() {
