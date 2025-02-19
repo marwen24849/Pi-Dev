@@ -37,6 +37,12 @@
                             <MenuItem onAction="#handleListQuiz" styleClass="menu-item" text="Liste Quiz" />
                         </items>
                     </MenuButton>
+
+                    <MenuButton styleClass="sidebar-menu" text="Gestion Poste">
+                        <items>
+                            <MenuItem onAction="#handleAddPoste" styleClass="menu-item" text="Ajouter Poste" />
+                        </items>
+                    </MenuButton>
                 </VBox>
             </children>
         </VBox>

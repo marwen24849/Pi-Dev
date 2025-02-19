@@ -1,5 +1,6 @@
 package esprit.tn.pidevrh.appbar;
 
+import esprit.tn.pidevrh.Poste.PosteController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,10 +20,16 @@ public class AppBarController {
     private Button list;
 
     @FXML
+    private Button listposte;
+
+    @FXML
     private Button addQuestion;
 
     @FXML
     private Button addQuiz;
+
+    @FXML
+    private Button addPoste;
 
 
     public void handleListQuestions() {
@@ -66,6 +74,27 @@ public class AppBarController {
             showAlert("Erreur", "Impossible de charger la vue de Quiz.");
         }
     }
+
+    public void handleAddPoste(ActionEvent event) {
+        try {
+            // Load the FXML file for adding a Poste
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/esprit/tn/pidevrh/poste/PosteAdd.fxml"));
+            Parent root = loader.load();
+
+            // Get the contentArea from the sidebar.fxml
+            AnchorPane contentArea = (AnchorPane) addPoste.lookup("#contentArea");
+
+            // Clear existing content and add the new Poste form
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading PosteAdd.fxml");
+        }
+    }
+
+
+
 
 
     private void showAlert(String title, String message) {

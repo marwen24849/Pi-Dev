@@ -109,6 +109,8 @@ public class SidebarController {
         }
     }
 
+    @FXML
+    public void handleAddPoste(ActionEvent event) {loadContent("/Fxml/Poste/PosteAdd.fxml");}
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

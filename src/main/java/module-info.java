@@ -8,6 +8,7 @@ module esprit.tn.pidevrh {
     requires javafx.graphics;
     requires java.sql;
     requires java.net.http;
+    requires java.desktop;
 
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;
@@ -21,4 +22,6 @@ module esprit.tn.pidevrh {
     opens esprit.tn.pidevrh.response to javafx.fxml, java.base, javafx.base;
     exports esprit.tn.pidevrh.login to javafx.fxml;
     opens esprit.tn.pidevrh.login to javafx.fxml, java.base;
+    opens esprit.tn.pidevrh.Poste to javafx.fxml , javafx.base;
+    exports esprit.tn.pidevrh.Poste;
 }
