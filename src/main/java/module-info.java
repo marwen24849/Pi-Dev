@@ -9,6 +9,9 @@ module esprit.tn.pidevrh {
     requires java.sql;
     requires java.net.http;
 
+    opens esprit.tn.pidevrh.congeApprove to javafx.fxml; // Ouvre le package pour JavaFX
+    exports esprit.tn.pidevrh.congeApprove;
+
     opens esprit.tn.pidevrh.leave to javafx.fxml;  // Fix: Allow JavaFX access to controllers
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;

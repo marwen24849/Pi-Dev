@@ -5,13 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 
@@ -132,6 +130,11 @@ public class SidebarController {
     public void handleAddConge() {
         loadContent("/Fxml/Leave/LeaveRequest.fxml");
     }
+    @FXML
+    public void handleSuiviConge() {
+        loadContent("/Fxml/Leave/suivi_conge.fxml");
+    }
+
 
     private void loadContent(String fxmlPath) {
         try {

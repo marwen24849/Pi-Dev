@@ -64,6 +64,7 @@
                                         styleClass="sidebar-menu" onAction="#toggleGestionCongeMenu"/>
                                 <VBox fx:id="gestionCongeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
                                     <Button onAction="#handleListConge" text="📄 Liste des Congés" styleClass="menu-item"/>
+                                    <Button onAction="#handleSuiviConge" text="📄 suivi des Congés" styleClass="menu-item"/>
                                 </VBox>
                             </VBox>
 

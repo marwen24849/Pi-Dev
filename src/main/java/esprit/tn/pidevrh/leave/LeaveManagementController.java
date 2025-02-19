@@ -58,6 +58,7 @@ public class LeaveManagementController {
                     Button rejectButton = new Button("❌ Refuser");
                     rejectButton.setOnAction(e -> updateLeaveStatus(leave.getId(), "REJECTED"));
 
+
                     VBox detailsBox = new VBox(5, userLabel, typeLabel, startDateLabel, endDateLabel, durationLabel, statusLabel);
                     VBox fullBox = new VBox(10, detailsBox, new HBox(10, approveButton, rejectButton));
 
@@ -108,17 +109,44 @@ public class LeaveManagementController {
     }
 
     private void updateLeaveStatus(int leaveId, String newStatus) {
-        String query = "UPDATE demande_conge SET status = ? WHERE id = ?";
+        String updateQuery = "UPDATE demande_conge SET status = ? WHERE id = ?";
+        String checkQuery = "SELECT COUNT(*) FROM conge WHERE conge_id = ?";
+        String insertQuery = "INSERT INTO conge (start_date, end_date, conge_id, user_id) " +
+                "SELECT date_debut, date_fin, id, user_id FROM demande_conge " +
+                "WHERE id = ? AND status = 'APPROVED'";
+
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, newStatus);
-            preparedStatement.setInt(2, leaveId);
-            preparedStatement.executeUpdate();
+             PreparedStatement updateStmt = connection.prepareStatement(updateQuery);
+             PreparedStatement checkStmt = connection.prepareStatement(checkQuery);
+             PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
+
+            // 1️⃣ Mettre à jour le statut de la demande
+            updateStmt.setString(1, newStatus);
+            updateStmt.setInt(2, leaveId);
+            updateStmt.executeUpdate();
+
+            // 2️⃣ Vérifier si l'entrée existe déjà dans la table `conge`
+            if ("APPROVED".equalsIgnoreCase(newStatus)) {
+                checkStmt.setInt(1, leaveId);
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) == 0) { // Aucun enregistrement trouvé
+                    // 3️⃣ Insérer uniquement si le congé n'existe pas encore
+                    insertStmt.setInt(1, leaveId);
+                    insertStmt.executeUpdate();
+                    System.out.println("✅ Congé inséré avec succès.");
+                } else {
+                    System.out.println("⚠ Congé déjà existant, insertion ignorée.");
+                }
+            }
+
+            // 4️⃣ Rafraîchir la liste des demandes après la mise à jour
             loadAllLeaveRequests();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     private String getUserName(int userId) {
         return "Utilisateur " + userId;
