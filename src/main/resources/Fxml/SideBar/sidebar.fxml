@@ -54,17 +54,23 @@
                                         styleClass="sidebar-menu" onAction="#toggleDemandeCongeMenu"/>
                                 <VBox fx:id="demandeCongeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
                                     <Button onAction="#handleAddDemande" text="➕ Ajouter Demande" styleClass="menu-item"/>
-                                    <Button onAction="#handleALisDemande" text="📄 List Demande" styleClass="menu-item"/>
+                                    <Button onAction="#handleALisDemande" text="📄 Liste Demandes" styleClass="menu-item"/>
                                 </VBox>
                             </VBox>
+
+                            <!-- Gestion Congé (NOUVEAU) -->
+                            <VBox fx:id="gestionCongeContainer">
+                                <Button fx:id="gestionCongeButton" text="📂 Gestion Congé"
+                                        styleClass="sidebar-menu" onAction="#toggleGestionCongeMenu"/>
+                                <VBox fx:id="gestionCongeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handleListConge" text="📄 Liste des Congés" styleClass="menu-item"/>
+                                </VBox>
+                            </VBox>
+
                         </VBox>
                     </content>
                 </ScrollPane>
-
-
             </VBox>
-
-
         </VBox>
 
         <!-- Content Area -->

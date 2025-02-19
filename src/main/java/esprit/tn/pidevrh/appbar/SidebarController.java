@@ -18,7 +18,7 @@ import java.io.IOException;
 public class SidebarController {
 
     @FXML
-    private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu;
+    private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu, gestionCongeMenu;
 
     @FXML
     private Button toggleButton;
@@ -42,6 +42,7 @@ public class SidebarController {
         toggleMenuVisibility(gestionQuestionsMenu, false);
         toggleMenuVisibility(gestionQuizMenu, false);
         toggleMenuVisibility(demandeCongeMenu, false);
+        toggleMenuVisibility(gestionCongeMenu, false); // Ajout du menu Gestion Congé
         handleToggleSidebar();
     }
 
@@ -88,6 +89,11 @@ public class SidebarController {
     }
 
     @FXML
+    private void toggleGestionCongeMenu() {
+        toggleMenuVisibility(gestionCongeMenu, !gestionCongeMenu.isVisible());
+    }
+
+    @FXML
     public void handleListQuestions() {
         loadContent("/Fxml/Question/ListQuestions.fxml");
     }
@@ -111,9 +117,20 @@ public class SidebarController {
     public void handleAddDemande(ActionEvent actionEvent) {
         loadContent("/Fxml/Leave/LeaveRequest.fxml");
     }
+
     @FXML
     public void handleALisDemande(ActionEvent actionEvent) {
         loadContent("/Fxml/Leave/ListRequest.fxml");
+    }
+
+    @FXML
+    public void handleListConge() {
+        loadContent("/Fxml/Leave/LeaveManagement.fxml");
+    }
+
+    @FXML
+    public void handleAddConge() {
+        loadContent("/Fxml/Leave/LeaveRequest.fxml");
     }
 
     private void loadContent(String fxmlPath) {
@@ -142,13 +159,4 @@ public class SidebarController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    public void handleAddFormation() {
-        loadContent("/Fxml/Formation/formation.fxml");
-    }
-    public void handleAddDemande() {
-        loadContent("/Fxml/Leave/LeaveRequest.fxml");
-
-    }
-
 }

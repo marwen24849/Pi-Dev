@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.leave.LeaveManagementController">
+
+    <children>
+        <VBox prefWidth="800.0" spacing="10">
+            <Label text="Gestion des Congés" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <ListView fx:id="leaveListView" prefHeight="500.0"/>
+        </VBox>
+    </children>
+</AnchorPane>

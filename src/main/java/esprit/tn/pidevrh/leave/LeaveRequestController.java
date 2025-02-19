@@ -1,4 +1,4 @@
-package esprit.tn.pidevrh.leave;
+  package esprit.tn.pidevrh.leave;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.fxml.FXML;
@@ -25,6 +25,7 @@ public class LeaveRequestController {
     @FXML private Button uploadButton;
 
     private File selectedFile;
+    private final long STATIC_USER_ID = 1; // Utilisation d'un ID statique
 
     @FXML
     public void initialize() {
@@ -68,14 +69,12 @@ public class LeaveRequestController {
         String justification = justificationField.getText().trim();
         String autre = autreCongeField.getText().trim();
 
-
-
         insertLeaveRequest(typeConge, autre, justification, startDate, endDate, selectedFile);
     }
 
     private void insertLeaveRequest(String typeConge, String autre, String justification, LocalDate startDate, LocalDate endDate, File certificateFile) {
-        String sql = "INSERT INTO demande_conge (type_congé, autre, justification, status, date_debut, date_fin, certificate) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO demande_conge (type_congé, autre, justification, status, date_debut, date_fin, certificate, user_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -86,6 +85,7 @@ public class LeaveRequestController {
             preparedStatement.setString(4, "PENDING"); // Default status
             preparedStatement.setDate(5, Date.valueOf(startDate));
             preparedStatement.setDate(6, Date.valueOf(endDate));
+            preparedStatement.setLong(8, STATIC_USER_ID); // Ajout de l'ID utilisateur statique
 
             if (certificateFile != null && certificateFile.exists() && certificateFile.canRead()) {
                 if (certificateFile.length() > 16 * 1024 * 1024) { // Vérifie si le fichier dépasse 16 Mo

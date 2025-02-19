@@ -3,104 +3,131 @@ package esprit.tn.pidevrh.leave;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class LeaveDisplayController {
     @FXML private ListView<Leave> leaveListView;
     private ObservableList<Leave> leaveRequests = FXCollections.observableArrayList();
 
+    private final long STATIC_USER_ID = 1; // ID utilisateur connecté (remplace par une valeur dynamique si nécessaire)
+
     @FXML
     public void initialize() {
         loadLeaveRequests();
 
-        // Custom rendering for ListView items with action buttons
-        leaveListView.setCellFactory(new Callback<>() {
+        leaveListView.setCellFactory(param -> new ListCell<>() {
             @Override
-            public ListCell<Leave> call(ListView<Leave> param) {
-                return new ListCell<>() {
-                    @Override
-                    protected void updateItem(Leave leave, boolean empty) {
-                        super.updateItem(leave, empty);
-                        if (empty || leave == null) {
-                            setText(null);
-                            setGraphic(null);
-                        } else {
-                            // Labels for leave details
-                            Label typeLabel = new Label("Type: " + leave.getTypeConge());
-                            Label autreLabel = new Label("Autre: " + leave.getAutre());
-                            Label justificationLabel = new Label("Justification: " + leave.getJustification());
-                            Label statusLabel = new Label("Status: " + leave.getStatus());
-                            Label startDateLabel = new Label("Début: " + leave.getDateDebut());
-                            Label endDateLabel = new Label("Fin: " + leave.getDateFin());
+            protected void updateItem(Leave leave, boolean empty) {
+                super.updateItem(leave, empty);
+                if (empty || leave == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Label typeLabel = new Label("Type: " + leave.getTypeConge());
+                    Label autreLabel = new Label("Autre: " + (leave.getAutre() != null ? leave.getAutre() : "N/A"));
+                    Label justificationLabel = new Label("Justification: " + (leave.getJustification() != null ? leave.getJustification() : "N/A"));
+                    Label statusLabel = new Label("Statut: " + leave.getStatus());
+                    Label startDateLabel = new Label("Début: " + leave.getDateDebut());
+                    Label endDateLabel = new Label("Fin: " + leave.getDateFin());
 
-                            // Buttons for action
-                            Button approveButton = new Button("✅ Approuver");
-                            approveButton.setOnAction(e -> updateLeaveStatus(leave.getId(), "Approuvé"));
+                    Button editButton = new Button("📝 Modifier");
+                    editButton.setOnAction(e -> editLeaveRequest(leave));
 
-                            Button rejectButton = new Button("❌ Rejeter");
-                            rejectButton.setOnAction(e -> updateLeaveStatus(leave.getId(), "Rejeté"));
+                    Button deleteButton = new Button("🗑️ Supprimer");
+                    deleteButton.setOnAction(e -> deleteLeaveRequest(leave.getId()));
 
-                            // Layout for details and buttons
-                            VBox detailsBox = new VBox(5, typeLabel, autreLabel, justificationLabel, statusLabel, startDateLabel, endDateLabel);
-                            HBox actionBox = new HBox(10, approveButton, rejectButton);
-                            VBox fullBox = new VBox(10, detailsBox, actionBox);
+                    VBox detailsBox = new VBox(5, typeLabel, autreLabel, justificationLabel, statusLabel, startDateLabel, endDateLabel);
+                    HBox actionBox = new HBox(10, editButton, deleteButton);
+                    VBox fullBox = new VBox(10, detailsBox, actionBox);
 
-                            setGraphic(fullBox);
-                        }
-                    }
-                };
+                    setGraphic(fullBox);
+                }
             }
         });
     }
 
-    private void loadLeaveRequests() {
-        String query = "SELECT id, type_congé, autre, justification, status, date_debut, date_fin FROM demande_conge";
+    /**
+     * Charge uniquement les demandes de congé de l'utilisateur connecté.
+     */
+    protected void loadLeaveRequests() {
+        String query = "SELECT id, user_id, type_congé, autre, justification, status, date_debut, date_fin, certificate " +
+                "FROM demande_conge WHERE user_id = ?";
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            while (resultSet.next()) {
-                leaveRequests.add(new Leave(
-                        resultSet.getInt("id"),
-                        resultSet.getString("type_congé"),
-                        resultSet.getString("autre"),
-                        resultSet.getString("justification"),
-                        resultSet.getString("status"),
-                        resultSet.getDate("date_debut").toLocalDate(),
-                        resultSet.getDate("date_fin").toLocalDate()
-                ));
+            preparedStatement.setLong(1, STATIC_USER_ID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                leaveRequests.clear();
+                while (resultSet.next()) {
+                    leaveRequests.add(new Leave(
+                            resultSet.getInt("id"),
+                            resultSet.getInt("user_id"), // Ajout du user_id
+                            resultSet.getString("type_congé"),
+                            resultSet.getString("autre"),
+                            resultSet.getString("justification"),
+                            resultSet.getString("status"),
+                            resultSet.getDate("date_debut").toLocalDate(),
+                            resultSet.getDate("date_fin").toLocalDate(),
+                            resultSet.getBytes("certificate") // Ajout du certificat
+                    ));
+                }
+                leaveListView.setItems(leaveRequests);
             }
-
-            leaveListView.setItems(leaveRequests);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateLeaveStatus(int id, String newStatus) {
-        String query = "UPDATE demande_conge SET status = ? WHERE id = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+    /**
+     * Permet de modifier une demande de congé.
+     */
+    private void editLeaveRequest(Leave leave) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Leave/LeaveEdit.fxml"));
+            Parent root = loader.load();
 
-            preparedStatement.setString(1, newStatus);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
+            LeaveEditController editController = loader.getController();
+            editController.setLeaveData(leave, this);
 
-            // Refresh list view after update
-            leaveRequests.clear();
-            loadLeaveRequests();
-        } catch (SQLException e) {
+            Stage stage = new Stage();
+            stage.setTitle("Modifier la Demande de Congé");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Supprime une demande de congé après confirmation.
+     */
+    private void deleteLeaveRequest(int id) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer cette demande ?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                String query = "DELETE FROM demande_conge WHERE id = ?";
+                try (Connection connection = DatabaseConnection.getConnection();
+                     PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setInt(1, id);
+                    preparedStatement.executeUpdate();
+                    loadLeaveRequests(); // Rafraîchir la liste après suppression
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
