@@ -1,7 +1,6 @@
 package esprit.tn.pidevrh.formation;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
-import esprit.tn.pidevrh.session.SessionController;
 import esprit.tn.pidevrh.session.SessionListController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,34 +9,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FormationListController {
 
     @FXML
-    private TableView<Formation> formationTableView;
+    private ListView<Formation> formationListView;
 
-    @FXML
-    private TableColumn<Formation, String> titleColumn, descriptionColumn;
-    @FXML
-    private TableColumn<Formation, Integer> durationColumn;
-
-    @FXML
-    private TableColumn<Formation, Void> actionColumn;
-
-    @FXML
-    private TableColumn<Formation, Void> sessionColumn;
     @FXML
     private ComboBox<String> titleFilter;
 
@@ -46,11 +32,11 @@ public class FormationListController {
 
     @FXML
     public void initialize() {
-        configureColumns();
         ObservableList<Formation> formationsObservableList = loadFormations();
-        formationTableView.setItems(formationsObservableList);
-        actionColumn.setCellFactory(createActionColumnFactory());
-        sessionColumn.setCellFactory(createSessionColumnFactory());
+        formationListView.setItems(formationsObservableList);
+        formationListView.setCellFactory(createFormationCellFactory());
+
+        // Initialize the filter ComboBox
         titleFilter.setValue("Toutes les formations");
 
         filterButton.setOnAction(event -> {
@@ -69,93 +55,19 @@ public class FormationListController {
                 );
             }
 
-            // Set the filtered items to the table view and reapply the action buttons column factory
-            formationTableView.setItems(filteredFormations);
-            actionColumn.setCellFactory(createActionColumnFactory());
+            // Set the filtered items to the list view
+            formationListView.setItems(filteredFormations);
         });
 
         configureTitleFilter(formationsObservableList.stream().map(Formation::getTitre).distinct());
     }
+
     private void configureTitleFilter(Stream<String> stringStream) {
         titleFilter.getItems().clear();
         titleFilter.getItems().add("Toutes les formations");
         stringStream.forEach(title -> titleFilter.getItems().add(title));
         titleFilter.setValue("Toutes les formations");
-
     }
-
-    private void configureColumns() {
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duree"));
-
-    }
-
-    private Callback<TableColumn<Formation, Void>, TableCell<Formation, Void>> createActionColumnFactory() {
-        return param -> new TableCell<Formation, Void>() {
-            private final Button updateButton = new Button("Modifier");
-            private final Button deleteButton = new Button("Supprimer");
-
-            {
-                updateButton.setOnAction(event -> handleUpdate(getTableView().getItems().get(getIndex())));
-                deleteButton.setOnAction(event -> handleDelete(getTableView().getItems().get(getIndex())));
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(new HBox(10, updateButton, deleteButton));
-                }
-            }
-        };
-    }
-
-
-    private void handleUpdate(Formation formation) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Formation/EditFormationForm.fxml"));
-            Parent root = loader.load();
-            FormationUpdateController controller = loader.getController();
-            controller.setFormation(formation);
-            Stage stage = new Stage();
-            stage.setTitle("Modifier la Formation");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-            initialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private void handleDelete(Formation formation) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Suppression");
-        alert.setHeaderText("Êtes-vous sûr de vouloir supprimer cette formation ?");
-        alert.setContentText("Formation : " + formation.getTitre());
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                deleteFormation(formation.getId());
-            }
-        });
-    }
-
-
-    private void deleteFormation(Long id) {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String sql = "DELETE FROM formation WHERE id=?";
-            PreparedStatement p = connection.prepareStatement(sql);
-            p.setLong(1, id);
-            p.executeUpdate();
-            initialize();
-        } catch (SQLException e) {
-            showAlert("Erreur de base de données", "Impossible de supprimer la formation : " + id);
-        }
-    }
-
 
     private ObservableList<Formation> loadFormations() {
         ObservableList<Formation> formations = FXCollections.observableArrayList();
@@ -180,35 +92,102 @@ public class FormationListController {
 
         return formations;
     }
-    // Create the session column button
-    private Callback<TableColumn<Formation, Void>, TableCell<Formation, Void>> createSessionColumnFactory() {
-        return param -> new TableCell<Formation, Void>() {
+
+    private Callback<ListView<Formation>, ListCell<Formation>> createFormationCellFactory() {
+        return param -> new ListCell<Formation>() {
+            private final Button updateButton = new Button("Modifier");
+            private final Button deleteButton = new Button("Supprimer");
             private final Button manageButton = new Button("Manage Sessions");
 
             {
-                manageButton.setOnAction(event ->{
-                    Formation selectedFormation = getTableView().getItems().get(getIndex());
-                    if(selectedFormation != null) {
+                updateButton.setOnAction(event -> handleUpdate(getItem()));
+                deleteButton.setOnAction(event -> handleDelete(getItem()));
+                manageButton.setOnAction(event -> {
+                    Formation selectedFormation = getItem();
+                    if (selectedFormation != null) {
                         long formationId = selectedFormation.getId();
                         handleManageSessions(formationId);
                     }
-                        });
-
+                });
             }
 
             @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
+            protected void updateItem(Formation formation, boolean empty) {
+                super.updateItem(formation, empty);
+                if (empty || formation == null) {
+                    setText(null);
                     setGraphic(null);
                 } else {
-                    setGraphic(new HBox(10, manageButton));
+                    // Create a VBox to structure the content
+                    VBox vbox = new VBox(10);
+                    vbox.setStyle("-fx-padding: 10px; -fx-border-color: #ddd; -fx-border-radius: 5px; -fx-background-color: #f7f7f7;");
+
+                    // Title label
+                    Label titleLabel = new Label("Titre: " + formation.getTitre());
+                    titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+
+                    // Description label
+                    Label descriptionLabel = new Label("Description: " + formation.getDescription());
+                    descriptionLabel.setStyle("-fx-font-size: 14px;");
+
+                    // Duration label
+                    Label durationLabel = new Label("Durée: " + formation.getDuree() + " semaines");
+                    durationLabel.setStyle("-fx-font-size: 14px;");
+
+                    // Action buttons in HBox
+                    HBox actionButtons = new HBox(10, updateButton, deleteButton, manageButton);
+                    actionButtons.setStyle("-fx-spacing: 10px;");
+
+                    // Adding all components to the VBox
+                    vbox.getChildren().addAll(titleLabel, descriptionLabel, durationLabel, actionButtons);
+
+                    // Set the graphic for the cell
+                    setGraphic(vbox);
                 }
             }
         };
     }
 
-    // Handle the click event to open the session management window
+    private void handleUpdate(Formation formation) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Formation/EditFormationForm.fxml"));
+            Parent root = loader.load();
+            FormationUpdateController controller = loader.getController();
+            controller.setFormation(formation);
+            Stage stage = new Stage();
+            stage.setTitle("Modifier la Formation");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+            initialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleDelete(Formation formation) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Suppression");
+        alert.setHeaderText("Êtes-vous sûr de vouloir supprimer cette formation ?");
+        alert.setContentText("Formation : " + formation.getTitre());
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                deleteFormation(formation.getId());
+            }
+        });
+    }
+
+    private void deleteFormation(Long id) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "DELETE FROM formation WHERE id=?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setLong(1, id);
+            p.executeUpdate();
+            initialize();
+        } catch (SQLException e) {
+            showAlert("Erreur de base de données", "Impossible de supprimer la formation : " + id);
+        }
+    }
+
     private void handleManageSessions(long formationId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Session/SessionList.fxml"));
@@ -224,7 +203,6 @@ public class FormationListController {
             e.printStackTrace();
         }
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

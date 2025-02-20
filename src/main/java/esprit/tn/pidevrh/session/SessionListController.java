@@ -1,7 +1,6 @@
 package esprit.tn.pidevrh.session;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
-import esprit.tn.pidevrh.formation.Formation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,12 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import lombok.Setter;
-import javafx.scene.control.cell.PropertyValueFactory;
-
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -26,33 +22,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SessionListController {
-    private Formation selectedFormation;
 
-    @FXML
-    private TableView<Session> sessionTableView;
-    @FXML
-    private TableColumn<Session, String> dateColumn, timeColumn, salleColumn;
-
-    private ObservableList<Session> sessionList;  // ObservableList to hold session data
-
-    @Setter
     private long currentFormationId;
+
     @FXML
-    // Make sure your TableColumn is of type Session
-    TableColumn<Session, Void> actionColumn = new TableColumn<>("Actions");
+    private ListView<Session> sessionListView;  // Use ListView instead of TableView
 
-
-
-
-
+    private ObservableList<Session> sessionList = FXCollections.observableArrayList(); // List of sessions
 
     @FXML
     public void initialize() {
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        salleColumn.setCellValueFactory(new PropertyValueFactory<>("salle"));
-        actionColumn.setCellFactory(createSessionActionColumnFactory());
-        sessionTableView.getColumns().add(actionColumn);
-
+        sessionListView.setCellFactory(param -> new SessionListCell()); // Set custom cell for displaying session
+        loadSessions(); // Load sessions from the database
     }
 
     // Set the selected formation for the session list view
@@ -65,17 +46,15 @@ public class SessionListController {
     private void loadSessionsForFormation() {
         // Here, fetch sessions from the database using formationId
         System.out.println("Loading sessions for Formation ID: " + currentFormationId);
-        // Add logic to retrieve sessions from DB and populate the UI
         loadSessions();
     }
 
     private void loadSessions() {
-        ObservableList<Session> sessions = FXCollections.observableArrayList();
+        sessionList.clear();
         String query = "SELECT * FROM session WHERE formation_id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
-
             statement.setLong(1, currentFormationId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -84,15 +63,13 @@ public class SessionListController {
                 session.setDate(resultSet.getDate("date").toLocalDate());
                 session.setSalle(resultSet.getString("salle"));
 
-                sessions.add(session);
-
+                sessionList.add(session);
             }
-
         } catch (SQLException e) {
             showAlert("Database Error", "Could not load sessions.");
         }
 
-        sessionTableView.setItems(sessions);
+        sessionListView.setItems(sessionList); // Bind sessions to ListView
     }
 
     private void showAlert(String title, String message) {
@@ -129,26 +106,33 @@ public class SessionListController {
             e.printStackTrace();
         }
     }
-    private Callback<TableColumn<Session, Void>, TableCell<Session, Void>> createSessionActionColumnFactory() {
-        return param -> new TableCell<Session, Void>() {
-            private final Button updateButton = new Button("Modifier");
-            private final Button deleteButton = new Button("Supprimer");
 
-            {
-                updateButton.setOnAction(event -> handleUpdate(getTableView().getItems().get(getIndex())));
-                deleteButton.setOnAction(event -> handleDelete(getTableView().getItems().get(getIndex())));
-            }
+    // Custom ListCell for Session objects
+    private class SessionListCell extends ListCell<Session> {
+        @Override
+        protected void updateItem(Session session, boolean empty) {
+            super.updateItem(session, empty);
+            if (empty || session == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                // Create a layout for each session
+                Label dateLabel = new Label("Date: " + session.getDate());
+                Label salleLabel = new Label("Salle: " + session.getSalle());
+                Button updateButton = new Button("Modifier");
+                Button deleteButton = new Button("Supprimer");
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(new HBox(10, updateButton, deleteButton));
-                }
+                updateButton.setOnAction(event -> handleUpdate(session));  // Handle update
+                deleteButton.setOnAction(event -> handleDelete(session));  // Handle delete
+
+                // Layout for session cell
+                HBox actionBox = new HBox(10, updateButton, deleteButton);
+                VBox sessionBox = new VBox(5, dateLabel, salleLabel, actionBox);
+                sessionBox.setStyle("-fx-padding: 10px; -fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7; -fx-border-radius: 5px;");
+
+                setGraphic(sessionBox);
             }
-        };
+        }
     }
 
     private void handleUpdate(Session session) {
@@ -166,24 +150,25 @@ public class SessionListController {
             e.printStackTrace();
         }
     }
+
     private void handleDelete(Session session) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Suppression");
         alert.setHeaderText("Êtes-vous sûr de vouloir supprimer cette session ?");
-        alert.setContentText("Session ID : " + session.getId() + "\nSalle : " + session.getSalle() + "\nDate : " + session.getDate());
+        alert.setContentText("Salle : " + session.getSalle() + "\nDate : " + session.getDate());
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 deleteSession(session.getId());
             }
         });
     }
+
     private void deleteSession(Long id) {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String sql = "DELETE FROM session WHERE id=?";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setLong(1, id);
             int rowsAffected = p.executeUpdate();
-
             if (rowsAffected > 0) {
                 showAlert("Succès", "La session a été supprimée avec succès.");
                 loadSessions(); // Reload sessions after successful deletion
@@ -194,9 +179,4 @@ public class SessionListController {
             showAlert("Erreur de base de données", "Impossible de supprimer la session : " + id);
         }
     }
-
-
-
-
-
 }

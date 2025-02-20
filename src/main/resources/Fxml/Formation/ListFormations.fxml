@@ -16,17 +16,9 @@
         <Button text="Filtrer" fx:id="filterButton" style="-fx-background-color: #92e038; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
     </HBox>
 
-    <!-- TableView to display formations -->
-    <TableView fx:id="formationTableView" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0" AnchorPane.bottomAnchor="100.0">
-        <columns>
-            <TableColumn fx:id="titleColumn" prefWidth="250.0" text="Titre" />
-            <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Description" />
-            <TableColumn fx:id="durationColumn" prefWidth="150.0" text="Durée (semaines)" />
-            <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" />
-            <TableColumn text="Manage Sessions" prefWidth="150.0" fx:id="sessionColumn"/>
-        </columns>
-    </TableView>
+    <!-- ListView to display formations -->
+    <ListView fx:id="formationListView" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0" AnchorPane.bottomAnchor="100.0" />
 
-    <!-- Pagination for table view -->
+    <!-- Pagination for list view -->
     <Pagination fx:id="pagination" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0" pageCount="10" currentPageIndex="0" style="-fx-font-size: 14px;" />
 </AnchorPane>

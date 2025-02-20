@@ -24,7 +24,7 @@
             <Label style="-fx-font-size: 14px;" text="Description :" GridPane.rowIndex="1" />
             <TextField fx:id="description" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <Label style="-fx-font-size: 14px;" text="Durée (semaines):" GridPane.rowIndex="2" />
+            <Label style="-fx-font-size: 14px;" text="Durée (jours):" GridPane.rowIndex="2" />
             <TextField fx:id="duration" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
 
