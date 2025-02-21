@@ -19,7 +19,7 @@ import java.sql.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FormationListController {
+public class InscriptionFormationController {
 
     @FXML
     private ListView<Formation> formationListView;
@@ -95,13 +95,11 @@ public class FormationListController {
 
     private Callback<ListView<Formation>, ListCell<Formation>> createFormationCellFactory() {
         return param -> new ListCell<Formation>() {
-            private final Button updateButton = new Button("Modifier");
-            private final Button deleteButton = new Button("Supprimer");
+            private final Button inscriptionButton = new Button("S'inscrire");
             private final Button manageButton = new Button("Consulter les sessions");
 
             {
-                updateButton.setOnAction(event -> handleUpdate(getItem()));
-                deleteButton.setOnAction(event -> handleDelete(getItem()));
+                inscriptionButton.setOnAction(event -> handleInscription(getItem()));
                 manageButton.setOnAction(event -> {
                     Formation selectedFormation = getItem();
                     if (selectedFormation != null) {
@@ -135,7 +133,7 @@ public class FormationListController {
                     durationLabel.setStyle("-fx-font-size: 14px;");
 
                     // Action buttons in HBox
-                    HBox actionButtons = new HBox(10, updateButton, deleteButton, manageButton);
+                    HBox actionButtons = new HBox(10, inscriptionButton, manageButton);
                     actionButtons.setStyle("-fx-spacing: 10px;");
 
                     // Adding all components to the VBox
@@ -148,45 +146,17 @@ public class FormationListController {
         };
     }
 
-    private void handleUpdate(Formation formation) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Formation/EditFormationForm.fxml"));
-            Parent root = loader.load();
-            FormationUpdateController controller = loader.getController();
-            controller.setFormation(formation);
-            Stage stage = new Stage();
-            stage.setTitle("Modifier la Formation");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-            initialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handleDelete(Formation formation) {
+    private void handleInscription(Formation formation) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Suppression");
-        alert.setHeaderText("Êtes-vous sûr de vouloir supprimer cette formation ?");
+        alert.setTitle("Inscription");
+        alert.setHeaderText("Êtes-vous sûr de vouloir s'insrire a cette formation ?");
         alert.setContentText("Formation : " + formation.getTitre());
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                deleteFormation(formation.getId());
-            }
-        });
+        alert.showAndWait();
     }
 
-    private void deleteFormation(Long id) {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String sql = "DELETE FROM formation WHERE id=?";
-            PreparedStatement p = connection.prepareStatement(sql);
-            p.setLong(1, id);
-            p.executeUpdate();
-            initialize();
-        } catch (SQLException e) {
-            showAlert("Erreur de base de données", "Impossible de supprimer la formation : " + id);
-        }
-    }
+
+
+
 
     private void handleManageSessions(long formationId) {
         try {

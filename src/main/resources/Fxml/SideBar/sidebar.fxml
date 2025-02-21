@@ -66,6 +66,14 @@
                                     <Button onAction="#handleListFormation" text="📜 Liste Formation" styleClass="menu-item"/>
                                 </VBox>
                             </VBox>
+                            <!-- S'inscrire a une Formation -->
+                            <VBox fx:id="gestionInscriptionFormationContainer1">
+                                <Button fx:id="gestionInscriptionFormationButton1" text="📚 S'inscrire a une  Formation"
+                                        styleClass="sidebar-menu" onAction="#toggleInscriptionFormationMenu"/>
+                                <VBox fx:id="inscriptionFormationMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handleInscriptionFormation" text="📜 Liste Formation" styleClass="menu-item"/>
+                                </VBox>
+                            </VBox>
 
                         </VBox>
                     </content>

@@ -18,7 +18,7 @@ import java.io.IOException;
 public class SidebarController {
 
     @FXML
-    private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu , gestionFormationMenu;
+    private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu , gestionFormationMenu ,inscriptionFormationMenu;
 
     @FXML
     private Button toggleButton;
@@ -43,6 +43,7 @@ public class SidebarController {
         toggleMenuVisibility(gestionQuizMenu, false);
         toggleMenuVisibility(demandeCongeMenu, false);
         toggleMenuVisibility(gestionFormationMenu, false);
+        toggleMenuVisibility(inscriptionFormationMenu, false);
         handleToggleSidebar();
     }
 
@@ -81,6 +82,9 @@ public class SidebarController {
     @FXML
     private void toggleFormationMenu() {
         toggleMenuVisibility(gestionFormationMenu, !gestionFormationMenu.isVisible());
+    }@FXML
+    private void toggleInscriptionFormationMenu() {
+        toggleMenuVisibility(inscriptionFormationMenu, !inscriptionFormationMenu.isVisible());
     }
     @FXML
     private void toggleGestionQuizMenu() {
@@ -149,6 +153,9 @@ public class SidebarController {
 
     public void handleAddFormation() {
         loadContent("/Fxml/Formation/formation.fxml");
+    }
+    public void handleInscriptionFormation() {
+        loadContent("/Fxml/Formation/inscriptionFormation.fxml");
     }
     public void handleAddDemande() {
         loadContent("/Fxml/Leave/LeaveRequest.fxml");
