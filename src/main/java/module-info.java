@@ -13,6 +13,7 @@ module esprit.tn.pidevrh {
     requires jdk.jdi;
     requires java.mail;
     requires org.json;
+    requires io.github.cdimascio.dotenv.java;
 
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;
