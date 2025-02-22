@@ -10,6 +10,7 @@ module esprit.tn.pidevrh {
     requires java.net.http;
     requires jdk.jdi;
     requires static lombok;
+    requires mysql.connector.java;
 
     opens esprit.tn.pidevrh.leave to javafx.fxml;  // Fix: Allow JavaFX access to controllers
     opens esprit.tn.pidevrh to javafx.fxml;

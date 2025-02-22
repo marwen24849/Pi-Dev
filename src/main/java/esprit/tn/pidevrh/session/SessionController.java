@@ -1,5 +1,6 @@
 package esprit.tn.pidevrh.session;
 
+import com.mysql.cj.exceptions.NumberOutOfRange;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,6 +48,20 @@ public class SessionController {
             return;
         }
 
+        try {
+            int salleNumber = Integer.parseInt(salle.getText());
+
+            if (salleNumber <= 0) {  // Check if the number is negative or zero
+                notValidNumberAlert("Erreur", "La salle doit être un nombre positif.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            notNumberAlert("Erreur", "La salle doit être un nombre entier.");
+            return;
+        }
+
+
+
         try (Connection conn = DatabaseConnection.getConnection()) {
             // SQL query to insert the session into the database
             String sql = "INSERT INTO session (formation_id, salle, date) VALUES (?, ?, ?)";
@@ -84,6 +99,20 @@ public class SessionController {
     }
     private void addedAlert(String title, String message){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void notNumberAlert(String title, String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void notValidNumberAlert(String title, String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
