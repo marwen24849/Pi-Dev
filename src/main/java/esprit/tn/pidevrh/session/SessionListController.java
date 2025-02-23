@@ -79,6 +79,13 @@ public class SessionListController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    private void showAlert1(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     public void openAddSession(ActionEvent event) {
         try {
@@ -170,7 +177,7 @@ public class SessionListController {
             p.setLong(1, id);
             int rowsAffected = p.executeUpdate();
             if (rowsAffected > 0) {
-                showAlert("Succès", "La session a été supprimée avec succès.");
+                showAlert1("Succès", "La session a été supprimée avec succès.");
                 loadSessions(); // Reload sessions after successful deletion
             } else {
                 showAlert("Erreur", "Impossible de supprimer la session.");

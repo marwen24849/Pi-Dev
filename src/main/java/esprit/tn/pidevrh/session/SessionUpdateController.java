@@ -3,6 +3,7 @@ package esprit.tn.pidevrh.session;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,6 +28,17 @@ public class SessionUpdateController {
         // Set the fields with the current session's values
         salleField.setText(session.getSalle());
         datePicker.setValue(session.getDate());
+        // Disable past dates in DatePicker
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #EEEEEE;");
+                }
+            }
+        });
     }
 
     @FXML
@@ -34,6 +46,22 @@ public class SessionUpdateController {
         // Validate the form fields
         if (!validateForm()) {
             return;  // Return early if validation fails
+        }
+        if (salleField.getText().isEmpty() || datePicker.getValue() == null) {
+            showAlert("Erreur", "Tous les champs doivent être remplis.");
+            return;
+        }
+
+        try {
+            int salleNumber = Integer.parseInt(salleField.getText());
+
+            if (salleNumber <= 0) {  // Check if the number is negative or zero
+                notValidNumberAlert("Erreur", "La salle doit être un nombre positif.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            notNumberAlert("Erreur", "La salle doit être un nombre entier.");
+            return;
         }
 
         String sql = "UPDATE session SET salle=?, date=? WHERE id=?";
@@ -92,5 +120,19 @@ public class SessionUpdateController {
 
         // If all validations pass
         return true;
+    }
+    private void notNumberAlert(String title, String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void notValidNumberAlert(String title, String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
