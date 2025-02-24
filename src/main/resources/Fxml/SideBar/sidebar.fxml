@@ -8,6 +8,7 @@
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.appbar.SidebarController">
 
     <children>
+
         <VBox fx:id="sidebarWrapper" prefWidth="250.0" styleClass="sidebar"
               AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
 
@@ -55,9 +56,24 @@
                                 </VBox>
                             </VBox>
 
+                            <VBox fx:id="user">
+                                <Button fx:id="userListButton" text="Users List" styleClass="sidebar-menu" onAction="#handleUserList"  />
+
+
+
+                            </VBox>
+
+                            <VBox fx:id="reclamation">
+                                <Button fx:id="RecalmationtButton" text="Reclamation" styleClass="sidebar-menu" onAction="#handleReclamation" />
+                            </VBox>
+
+
+                            <VBox fx:id="Listreclamation">
+                                <Button fx:id="RecalmationtList" text="Liste des Reclamations" styleClass="sidebar-menu" onAction="#handleReclamationList"  />
+                            </VBox>
 
                             <VBox fx:id="assistant">
-                                <Button fx:id="assistant" text="🤖 Assistant"
+                                <Button fx:id="assistant1" text="🤖 Assistant"
                                         styleClass="sidebar-menu" onAction="#handleAssistant"/>
 
                             </VBox>
@@ -66,9 +82,8 @@
                 </ScrollPane>
 
                 <!-- Logout Button (Fixed at Bottom) -->
-                <Button fx:id="logoutButton" text="🚪 Log Out"
-                        styleClass="sidebar-menu sidebar-logout"
-                        />
+                <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Logout" AnchorPane.leftAnchor="20" AnchorPane.bottomAnchor="10" />
+
             </VBox>
 
 
