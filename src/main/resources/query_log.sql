@@ -88,3 +88,7 @@ FROM question;
  INSERT INTO question (category, difficultylevel, option1, option2, option3, option4, question_title, right_answer, score)
 VALUES ('Catégorie', 'Niveau', 'Option 1', 'Option 2', 'Option 3', 'Option 4', 'Titre de la question', 'Réponse correcte', 10);
 ******************************************** ********************************************
+2025-02-24 13:10:45 
+ SELECT COUNT(*) AS nombre_quiz
+FROM quiz;
+******************************************** ********************************************
