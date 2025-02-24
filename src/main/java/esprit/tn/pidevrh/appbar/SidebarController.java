@@ -17,6 +17,8 @@ import java.io.IOException;
 
 public class SidebarController {
 
+    public Button gestionQuestionsButton;
+    public VBox gestionQuestionsContainer;
     @FXML
     private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu;
 
@@ -29,7 +31,7 @@ public class SidebarController {
     @FXML
     private AnchorPane contentArea;
 
-    private boolean isSidebarOpen = true; // Sidebar starts open
+    private boolean isSidebarOpen = true;
 
     @FXML
     public void initialize() {
@@ -37,6 +39,7 @@ public class SidebarController {
             System.err.println("Error: Sidebar is null! Check FXML fx:id.");
             return;
         }
+
 
         sidebarWrapper.setTranslateX(0);
         toggleMenuVisibility(gestionQuestionsMenu, false);
@@ -149,5 +152,9 @@ public class SidebarController {
 
     public void handleAssistant(ActionEvent actionEvent) {
         loadContent("/Fxml/chat/chat_view.fxml");
+    }
+
+    public void handleAssistantSgrh(ActionEvent actionEvent) {
+        loadContent("/Fxml/chat/Chat_SGRH.fxml");
     }
 }

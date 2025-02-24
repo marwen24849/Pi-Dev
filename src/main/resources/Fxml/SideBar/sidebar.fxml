@@ -57,8 +57,14 @@
 
 
                             <VBox fx:id="assistant">
-                                <Button fx:id="assistant" text="🤖 Assistant"
+                                <Button fx:id="assistan" text="🤖 Assistant"
                                         styleClass="sidebar-menu" onAction="#handleAssistant"/>
+
+                            </VBox>
+
+                            <VBox fx:id="SGRHAssistant">
+                                <Button fx:id="sgrhIa" text="🤖 SGRH Assistant"
+                                        styleClass="sidebar-menu" onAction="#handleAssistantSgrh"/>
 
                             </VBox>
                         </VBox>

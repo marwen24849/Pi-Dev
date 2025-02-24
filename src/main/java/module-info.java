@@ -11,6 +11,7 @@ module esprit.tn.pidevrh {
     requires com.fasterxml.jackson.databind;
     requires okhttp3;
     requires annotations;
+    requires org.json;
 
 
     opens esprit.tn.pidevrh.leave to javafx.fxml;
