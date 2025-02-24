@@ -7,6 +7,7 @@ module esprit.tn.pidevrh {
     requires javafx.graphics;
     requires java.sql;
     requires java.net.http;
+
     requires java.desktop;
     requires mysql.connector.java;
     requires jbcrypt;
@@ -15,6 +16,13 @@ module esprit.tn.pidevrh {
     requires org.json;
     requires io.github.cdimascio.dotenv.java;
 
+    requires com.fasterxml.jackson.databind;
+    requires okhttp3;
+    requires annotations;
+
+
+
+    opens esprit.tn.pidevrh.leave to javafx.fxml;
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;
     exports esprit.tn.pidevrh.question to javafx.fxml;
@@ -30,4 +38,12 @@ module esprit.tn.pidevrh {
 
 
     opens esprit.tn.pidevrh.Reclamation to javafx.fxml;
+
+    exports esprit.tn.pidevrh.formation to javafx.fxml;
+    opens esprit.tn.pidevrh.formation to javafx.fxml, java.base, javafx.base;
+    exports esprit.tn.pidevrh.chat to javafx.fxml;
+    opens esprit.tn.pidevrh.chat to javafx.fxml, java.base, javafx.base;
+
+    exports esprit.tn.pidevrh.leave;
+
 }

@@ -1,0 +1,40 @@
+/* styles.css */
+
+/* Style général de la pagination */
+.pagination {
+    -fx-margin-top: 50px;
+}
+
+/* Style des boutons de pagination */
+.pagination .button {
+    -fx-background-color: #92e038;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+/* Style des boutons de pagination au survol */
+.pagination .button:hover {
+    -fx-background-color: #7cc030;
+}
+
+/* Style des boutons de pagination sélectionnés */
+.pagination .button:selected {
+    -fx-background-color: #6aa828;
+    -fx-text-fill: white;
+}
+
+/* Style des boutons de pagination désactivés */
+.pagination .button:disabled {
+    -fx-background-color: #ccc;
+    -fx-text-fill: #666;
+}
+
+/* Style du label de la pagination (numéro de page actuel) */
+.pagination .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495E;
+}
