@@ -131,13 +131,53 @@
 
 .toggle-button:hover {
     -fx-background-color: #45a049;
-
     -fx-border-color: #2c3e50;
 
     -fx-cursor: hand;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
+
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 16px;
+    -fx-pref-width: 200px;
+    -fx-alignment: center-left;
+    -fx-padding: 10 0 10 15;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-margin-top: auto;
+}
+
+.logout-button:hover {
+    -fx-background-color: #e3e8f1;
+    -fx-text-fill: #2c3e50;
+    -fx-border-color: transparent;
+}
+.user-info {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 10px;
+    -fx-border-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 4);
+    -fx-alignment: center-left;
+}
+
+
+.user-name {
+    -fx-font-size: 18px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #ecf0f1;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+}
+
+
+
+
 
 .sidebar-scroll {
     -fx-background-color: #f9fafc;

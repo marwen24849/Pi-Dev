@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/javafx/1"
+            stylesheets="@reclamation.css" fx:controller="esprit.tn.pidevrh.Reclamation.ReclamationController">
+
+    <VBox spacing="10.0" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <Label text="Ajouter une Réclamation" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+        <TextArea fx:id="reclamationTextArea" promptText="Écrivez votre réclamation ici..." wrapText="true" prefHeight="200.0"/>
+
+        <HBox spacing="10.0">
+            <Button text="Corriger la Grammaire" onAction="#handleCorrection" />
+            <Button text="Envoyer" onAction="#handleSubmit" />
+        </HBox>
+    </VBox>
+
+</AnchorPane>

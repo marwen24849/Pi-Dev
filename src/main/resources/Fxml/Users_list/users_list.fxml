@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@users_list.css"
+            fx:controller="esprit.tn.pidevrh.login.UserListController">
+
+    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+           text="Liste des Utilisateurs" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0" />
+
+    <!-- VBox to simulate column headers and ListView -->
+    <VBox spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+          AnchorPane.topAnchor="100.0" AnchorPane.bottomAnchor="80.0">
+
+        <!-- Header Row for Columns -->
+        <HBox spacing="50.0" alignment="BASELINE_LEFT">
+            <Label text="ID" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #34495E;" />
+            <Label text="Username" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #34495E;" />
+            <Label text="Email" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #34495E;" />
+
+            <!-- Role label with a small margin to the right -->
+            <Label text="Role" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #34495E; -fx-padding: 0 0 0 170;" />
+        </HBox>
+
+
+
+        <!-- ListView to display user data -->
+        <ListView fx:id="userListView" style="-fx-font-size: 12px;" />
+
+    </VBox>
+
+</AnchorPane>
