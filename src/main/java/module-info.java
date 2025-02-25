@@ -7,6 +7,14 @@ module esprit.tn.pidevrh {
     requires javafx.graphics;
     requires java.sql;
     requires java.net.http;
+    requires com.google.api.client.auth;
+    requires com.google.api.client.extensions.java6.auth;
+    requires com.google.api.client.extensions.jetty.auth;
+    requires google.api.client;
+    requires com.google.api.client;
+    requires com.google.api.services.calendar;
+    requires com.google.api.client.json.jackson2;
+    requires jdk.httpserver;
 
     exports esprit.tn.pidevrh.teams_departements to javafx.graphics, javafx.fxml;
     opens esprit.tn.pidevrh.teams_departements to javafx.fxml, javafx.base;

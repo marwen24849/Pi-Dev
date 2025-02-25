@@ -1,5 +1,8 @@
 package esprit.tn.pidevrh.projet;
 
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,12 +20,20 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.GeneralSecurityException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
+
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
+import esprit.tn.pidevrh.google.GoogleCalendarService;
+import com.google.api.services.calendar.Calendar;
 
 
 public class ProjetController {
@@ -36,11 +47,18 @@ public class ProjetController {
     @FXML private DatePicker dateDebutPicker;
     @FXML private DatePicker dateFinPicker;
     @FXML private Button addProjectButton;
+    @FXML private Button addToCalendarButton;  // New button
+    private GoogleCalendarService calendarService;
+
 
     @FXML
     private Button deleteProjectButton;
     @FXML
     private Button updateProjectButton;
+
+    @FXML private ComboBox<String> monthComboBox;
+    @FXML private ComboBox<String> yearComboBox;
+    @FXML private CheckBox statusCheckBox;
 
     //@FXML private TableView<Projet> projectTableView;
    // @FXML private TableColumn<Projet, String> nomColumn;
@@ -68,9 +86,23 @@ public class ProjetController {
 */
    @FXML
    public void initialize() {
+       // Initialize month and year ComboBoxes
+       monthComboBox.setItems(FXCollections.observableArrayList(
+               "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+               "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+       ));
+       yearComboBox.setItems(FXCollections.observableArrayList(
+               "2023", "2024", "2025", "2026", "2027"
+       ));
+
        // Load projects and available teams
        loadProjects();
        loadAvailableTeams();
+
+       // Add listeners to filters
+       monthComboBox.setOnAction(event -> loadProjects());
+       yearComboBox.setOnAction(event -> loadProjects());
+       statusCheckBox.setOnAction(event -> loadProjects());
 
        // Use a cell factory to customize the ListView with buttons for each item
        projectListView.setCellFactory(param -> new ListCell<String>() {
@@ -81,6 +113,7 @@ public class ProjetController {
            private final Label dateLabel = new Label();
            private final Button deleteButton = new Button("Delete");
            private final Button updateButton = new Button("Update");
+           private final Button addToCalendarButton = new Button("Add to Calendar");
            private final HBox buttonContainer = new HBox(10);
 
            {
@@ -97,8 +130,9 @@ public class ProjetController {
                // Styling for buttons
                deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-border-radius: 5px;");
                updateButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-border-radius: 5px;");
+               addToCalendarButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-border-radius: 5px;");
                buttonContainer.setAlignment(Pos.CENTER);
-               buttonContainer.getChildren().addAll(updateButton, deleteButton);
+               buttonContainer.getChildren().addAll(updateButton, deleteButton, addToCalendarButton);
 
                // Add all components to the card
                cardContainer.getChildren().addAll(
@@ -137,6 +171,9 @@ public class ProjetController {
                        // Add action to update button
                        updateButton.setOnAction(event -> handleUpdateProject(item));
 
+                       // Add action to add to calendar button
+                       addToCalendarButton.setOnAction(event -> handleAddToCalendar(projectName, projectManager, dates));
+
                        // Set the card as the graphic for the list cell
                        setGraphic(cardContainer);
                    }
@@ -144,6 +181,8 @@ public class ProjetController {
            }
        });
    }
+
+
 
 
 
@@ -198,19 +237,17 @@ public class ProjetController {
         }
 
         try (Connection connection = DatabaseConnection.getConnection()) {
-            // Fetch the team ID based on the team name selected
             int equipeId = getTeamId(equipeName);
 
             String insertSQL = "INSERT INTO projet (nom_projet, equipe, responsable, date_debut, date_fin) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setString(1, nomProjet);
-            preparedStatement.setInt(2, equipeId);  // Save the team ID, not the name
+            preparedStatement.setInt(2, equipeId);
             preparedStatement.setString(3, responsable);
             preparedStatement.setTimestamp(4, Timestamp.valueOf(dateDebut.atStartOfDay()));
             preparedStatement.setTimestamp(5, Timestamp.valueOf(dateFin.atStartOfDay()));
             preparedStatement.executeUpdate();
 
-            // Add the new project to the ListView
             String projectSummary = nomProjet + " - " + equipeName + " - " + responsable + " - " + dateDebut + " to " + dateFin;
             projectListView.getItems().add(projectSummary);
 
@@ -221,6 +258,23 @@ public class ProjetController {
             showAlert("Erreur", "Erreur lors de l'ajout du projet: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+
+    private void handleAddToCalendar(String projectName, String projectManager, String dates) {
+        String[] dateParts = dates.split(" to ");
+        LocalDateTime startDate = LocalDate.parse(dateParts[0]).atStartOfDay();
+        LocalDateTime endDate = LocalDate.parse(dateParts[1]).atStartOfDay();
+
+        try {
+            GoogleCalendarService.addEvent(projectName, "Managed by: " + projectManager, startDate, endDate);
+            showAlert("Succès", "Projet ajouté au calendrier Google avec succès!", Alert.AlertType.INFORMATION);
+        } catch (GeneralSecurityException | IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ajout du projet au calendrier Google: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+
+
+
 
 
     private int getTeamId(String teamName) {
@@ -323,7 +377,7 @@ public class ProjetController {
             showAlert("Erreur", "Erreur lors du chargement des projets: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }*/
-   private void loadProjects() {
+  /* private void loadProjects() {
        List<String> projectDetails = new ArrayList<>();
        try (Connection connection = DatabaseConnection.getConnection()) {
            String fetchSQL = "SELECT * FROM projet";
@@ -342,7 +396,53 @@ public class ProjetController {
            showAlert("Erreur", "Erreur lors du chargement des projets: " + e.getMessage(), Alert.AlertType.ERROR);
        }
        projectListView.setItems(FXCollections.observableArrayList(projectDetails));
-   }
+   }*/
+
+
+    @FXML
+    public void handleResetFilters() {
+        // Clear the selected filters
+        monthComboBox.getSelectionModel().clearSelection();
+        yearComboBox.getSelectionModel().clearSelection();
+        statusCheckBox.setSelected(false);
+
+        // Reload all projects without filters
+        loadProjects();
+    }
+
+    private void loadProjects() {
+        List<String> projectDetails = new ArrayList<>();
+        String selectedMonth = monthComboBox.getValue();
+        String selectedYear = yearComboBox.getValue();
+        boolean showOnlyOngoing = statusCheckBox.isSelected();
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String fetchSQL = "SELECT * FROM projet";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(fetchSQL);
+
+            while (resultSet.next()) {
+                LocalDate startDate = resultSet.getTimestamp("date_debut").toLocalDateTime().toLocalDate();
+                LocalDate endDate = resultSet.getTimestamp("date_fin").toLocalDateTime().toLocalDate();
+
+                // Apply filters only if a filter is selected
+                boolean matchesMonth = selectedMonth == null || startDate.getMonth().toString().equalsIgnoreCase(selectedMonth);
+                boolean matchesYear = selectedYear == null || String.valueOf(startDate.getYear()).equals(selectedYear);
+                boolean isOngoing = !showOnlyOngoing || endDate.isAfter(LocalDate.now());
+
+                if (matchesMonth && matchesYear && isOngoing) {
+                    String projetInfo = resultSet.getString("nom_projet") + " - " +
+                            resultSet.getString("equipe") + " - " +
+                            resultSet.getString("responsable") + " - " +
+                            startDate + " to " + endDate;
+                    projectDetails.add(projetInfo);
+                }
+            }
+        } catch (SQLException e) {
+            showAlert("Erreur", "Erreur lors du chargement des projets: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+        projectListView.setItems(FXCollections.observableArrayList(projectDetails));
+    }
 
     private void showAlert(String title, String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
