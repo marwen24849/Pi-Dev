@@ -25,10 +25,6 @@ public class SessionController {
     private long formationId;
 
 
-
-
-
-
     public void initialize() {
 
         salle.setText("");

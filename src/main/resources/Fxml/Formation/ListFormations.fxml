@@ -6,19 +6,23 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.formation.FormationListController">
 
-    <!-- Updated the text to match the context: "Liste des Formations" -->
-    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;" text="Liste des Formations" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0" />
+    <!-- Title -->
+    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+           text="Liste des Formations"
+           AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="50.0" />
 
-    <!-- Filter UI -->
-    <HBox spacing="10.0" alignment="CENTER_LEFT" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="120.0" AnchorPane.rightAnchor="20.0">
-        <Label text="Filtrer par titre :" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
-        <ComboBox fx:id="titleFilter" promptText="Choisir une formation" style="-fx-font-size: 14px; -fx-padding: 5px;" />
-        <Button text="Filtrer" fx:id="filterButton" style="-fx-background-color: #92e038; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
+    <!-- Search Bar UI -->
+    <HBox spacing="10.0" alignment="CENTER_LEFT"
+          AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" AnchorPane.rightAnchor="20.0">
+        <Label text="Rechercher :" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
+        <TextField fx:id="searchField" promptText="Saisir le titre de la formation..."
+                   style="-fx-font-size: 14px; -fx-padding: 5px; -fx-pref-width: 300px;" />
     </HBox>
 
     <!-- ListView to display formations -->
-    <ListView fx:id="formationListView" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0" AnchorPane.bottomAnchor="100.0" />
+    <ListView fx:id="formationListView"
+              AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="140.0" AnchorPane.bottomAnchor="100.0" />
 
-    <!-- Pagination for list view -->
-    <Pagination fx:id="pagination" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0" pageCount="10" currentPageIndex="0" style="-fx-font-size: 14px;" />
+
 </AnchorPane>

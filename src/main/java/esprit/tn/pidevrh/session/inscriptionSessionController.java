@@ -1,0 +1,109 @@
+package esprit.tn.pidevrh.session;
+
+import esprit.tn.pidevrh.connection.DatabaseConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class inscriptionSessionController {
+
+    private long currentFormationId;
+
+    @FXML
+    private ListView<Session> sessionListView;  // Use ListView instead of TableView
+
+    private ObservableList<Session> sessionList = FXCollections.observableArrayList(); // List of sessions
+
+    @FXML
+    public void initialize() {
+        sessionListView.setCellFactory(param -> new SessionListCell()); // Set custom cell for displaying session
+        loadSessions(); // Load sessions from the database
+    }
+
+    // Set the selected formation for the session list view
+    public void setFormationId(long formationId) {
+        this.currentFormationId = formationId;
+        System.out.println("Formation ID received: " + formationId);
+        loadSessionsForFormation();
+    }
+
+    private void loadSessionsForFormation() {
+        // Here, fetch sessions from the database using formationId
+        System.out.println("Loading sessions for Formation ID: " + currentFormationId);
+        loadSessions();
+    }
+
+    private void loadSessions() {
+        sessionList.clear();
+        String query = "SELECT * FROM session WHERE formation_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setLong(1, currentFormationId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Session session = new Session();
+                session.setId(resultSet.getLong("id"));
+                session.setDate(resultSet.getDate("date").toLocalDate());
+                session.setSalle(resultSet.getString("salle"));
+
+                sessionList.add(session);
+            }
+        } catch (SQLException e) {
+            showAlert("Database Error", "Could not load sessions.");
+        }
+
+        sessionListView.setItems(sessionList); // Bind sessions to ListView
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+
+    // Custom ListCell for Session objects
+    private class SessionListCell extends ListCell<Session> {
+        @Override
+        protected void updateItem(Session session, boolean empty) {
+            super.updateItem(session, empty);
+            if (empty || session == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                // Create a layout for each session
+                Label dateLabel = new Label("Date: " + session.getDate());
+                Label salleLabel = new Label("Salle: " + session.getSalle());
+
+                // Layout for session cell
+                HBox actionBox = new HBox(10);
+                VBox sessionBox = new VBox(5, dateLabel, salleLabel, actionBox);
+                sessionBox.setStyle("-fx-padding: 10px; -fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7; -fx-border-radius: 5px;");
+
+                setGraphic(sessionBox);
+            }
+        }
+    }
+
+
+}

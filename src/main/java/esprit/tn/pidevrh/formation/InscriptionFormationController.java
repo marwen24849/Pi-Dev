@@ -1,7 +1,7 @@
 package esprit.tn.pidevrh.formation;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
-import esprit.tn.pidevrh.session.SessionListController;
+import esprit.tn.pidevrh.session.inscriptionSessionController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,48 +25,35 @@ public class InscriptionFormationController {
     private ListView<Formation> formationListView;
 
     @FXML
-    private ComboBox<String> titleFilter;
+    private TextField searchField;  // Replace ComboBox with a search bar
 
-    @FXML
-    private Button filterButton;
+    private ObservableList<Formation> formationsObservableList;
 
     @FXML
     public void initialize() {
-        ObservableList<Formation> formationsObservableList = loadFormations();
+        // Load formations
+        formationsObservableList = loadFormations();
         formationListView.setItems(formationsObservableList);
         formationListView.setCellFactory(createFormationCellFactory());
 
-        // Initialize the filter ComboBox
-        titleFilter.setValue("Toutes les formations");
-
-        filterButton.setOnAction(event -> {
-            String selectedTitle = titleFilter.getValue();
-
-            // Filtering the observable list based on the selected title
-            ObservableList<Formation> filteredFormations;
-            if ("Toutes les formations".equals(selectedTitle)) {
-                // Reset to show all formations without filtering
-                filteredFormations = formationsObservableList;
-            } else {
-                filteredFormations = FXCollections.observableArrayList(
-                        formationsObservableList.stream()
-                                .filter(f -> f.getTitre().equals(selectedTitle))
-                                .collect(Collectors.toList())
-                );
-            }
-
-            // Set the filtered items to the list view
-            formationListView.setItems(filteredFormations);
+        // Add a listener to filter the list based on the search query
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterFormations(newValue);
         });
-
-        configureTitleFilter(formationsObservableList.stream().map(Formation::getTitre).distinct());
     }
 
-    private void configureTitleFilter(Stream<String> stringStream) {
-        titleFilter.getItems().clear();
-        titleFilter.getItems().add("Toutes les formations");
-        stringStream.forEach(title -> titleFilter.getItems().add(title));
-        titleFilter.setValue("Toutes les formations");
+    private void filterFormations(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            formationListView.setItems(formationsObservableList); // Show all if search is empty
+        } else {
+            String lowerCaseQuery = query.toLowerCase();
+            ObservableList<Formation> filteredList = FXCollections.observableArrayList(
+                    formationsObservableList.stream()
+                            .filter(f -> f.getTitre().toLowerCase().contains(lowerCaseQuery))
+                            .collect(Collectors.toList())
+            );
+            formationListView.setItems(filteredList);
+        }
     }
 
     private ObservableList<Formation> loadFormations() {
@@ -83,23 +70,21 @@ public class InscriptionFormationController {
                 formation.setTitre(resultSet.getString("title"));
                 formation.setDescription(resultSet.getString("description"));
                 formation.setDuree(resultSet.getInt("duration"));
-
                 formations.add(formation);
             }
         } catch (SQLException e) {
             showAlert("Erreur de base de données", "Impossible de charger les formations : " + e.getMessage());
         }
-
         return formations;
     }
 
     private Callback<ListView<Formation>, ListCell<Formation>> createFormationCellFactory() {
         return param -> new ListCell<Formation>() {
-            private final Button inscriptionButton = new Button("S'inscrire");
+
             private final Button manageButton = new Button("Consulter les sessions");
 
             {
-                inscriptionButton.setOnAction(event -> handleInscription(getItem()));
+
                 manageButton.setOnAction(event -> {
                     Formation selectedFormation = getItem();
                     if (selectedFormation != null) {
@@ -133,7 +118,7 @@ public class InscriptionFormationController {
                     durationLabel.setStyle("-fx-font-size: 14px;");
 
                     // Action buttons in HBox
-                    HBox actionButtons = new HBox(10, inscriptionButton, manageButton);
+                    HBox actionButtons = new HBox(10,  manageButton);
                     actionButtons.setStyle("-fx-spacing: 10px;");
 
                     // Adding all components to the VBox
@@ -146,24 +131,16 @@ public class InscriptionFormationController {
         };
     }
 
-    private void handleInscription(Formation formation) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Inscription");
-        alert.setHeaderText("Êtes-vous sûr de vouloir s'insrire a cette formation ?");
-        alert.setContentText("Formation : " + formation.getTitre());
-        alert.showAndWait();
-    }
-
 
 
 
 
     private void handleManageSessions(long formationId) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Session/SessionList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Session/inscriptionSessionsList.fxml"));
             Parent root = loader.load();
             // Get the controller and pass the formation ID
-            SessionListController controller = loader.getController();
+            inscriptionSessionController controller = loader.getController();
             controller.setFormationId(formationId);
             Stage stage = new Stage();
             stage.setTitle("Manage Sessions - Formation ID:" + formationId);
