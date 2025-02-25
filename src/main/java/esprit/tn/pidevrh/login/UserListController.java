@@ -53,7 +53,7 @@ public class UserListController {
     }
 
     private HBox createUserItem(User user) {
-        Label userInfo = new Label(user.getId() + " | " + user.getFirstName() + " " + user.getLastName() + " | " + user.getEmail() + " | " + user.getRole());
+        Label userInfo = new Label(user.getId()+" "  + user.getFirstName() + " " + user.getLastName() + " " + user.getEmail() + " "+ user.getRole());
         Button deleteButton = new Button("🗑️");
 
         deleteButton.setOnAction(event -> handleDelete(user));
