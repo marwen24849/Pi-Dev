@@ -11,8 +11,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +22,7 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class GoogleCalendarService {
     private static final String APPLICATION_NAME = "JavaFX Project Manager";
@@ -53,7 +53,7 @@ public class GoogleCalendarService {
                 .build();
     }
 
-    public static void addEvent(String summary, String description, LocalDateTime start, LocalDateTime end) throws GeneralSecurityException, IOException {
+   /* public static void addEvent(String summary, String description, LocalDateTime start, LocalDateTime end) throws GeneralSecurityException, IOException {
         Calendar service = getCalendarService();
 
         Event event = new Event()
@@ -74,5 +74,41 @@ public class GoogleCalendarService {
         event.setEnd(endDateTime);
 
         service.events().insert("primary", event).execute();
+    }*/
+
+    public static String addEvent(String summary, String description, LocalDateTime start, LocalDateTime end) throws GeneralSecurityException, IOException {
+        Calendar service = getCalendarService();
+
+        // Convert LocalDateTime to Date
+        Date startDate = Date.from(start.atZone(ZoneId.systemDefault()).toInstant());
+        Date endDate = Date.from(end.atZone(ZoneId.systemDefault()).toInstant());
+
+        // Create the event
+        Event event = new Event()
+                .setSummary(summary)
+                .setDescription(description)
+                .setStart(new EventDateTime()
+                        .setDateTime(new com.google.api.client.util.DateTime(startDate))
+                        .setTimeZone(ZoneId.systemDefault().toString()))
+                .setEnd(new EventDateTime()
+                        .setDateTime(new com.google.api.client.util.DateTime(endDate))
+                        .setTimeZone(ZoneId.systemDefault().toString()));
+
+        // Add Google Meet conference data
+        ConferenceData conferenceData = new ConferenceData()
+                .setCreateRequest(new CreateConferenceRequest()
+                        .setRequestId(UUID.randomUUID().toString()) // Unique ID for the conference
+                        .setConferenceSolutionKey(new ConferenceSolutionKey()
+                                .setType("hangoutsMeet"))); // Use Google Meet
+        event.setConferenceData(conferenceData);
+
+        // Insert the event with the conference request
+        event = service.events()
+                .insert("primary", event)
+                .setConferenceDataVersion(1) // Enable conference creation
+                .execute();
+
+        // Return the Google Meet link
+        return event.getHangoutLink();
     }
 }

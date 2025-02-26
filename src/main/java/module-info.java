@@ -15,6 +15,7 @@ module esprit.tn.pidevrh {
     requires com.google.api.services.calendar;
     requires com.google.api.client.json.jackson2;
     requires jdk.httpserver;
+    requires java.desktop;
 
     exports esprit.tn.pidevrh.teams_departements to javafx.graphics, javafx.fxml;
     opens esprit.tn.pidevrh.teams_departements to javafx.fxml, javafx.base;

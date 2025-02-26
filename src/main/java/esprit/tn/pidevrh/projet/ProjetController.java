@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -259,7 +260,7 @@ public class ProjetController {
         }
     }
 
-    private void handleAddToCalendar(String projectName, String projectManager, String dates) {
+    /*private void handleAddToCalendar(String projectName, String projectManager, String dates) {
         String[] dateParts = dates.split(" to ");
         LocalDateTime startDate = LocalDate.parse(dateParts[0]).atStartOfDay();
         LocalDateTime endDate = LocalDate.parse(dateParts[1]).atStartOfDay();
@@ -270,6 +271,64 @@ public class ProjetController {
         } catch (GeneralSecurityException | IOException e) {
             showAlert("Erreur", "Erreur lors de l'ajout du projet au calendrier Google: " + e.getMessage(), Alert.AlertType.ERROR);
         }
+    }*/
+    private void handleAddToCalendar(String projectName, String projectManager, String dates) {
+        String[] dateParts = dates.split(" to ");
+        LocalDateTime startDate = LocalDate.parse(dateParts[0]).atStartOfDay();
+        LocalDateTime endDate = LocalDate.parse(dateParts[1]).atStartOfDay();
+
+        try {
+            // Add the event to Google Calendar and get the Google Meet link
+            String meetLink = GoogleCalendarService.addEvent(
+                    projectName,
+                    "Managed by: " + projectManager,
+                    startDate,
+                    endDate
+            );
+
+            // Show the Google Meet link as a clickable hyperlink
+            showAlertWithHyperlink(
+                    "Google Meet Link",
+                    "Projet ajouté au calendrier Google avec succès!",
+                    meetLink
+            );
+        } catch (GeneralSecurityException | IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ajout du projet au calendrier Google: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void showAlertWithHyperlink(String title, String message, String meetLink) {
+        // Create a custom dialog
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle(title);
+        dialog.setHeaderText(message);
+
+        // Create a hyperlink for the Google Meet link
+        Hyperlink hyperlink = new Hyperlink(meetLink);
+        hyperlink.setOnAction(event -> {
+            try {
+                // Open the link in the default browser
+                java.awt.Desktop.getDesktop().browse(new java.net.URI(meetLink));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Add the hyperlink to the dialog
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.add(new Label("Google Meet Link:"), 0, 0);
+        gridPane.add(hyperlink, 1, 0);
+
+        // Set the dialog content
+        dialog.getDialogPane().setContent(gridPane);
+
+        // Add an "OK" button to close the dialog
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+
+        // Show the dialog
+        dialog.showAndWait();
     }
 
 
