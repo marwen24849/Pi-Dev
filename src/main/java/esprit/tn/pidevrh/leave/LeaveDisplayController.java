@@ -21,7 +21,7 @@ public class LeaveDisplayController {
     @FXML private ListView<Leave> leaveListView;
     private ObservableList<Leave> leaveRequests = FXCollections.observableArrayList();
 
-    private final long STATIC_USER_ID = 1; // ID utilisateur connecté (remplace par une valeur dynamique si nécessaire)
+    private final long STATIC_USER_ID = 5;
 
     @FXML
     public void initialize() {
@@ -58,9 +58,7 @@ public class LeaveDisplayController {
         });
     }
 
-    /**
-     * Charge uniquement les demandes de congé de l'utilisateur connecté.
-     */
+
     protected void loadLeaveRequests() {
         String query = "SELECT id, user_id, type_congé, autre, justification, status, date_debut, date_fin, certificate " +
                 "FROM demande_conge WHERE user_id = ?";
@@ -74,14 +72,14 @@ public class LeaveDisplayController {
                 while (resultSet.next()) {
                     leaveRequests.add(new Leave(
                             resultSet.getInt("id"),
-                            resultSet.getInt("user_id"), // Ajout du user_id
+                            resultSet.getInt("user_id"),
                             resultSet.getString("type_congé"),
                             resultSet.getString("autre"),
                             resultSet.getString("justification"),
                             resultSet.getString("status"),
                             resultSet.getDate("date_debut").toLocalDate(),
                             resultSet.getDate("date_fin").toLocalDate(),
-                            resultSet.getBytes("certificate") // Ajout du certificat
+                            resultSet.getBytes("certificate")
                     ));
                 }
                 leaveListView.setItems(leaveRequests);
@@ -111,9 +109,7 @@ public class LeaveDisplayController {
         }
     }
 
-    /**
-     * Supprime une demande de congé après confirmation.
-     */
+
     private void deleteLeaveRequest(int id) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer cette demande ?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
@@ -123,7 +119,7 @@ public class LeaveDisplayController {
                      PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, id);
                     preparedStatement.executeUpdate();
-                    loadLeaveRequests(); // Rafraîchir la liste après suppression
+                    loadLeaveRequests();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

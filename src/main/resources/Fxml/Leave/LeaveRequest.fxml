@@ -69,9 +69,15 @@
                       style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
                              -fx-border-color: #dce4ec; -fx-border-radius: 8px;
                              -fx-padding: 8px;" />
+            <!-- Bouton Check Holiday -->
+            <Button fx:id="checkHolidayButton" text="Check Holiday" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                    onAction="#handleCheckHolidays"
+                    style="-fx-background-color: #f39c12; -fx-text-fill: white;
+                           -fx-font-size: 14px; -fx-font-weight: bold;
+                           -fx-padding: 8px 16px; -fx-background-radius: 8px;" />
 
             <!-- Bouton Upload Justification -->
-            <Button fx:id="uploadButton" text="Télécharger Certificat" GridPane.rowIndex="5" GridPane.columnIndex="1"
+            <Button fx:id="uploadButton" text="Télécharger Certificat" GridPane.rowIndex="6" GridPane.columnIndex="1"
                     onAction="#handleUpload"
                     style="-fx-background-color: #3498db; -fx-text-fill: white;
                            -fx-font-size: 14px; -fx-font-weight: bold;

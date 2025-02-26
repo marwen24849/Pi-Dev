@@ -27,7 +27,7 @@ public class LeaveEditController {
     private Leave leave;
     private LeaveDisplayController parentController;
     private File selectedCertificate;
-    private final long STATIC_USER_ID = 1; // ID utilisateur statique (à rendre dynamique si nécessaire)
+    private final long STATIC_USER_ID = 5;
 
     @FXML
     public void initialize() {
@@ -59,7 +59,7 @@ public class LeaveEditController {
         autreField.setDisable(!isOtherLeave);
 
         if (!isMedicalLeave) {
-            selectedCertificate = null; // Supprime le fichier sélectionné si on quitte "Maladie"
+            selectedCertificate = null;
             medicalCertificateField.clear();
         }
         if (!isOtherLeave) {
@@ -102,13 +102,13 @@ public class LeaveEditController {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, selectedType);
-            preparedStatement.setString(2, autreValue); // Se remplit seulement si le type est "Autre", sinon NULL
+            preparedStatement.setString(2, autreValue);
             preparedStatement.setString(3, justificationField.getText());
             preparedStatement.setDate(4, java.sql.Date.valueOf(startDatePicker.getValue()));
             preparedStatement.setDate(5, java.sql.Date.valueOf(endDatePicker.getValue()));
 
             if (shouldUpdateCertificate) {
-                if (selectedCertificate.length() > 16 * 1024 * 1024) { // Vérification taille max
+                if (selectedCertificate.length() > 16 * 1024 * 1024) {
                     showAlert("Erreur", "Le fichier est trop volumineux (max: 16 Mo)", Alert.AlertType.ERROR);
                     return;
                 }

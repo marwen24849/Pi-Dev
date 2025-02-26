@@ -12,7 +12,7 @@
            AnchorPane.leftAnchor="20.0"
            AnchorPane.topAnchor="40.0" />
 
-    <!-- Liste des Congés Approuvés -->
+
     <ListView fx:id="congeListView"
               AnchorPane.leftAnchor="20.0"
               AnchorPane.rightAnchor="20.0"
@@ -20,7 +20,7 @@
               AnchorPane.bottomAnchor="80.0"
               style="-fx-font-size: 14px; -fx-padding: 5px;" />
 
-    <!-- Bouton Rafraîchir -->
+
     <Button text="🔄 Rafraîchir" fx:id="refreshButton"
             onAction="#handleRefresh"
             AnchorPane.leftAnchor="20.0"

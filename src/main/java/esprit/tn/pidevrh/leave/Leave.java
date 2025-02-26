@@ -4,14 +4,14 @@ import java.time.LocalDate;
 
 public class Leave {
     private int id;
-    private int userId; // Ajout de l'ID utilisateur
+    private int userId;
     private String typeConge;
     private String autre;
     private String justification;
     private String status;
     private LocalDate dateDebut;
     private LocalDate dateFin;
-    private byte[] certificate; // Ajout du certificat (si congé maladie)
+    private byte[] certificate;
 
     // Constructeur mis à jour
     public Leave(int id, int userId, String typeConge, String autre, String justification, String status, LocalDate dateDebut, LocalDate dateFin, byte[] certificate) {
@@ -28,14 +28,14 @@ public class Leave {
 
     // Getters
     public int getId() { return id; }
-    public int getUserId() { return userId; } // Getter pour userId
+    public int getUserId() { return userId; }
     public String getTypeConge() { return typeConge; }
     public String getAutre() { return autre; }
     public String getJustification() { return justification; }
     public String getStatus() { return status; }
     public LocalDate getDateDebut() { return dateDebut; }
     public LocalDate getDateFin() { return dateFin; }
-    public byte[] getCertificate() { return certificate; } // Getter pour certificat
+    public byte[] getCertificate() { return certificate; }
 
     // Setters
     public void setTypeConge(String typeConge) { this.typeConge = typeConge; }

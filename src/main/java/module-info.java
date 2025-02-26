@@ -6,8 +6,9 @@ module esprit.tn.pidevrh {
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires javafx.graphics;
-    requires java.sql;
     requires java.net.http;
+    requires com.google.gson;
+    requires java.sql;
 
     opens esprit.tn.pidevrh.congeApprove to javafx.fxml; // Ouvre le package pour JavaFX
     exports esprit.tn.pidevrh.congeApprove;

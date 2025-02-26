@@ -48,8 +48,8 @@ public class LeaveManagementController {
                     Label durationLabel = new Label("Durée: " + duration + " jours");
 
 
-                    String status = (leave.getStatus() != null) ? leave.getStatus() : "PENDING";
-                    Label statusLabel = new Label("Statut: " + status);
+                    // String status = (leave.getStatus() != null) ? leave.getStatus() : "PENDING";
+                   // Label statusLabel = new Label("Statut: " + status);
 
 
                     Button approveButton = new Button("✅ Approuver");
@@ -59,10 +59,10 @@ public class LeaveManagementController {
                     rejectButton.setOnAction(e -> updateLeaveStatus(leave.getId(), "REJECTED"));
 
 
-                    VBox detailsBox = new VBox(5, userLabel, typeLabel, startDateLabel, endDateLabel, durationLabel, statusLabel);
+                    VBox detailsBox = new VBox(5, userLabel, typeLabel, startDateLabel, endDateLabel, durationLabel);
                     VBox fullBox = new VBox(10, detailsBox, new HBox(10, approveButton, rejectButton));
 
-                    // Si le congé est de type "Maladie", afficher le certificat
+
                     if ("Maladie".equalsIgnoreCase(leave.getTypeConge()) && leave.getCertificate() != null) {
                         ImageView certImageView = new ImageView(new Image(new ByteArrayInputStream(leave.getCertificate())));
                         certImageView.setFitWidth(100);
@@ -120,17 +120,17 @@ public class LeaveManagementController {
              PreparedStatement checkStmt = connection.prepareStatement(checkQuery);
              PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
 
-            // 1️⃣ Mettre à jour le statut de la demande
+
             updateStmt.setString(1, newStatus);
             updateStmt.setInt(2, leaveId);
             updateStmt.executeUpdate();
 
-            // 2️⃣ Vérifier si l'entrée existe déjà dans la table `conge`
+
             if ("APPROVED".equalsIgnoreCase(newStatus)) {
                 checkStmt.setInt(1, leaveId);
                 ResultSet rs = checkStmt.executeQuery();
-                if (rs.next() && rs.getInt(1) == 0) { // Aucun enregistrement trouvé
-                    // 3️⃣ Insérer uniquement si le congé n'existe pas encore
+                if (rs.next() && rs.getInt(1) == 0) {
+
                     insertStmt.setInt(1, leaveId);
                     insertStmt.executeUpdate();
                     System.out.println("✅ Congé inséré avec succès.");
@@ -139,7 +139,7 @@ public class LeaveManagementController {
                 }
             }
 
-            // 4️⃣ Rafraîchir la liste des demandes après la mise à jour
+            //
             loadAllLeaveRequests();
 
         } catch (SQLException e) {
