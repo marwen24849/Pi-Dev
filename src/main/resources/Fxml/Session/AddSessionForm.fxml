@@ -17,13 +17,24 @@
                 <ColumnConstraints hgrow="ALWAYS" />
             </columnConstraints>
 
+
+
             <!-- Session Date -->
-            <Label style="-fx-font-size: 14px;" text="Session Date :" />
-            <DatePicker fx:id="date" style="-fx-font-size: 14px;" GridPane.columnIndex="1" />
+            <Label style="-fx-font-size: 14px;" text="Session Date :" GridPane.rowIndex="1" />
+            <DatePicker fx:id="date" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <!-- Session Type (Radio Buttons) -->
+            <Label style="-fx-font-size: 14px;" text="Type de Session :" />
+            <HBox spacing="10" GridPane.columnIndex="1">
+                <RadioButton fx:id="presentielRadio" text="Présentiel" onAction="#handleSessionTypeChange" />
+                <RadioButton fx:id="onlineRadio" text="En ligne" onAction="#handleSessionTypeChange" />
+            </HBox>
+
+
 
             <!-- Salle (Room) -->
-            <Label style="-fx-font-size: 14px;" text="Salle (Room) :" GridPane.rowIndex="1" />
-            <TextField fx:id="salle" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="salleLabel" style="-fx-font-size: 14px;" text="Salle (Room) :" GridPane.rowIndex="2" />
+            <TextField fx:id="salle" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2" visible="false" />
         </GridPane>
 
         <!-- Bouton -->

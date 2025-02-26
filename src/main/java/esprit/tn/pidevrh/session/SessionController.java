@@ -4,10 +4,7 @@ import com.mysql.cj.exceptions.NumberOutOfRange;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import lombok.Setter;
 
 import java.sql.*;
@@ -16,18 +13,29 @@ import java.time.LocalDate;
 
 public class SessionController {
 
+    public void setFormationId(long formationId) {
+        this.formationId = formationId;
+    }
+
     @FXML
     private TextField salle;
+    @FXML
+    private Label salleLabel;
 
     @FXML
     private DatePicker date;
 
     private long formationId;
 
+    @FXML
+    private RadioButton presentielRadio;
+
+    @FXML
+    private RadioButton onlineRadio;
+
+    private ToggleGroup sessionTypeGroup;  // Define it as a private field
 
     public void initialize() {
-
-        salle.setText("");
         // Disable past dates in DatePicker
         date.setDayCellFactory(picker -> new DateCell() {
             @Override
@@ -39,48 +47,69 @@ public class SessionController {
                 }
             }
         });
+        // Initialize the ToggleGroup
+        sessionTypeGroup = new ToggleGroup();
 
+        // Set the ToggleGroup for both RadioButtons
+        presentielRadio.setToggleGroup(sessionTypeGroup);
+        onlineRadio.setToggleGroup(sessionTypeGroup);
+
+        // Set default selection (optional)
+        presentielRadio.setSelected(true);  // Makes sure "Présentiel" is selected by default
+
+        // Ensure proper behavior when initialized
+        handleSessionTypeChange(null); // Call this to check the default state
     }
 
-    public void setFormationId(long formationId) {
-        this.formationId = formationId;
+    @FXML
+    void handleSessionTypeChange(ActionEvent event) {
+        if (presentielRadio.isSelected()) {
+            salle.setVisible(true);
+            salleLabel.setVisible(true);
+        } else {
+            salle.setVisible(false);
+            salleLabel.setVisible(false);
+        }
     }
+
 
     @FXML
     void handleAddSession() {
         // Check if all fields are filled out
-        if (salle.getText().isEmpty() || date.getValue() == null) {
+        if ((presentielRadio.isSelected() && salle.getText().isEmpty()) || date.getValue() == null) {
             showAlert("Erreur", "Tous les champs doivent être remplis.");
             return;
         }
 
-        try {
-            int salleNumber = Integer.parseInt(salle.getText());
+        // Validate salle number if "Présentiel" is selected
+        if (presentielRadio.isSelected()) {
+            try {
+                int salleNumber = Integer.parseInt(salle.getText());
 
-            if (salleNumber <= 0) {  // Check if the number is negative or zero
-                notValidNumberAlert("Erreur", "La salle doit être un nombre positif.");
+                if (salleNumber <= 0) {  // Check if the number is negative or zero
+                    notValidNumberAlert("Erreur", "La salle doit être un nombre positif.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                notNumberAlert("Erreur", "La salle doit être un nombre entier.");
                 return;
             }
-        } catch (NumberFormatException e) {
-            notNumberAlert("Erreur", "La salle doit être un nombre entier.");
-            return;
         }
+
         if (!canAddSession(formationId)) {
             showAlert("Erreur", "Le nombre maximum de sessions pour cette formation est atteint.");
             return;
         }
+
         try (Connection conn = DatabaseConnection.getConnection()) {
             // SQL query to insert the session into the database
-            String sql = "INSERT INTO session (formation_id, salle, date) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO session (formation_id, salle, date, is_online) VALUES (?, ?, ?, ?)";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setLong(1, formationId);  // Use the current formationId here
-            ps.setString(2, salle.getText());
+            ps.setString(2, presentielRadio.isSelected() ? salle.getText() : null); // Set salle only for presentiel
             ps.setDate(3, Date.valueOf(date.getValue()));
-
-            // Check the SQL and parameters before execution (for debugging)
-            System.out.println("SQL: " + sql);
-            System.out.println("Parameters: " + formationId + ", " + salle.getText() + ", " + Date.valueOf(date.getValue()));
+            ps.setBoolean(4, onlineRadio.isSelected()); // Set is_online based on selection
 
             // Execute the query
             int rowsAffected = ps.executeUpdate();
@@ -96,6 +125,7 @@ public class SessionController {
             showAlert("Erreur SQL", "Erreur lors de l'ajout de la session dans la base de données. Détails : " + e.getMessage());
         }
     }
+
 
     public boolean canAddSession(long formationId) {
         String countQuery = "SELECT COUNT(*) FROM session WHERE formation_id = ?";

@@ -62,6 +62,8 @@ public class inscriptionSessionController {
                 session.setId(resultSet.getLong("id"));
                 session.setDate(resultSet.getDate("date").toLocalDate());
                 session.setSalle(resultSet.getString("salle"));
+                session.setOnline(resultSet.getBoolean("is_online")); // Set online status
+                session.setRoomLink(resultSet.getString("link")); // Set the link for online sessions
 
                 sessionList.add(session);
             }
@@ -93,11 +95,27 @@ public class inscriptionSessionController {
             } else {
                 // Create a layout for each session
                 Label dateLabel = new Label("Date: " + session.getDate());
-                Label salleLabel = new Label("Salle: " + session.getSalle());
+                Label typeLabel = new Label("Type: " + (session.isOnline() ? "En ligne" : "Présentiel"));
 
-                // Layout for session cell
-                HBox actionBox = new HBox(10);
-                VBox sessionBox = new VBox(5, dateLabel, salleLabel, actionBox);
+                // Conditional display of salle or link
+                Label salleLabel = new Label();
+                Label linkLabel = new Label();
+                if (session.isOnline()) {
+                    linkLabel.setText("Link: " + session.getRoomLink());
+                } else {
+                    salleLabel.setText("Salle: " + session.getSalle());
+                }
+
+
+                VBox sessionBox = new VBox(5, dateLabel, typeLabel);
+
+                // Add salle or link based on session type
+                if (session.isOnline()) {
+                    sessionBox.getChildren().add(linkLabel);
+                } else {
+                    sessionBox.getChildren().add(salleLabel);
+                }
+
                 sessionBox.setStyle("-fx-padding: 10px; -fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7; -fx-border-radius: 5px;");
 
                 setGraphic(sessionBox);
