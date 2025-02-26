@@ -5,7 +5,6 @@
 
 <AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.pidevrh.formation.FormationController">
 
-
     <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
 
         <!-- Titre -->
@@ -18,17 +17,21 @@
                 <ColumnConstraints hgrow="ALWAYS" />
             </columnConstraints>
 
+            <!-- Titre -->
             <Label style="-fx-font-size: 14px;" text="Titre  :" />
             <TextField fx:id="titleField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" />
 
+            <!-- Description -->
             <Label style="-fx-font-size: 14px;" text="Description :" GridPane.rowIndex="1" />
             <TextField fx:id="description" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
+            <!-- Durée (jours) -->
             <Label style="-fx-font-size: 14px;" text="Durée (jours):" GridPane.rowIndex="2" />
             <TextField fx:id="duration" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-
-
+            <!-- Capacité -->
+            <Label style="-fx-font-size: 14px;" text="Capacité:" GridPane.rowIndex="3" />
+            <TextField fx:id="capacity" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         </GridPane>
 
         <!-- Bouton -->

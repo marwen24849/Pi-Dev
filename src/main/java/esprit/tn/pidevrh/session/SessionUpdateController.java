@@ -2,10 +2,7 @@ package esprit.tn.pidevrh.session;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -19,15 +16,23 @@ public class SessionUpdateController {
     private TextField salleField;
 
     @FXML
+    private TextField linkField;
+
+    @FXML
     private DatePicker datePicker;
+
+    @FXML
+    private RadioButton presentielRadio;
+
+    @FXML
+    private RadioButton onlineRadio;
+
+    @FXML
+    private ToggleGroup sessionTypeGroup; // Ensure this matches the fx:id in FXML
 
     private Session session;
 
-    public void setSession(Session session) {
-        this.session = session;
-        // Set the fields with the current session's values
-        salleField.setText(session.getSalle());
-        datePicker.setValue(session.getDate());
+    public void initialize() {
         // Disable past dates in DatePicker
         datePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
@@ -39,38 +44,94 @@ public class SessionUpdateController {
                 }
             }
         });
+
+        // Initialize the ToggleGroup
+        sessionTypeGroup = new ToggleGroup();
+
+        // Set the ToggleGroup for both RadioButtons
+        presentielRadio.setToggleGroup(sessionTypeGroup);
+        onlineRadio.setToggleGroup(sessionTypeGroup);
+
+        // Set default selection (optional)
+        presentielRadio.setSelected(true);  // Makes sure "Présentiel" is selected by default
+
+        // Ensure proper behavior when initialized
+        handleSessionTypeChange(); // Call this to check the default state
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+
+        // Set the fields with the current session's values
+        salleField.setText(session.getSalle());
+        datePicker.setValue(session.getDate());
+
+        // Set session type (online or présentiel)
+        if (session.isOnline()) {
+            onlineRadio.setSelected(true);
+            linkField.setText(session.getRoomLink());
+            salleField.setVisible(false);
+            linkField.setVisible(true);
+        } else {
+            presentielRadio.setSelected(true);
+            salleField.setVisible(true);
+            linkField.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void handleSessionTypeChange() {
+        // Show/hide salle and link fields based on session type
+        if (presentielRadio.isSelected()) {
+            salleField.setVisible(true);
+            linkField.setVisible(false);
+        } else {
+            salleField.setVisible(false);
+            linkField.setVisible(true);
+        }
     }
 
     @FXML
     private void handleSave() {
-        // Validate the form fields
-        if (!validateForm()) {
-            return;  // Return early if validation fails
-        }
-        if (salleField.getText().isEmpty() || datePicker.getValue() == null) {
+        // Check if all fields are filled out
+        if ((presentielRadio.isSelected() && salleField.getText().isEmpty()) ||
+                (onlineRadio.isSelected() && linkField.getText().isEmpty()) ||
+                datePicker.getValue() == null) {
             showAlert("Erreur", "Tous les champs doivent être remplis.");
             return;
         }
 
-        try {
-            int salleNumber = Integer.parseInt(salleField.getText());
+        // Validate salle number if "Présentiel" is selected
+        if (presentielRadio.isSelected()) {
+            try {
+                int salleNumber = Integer.parseInt(salleField.getText());
 
-            if (salleNumber <= 0) {  // Check if the number is negative or zero
-                notValidNumberAlert("Erreur", "La salle doit être un nombre positif.");
+                if (salleNumber <= 0) {  // Check if the number is negative or zero
+                    notValidNumberAlert("Erreur", "La salle doit être un nombre positif.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                notNumberAlert("Erreur", "La salle doit être un nombre entier.");
                 return;
             }
-        } catch (NumberFormatException e) {
-            notNumberAlert("Erreur", "La salle doit être un nombre entier.");
-            return;
         }
 
-        String sql = "UPDATE session SET salle=?, date=? WHERE id=?";
+        // Update session details
+        session.setOnline(onlineRadio.isSelected());
+        session.setDate(datePicker.getValue());
+        session.setSalle(salleField.getText());
+        session.setRoomLink(linkField.getText());
+
+        // Save changes to the database
+        String sql = "UPDATE session SET date=?, salle=?, is_online=?, link=? WHERE id=?";
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, salleField.getText());
-            preparedStatement.setDate(2, java.sql.Date.valueOf(datePicker.getValue()));
-            preparedStatement.setLong(3, session.getId());
+            preparedStatement.setDate(1, java.sql.Date.valueOf(session.getDate()));
+            preparedStatement.setString(2, session.isOnline() ? null : session.getSalle());
+            preparedStatement.setBoolean(3, session.isOnline());
+            preparedStatement.setString(4, session.isOnline() ? session.getRoomLink() : null);
+            preparedStatement.setLong(5, session.getId());
 
             int rowsUpdated = preparedStatement.executeUpdate();
 
@@ -97,6 +158,29 @@ public class SessionUpdateController {
         stage.close();
     }
 
+    private boolean validateForm() {
+        // Validate Date
+        if (datePicker.getValue() == null) {
+            showAlert("Erreur", "La date ne peut pas être vide.");
+            return false;
+        }
+
+        // Validate Salle (if présentiel)
+        if (presentielRadio.isSelected() && salleField.getText().trim().isEmpty()) {
+            showAlert("Erreur", "La salle ne peut pas être vide pour une session présentielle.");
+            return false;
+        }
+
+        // Validate Link (if online)
+        if (onlineRadio.isSelected() && linkField.getText().trim().isEmpty()) {
+            showAlert("Erreur", "Le lien ne peut pas être vide pour une session en ligne.");
+            return false;
+        }
+
+        // If all validations pass
+        return true;
+    }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -105,30 +189,15 @@ public class SessionUpdateController {
         alert.showAndWait();
     }
 
-    private boolean validateForm() {
-        // Validate Salle (it should not be empty)
-        if (salleField.getText().trim().isEmpty()) {
-            showAlert("Erreur", "Le champ 'Salle' ne peut pas être vide.");
-            return false;
-        }
-
-        // Validate Date (it should be selected)
-        if (datePicker.getValue() == null) {
-            showAlert("Erreur", "La date doit être sélectionnée.");
-            return false;
-        }
-
-        // If all validations pass
-        return true;
-    }
-    private void notNumberAlert(String title, String message){
+    private void notNumberAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void notValidNumberAlert(String title, String message){
+
+    private void notValidNumberAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(null);

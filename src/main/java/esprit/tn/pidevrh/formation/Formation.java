@@ -5,6 +5,17 @@ public class Formation {
     private String titre;
     private String description;
     private int duration;
+    private int capacity;
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+
 
     public Formation(String titre, String description, int duration) {
         this.titre = titre;

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class FormationUpdateController {
 
     @FXML
-    private TextField titleField, descriptionField, durationField;
+    private TextField titleField, descriptionField, durationField, capacityField;
 
     private Formation formation;
 
@@ -23,6 +23,7 @@ public class FormationUpdateController {
         titleField.setText(formation.getTitre());
         descriptionField.setText(formation.getDescription());
         durationField.setText(String.valueOf(formation.getDuree()));
+        capacityField.setText(String.valueOf(formation.getCapacity()));
     }
 
     @FXML
@@ -32,14 +33,15 @@ public class FormationUpdateController {
             return;  // Return early if validation fails
         }
 
-        String sql = "UPDATE formation SET title=?, description=?, duration=? WHERE id=?";
+        String sql = "UPDATE formation SET title=?, description=?, duration=? , capacity=? WHERE id=?";
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, titleField.getText());
             preparedStatement.setString(2, descriptionField.getText());
             preparedStatement.setInt(3, Integer.parseInt(durationField.getText()));
-            preparedStatement.setLong(4, formation.getId());
+            preparedStatement.setInt(4, Integer.parseInt(capacityField.getText()));
+            preparedStatement.setLong(5, formation.getId());
 
             int rowsUpdated = preparedStatement.executeUpdate();
 

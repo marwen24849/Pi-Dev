@@ -8,6 +8,7 @@
     <TextField fx:id="titleField" promptText="Titre de la formation" />
     <TextField fx:id="descriptionField"  promptText="Description de la formation" />
     <TextField fx:id="durationField" promptText="Durée de la formation" />
+    <TextField fx:id="capacityField" promptText="Durée de la formation" />
 
 
     <HBox spacing="10">

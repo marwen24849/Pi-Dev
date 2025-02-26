@@ -70,6 +70,7 @@ public class InscriptionFormationController {
                 formation.setTitre(resultSet.getString("title"));
                 formation.setDescription(resultSet.getString("description"));
                 formation.setDuree(resultSet.getInt("duration"));
+                formation.setCapacity(resultSet.getInt("capacity"));
                 formations.add(formation);
             }
         } catch (SQLException e) {
@@ -117,12 +118,16 @@ public class InscriptionFormationController {
                     Label durationLabel = new Label("Durée: " + formation.getDuree() + " jours");
                     durationLabel.setStyle("-fx-font-size: 14px;");
 
+                    // Capacity label
+                    Label capacityLabel = new Label("Capacité: " + formation.getCapacity());
+                    capacityLabel.setStyle("-fx-font-size: 14px;");
+
                     // Action buttons in HBox
                     HBox actionButtons = new HBox(10,  manageButton);
                     actionButtons.setStyle("-fx-spacing: 10px;");
 
                     // Adding all components to the VBox
-                    vbox.getChildren().addAll(titleLabel, descriptionLabel, durationLabel, actionButtons);
+                    vbox.getChildren().addAll(titleLabel, descriptionLabel, durationLabel,capacityLabel, actionButtons);
 
                     // Set the graphic for the cell
                     setGraphic(vbox);
