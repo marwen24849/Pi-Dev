@@ -4,73 +4,95 @@
     -fx-font-family: 'Segoe UI';
 }
 
-
-.label {
+.header-title {
     -fx-text-fill: #2D3640;
     -fx-font-size: 24px;
     -fx-font-weight: 600;
-    -fx-padding: 0 0 5px 0;
+    -fx-padding: 0 0 15px 0;
 }
 
-
-.hbox {
-    -fx-padding: 15px 20px;
+.user-list-container {
     -fx-background-color: #FFFFFF;
-    -fx-background-radius: 5px;
+    -fx-background-radius: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-padding: 15px;
 }
 
-.header-label {
-    -fx-text-fill: #3A4045 !important;
-    -fx-font-size: 14px;
-    -fx-font-weight: 600;
-    -fx-padding: 0 25px 0 0;
-    -fx-min-width: 120px;
-}
-
-
-.list-view {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-padding: 10px 0;
-}
-
-.list-cell {
-    -fx-background-color: #FFFFFF;
-    -fx-padding: 15px 20px;
+.user-header {
+    -fx-background-color: #F5F6FA;
+    -fx-padding: 12px 15px;
+    -fx-spacing: 20px;
     -fx-border-color: #E0E4E7;
     -fx-border-width: 0 0 1px 0;
+}
+
+.column-header {
+    -fx-text-fill: #3A4045;
     -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.user-card {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 15px;
+    -fx-spacing: 20px;
+    -fx-border-color: #E0E4E7;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.user-card:hover {
+    -fx-background-color: #F8FAFC;
+}
+
+.user-info {
     -fx-text-fill: #2D3640;
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
 }
 
-.list-cell:filled:hover {
-    -fx-background-color: #F5F6FA;
+.role-combo {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D1D9E0;
+    -fx-border-radius: 4px;
+    -fx-pref-width: 120px;
+}
+
+.role-combo .list-cell {
+    -fx-padding: 8px 12px;
+    -fx-font-size: 14px;
+}
+
+.action-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6FB2FF;
+    -fx-font-size: 14px;
     -fx-cursor: hand;
+    -fx-padding: 6px 12px;
+    -fx-border-radius: 4px;
 }
 
-.list-cell:filled:selected {
+.action-button:hover {
     -fx-background-color: #6FB2FF20;
 }
 
-
-.scroll-bar:vertical {
-    -fx-background-color: transparent;
+.delete-button {
+    -fx-text-fill: #FF6B6B;
 }
 
-.scroll-bar:vertical .thumb {
-    -fx-background-color: #D1D9E0;
-    -fx-background-radius: 4px;
+.delete-button:hover {
+    -fx-background-color: #FF6B6B20;
 }
 
-.scroll-bar:vertical .increment-button,
-.scroll-bar:vertical .decrement-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
+.user-header {
+    -fx-padding: 12px 20px;
+    -fx-background-color: #F5F6FA;
+    -fx-border-color: #E0E4E7;
+    -fx-border-width: 0 0 1px 0;
 }
 
-
-.role-label {
-    -fx-text-fill: #6FB2FF;
+.column-header {
+    -fx-text-fill: #3A4045;
+    -fx-font-size: 14px;
     -fx-font-weight: 600;
+    -fx-alignment: CENTER_LEFT;
 }

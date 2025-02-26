@@ -4,8 +4,11 @@ import esprit.tn.pidevrh.connection.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +25,15 @@ public class UserListController {
         loadUsers();
     }
 
+    @FXML
+    private VBox userContainer;
+
     private void loadUsers() {
-        ObservableList<HBox> userList = FXCollections.observableArrayList();
+        userContainer.getChildren().clear();
+
+        // Add header
+        HBox header = createHeader();
+        userContainer.getChildren().add(header);
 
         String query = "SELECT * FROM user";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -40,25 +50,86 @@ public class UserListController {
 
                 User.Role role = User.Role.valueOf(roleString);
                 User user = new User(id, firstName, lastName, email, password, role);
-
-                HBox userItem = createUserItem(user);
-                userList.add(userItem);
+                HBox userCard = createUserCard(user);
+                userContainer.getChildren().add(userCard);
             }
 
         } catch (SQLException e) {
             showAlert("Erreur", "Impossible de charger les utilisateurs: " + e.getMessage());
         }
+    }
+    private HBox createHeader() {
+        HBox header = new HBox();
+        header.getStyleClass().add("user-header");
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.setSpacing(50);
 
-        userListView.setItems(userList);
+
+        Label nameHeader = createHeaderLabel("Nom Complet", 250);
+        Label emailHeader = createHeaderLabel("Email", 300);
+
+
+        header.getChildren().addAll(nameHeader, emailHeader);
+        return header;
     }
 
-    private HBox createUserItem(User user) {
-        Label userInfo = new Label(user.getId()+" "  + user.getFirstName() + " " + user.getLastName() + " " + user.getEmail() + " "+ user.getRole());
-        Button deleteButton = new Button("🗑️");
+    private Label createHeaderLabel(String text, double width) {
+        Label label = new Label(text);
+        label.getStyleClass().add("column-header");
+        label.setPrefWidth(width);
+        label.setPadding(new Insets(0, 10, 0, 10));
+        return label;
+    }
 
-        deleteButton.setOnAction(event -> handleDelete(user));
-        HBox userItem = new HBox(10, userInfo, deleteButton);
-        return userItem;
+    private HBox createUserCard(User user) {
+        HBox card = new HBox();
+        card.getStyleClass().add("user-card");
+        card.setSpacing(20);
+        card.setAlignment(Pos.CENTER_LEFT);
+
+
+        Label nameLabel = new Label(user.getFirstName() + " " + user.getLastName());
+        nameLabel.getStyleClass().add("user-info");
+        nameLabel.setPrefWidth(200);
+
+
+        Label emailLabel = new Label(user.getEmail());
+        emailLabel.getStyleClass().add("user-info");
+        emailLabel.setPrefWidth(250);
+
+
+        ComboBox<User.Role> roleCombo = new ComboBox<>();
+        roleCombo.getStyleClass().add("role-combo");
+        roleCombo.getItems().addAll(User.Role.values());
+        roleCombo.setValue(user.getRole());
+        roleCombo.setPrefWidth(150);
+        roleCombo.setOnAction(e -> handleRoleChange(user, roleCombo.getValue()));
+
+
+        HBox actions = new HBox(10);
+        Button deleteButton = new Button("Supprimer");
+        deleteButton.getStyleClass().addAll("action-button", "delete-button");
+        deleteButton.setOnAction(e -> handleDelete(user));
+
+        actions.getChildren().addAll(deleteButton);
+        actions.setPrefWidth(100);
+
+        card.getChildren().addAll(nameLabel, emailLabel, roleCombo, actions);
+        return card;
+    }
+
+    private void handleRoleChange(User user, User.Role newRole) {
+
+        String query = "UPDATE user SET role = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, newRole.toString());
+            stmt.setLong(2, user.getId());
+            stmt.executeUpdate();
+            user.setRole(newRole);
+        } catch (SQLException e) {
+            showAlert("Erreur", "Échec de la mise à jour du rôle: " + e.getMessage());
+        }
     }
 
     private void handleDelete(User user) {

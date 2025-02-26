@@ -2,30 +2,28 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@users_list.css"
-            fx:controller="esprit.tn.pidevrh.login.UserListController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@users_list.css" fx:controller="esprit.tn.pidevrh.login.UserListController">
 
-    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
-           text="Liste des Utilisateurs" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0" />
-
-    <!-- VBox to simulate column headers and ListView -->
-    <VBox spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
-          AnchorPane.topAnchor="100.0" AnchorPane.bottomAnchor="80.0">
-
-        <!-- Header Row for Columns -->
-        <HBox spacing="50.0" alignment="BASELINE_LEFT" styleClass="header-row">
-            <Label text="ID" styleClass="header-label" />
-            <Label text="Username" styleClass="header-label" />
-            <Label text="Email" styleClass="header-label" />
-            <Label text="Role" styleClass="header-label role-label" />
-        </HBox>
+    <VBox spacing="20.0" AnchorPane.topAnchor="40.0" AnchorPane.leftAnchor="20.0"
+          AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0">
 
 
+        <Label text="Liste des Utilisateurs" styleClass="header-title" />
 
-        <!-- ListView to display user data -->
-        <ListView fx:id="userListView" style="-fx-font-size: 9px;" />
 
+        <VBox fx:id="userContainer" spacing="10.0" styleClass="user-list-container">
+
+            <HBox styleClass="user-header">
+                <Label text="Nom Complet" styleClass="column-header" prefWidth="200"/>
+                <Label text="Email" styleClass="column-header" prefWidth="250"/>
+                <Label text="Rôle" styleClass="column-header" prefWidth="150"/>
+                <Label text="Actions" styleClass="column-header" prefWidth="100"/>
+            </HBox>
+
+
+        </VBox>
     </VBox>
-
 </AnchorPane>
