@@ -94,6 +94,11 @@ public class SessionController {
                 notNumberAlert("Erreur", "La salle doit être un nombre entier.");
                 return;
             }
+            // Check if a session with the same date and salle already exists
+            if (isSessionConflict(date.getValue(), salle.getText())) {
+                showAlert("Erreur", "Une session avec la même date et salle existe déjà.");
+                return;
+            }
         }
 
         if (!canAddSession(formationId)) {
@@ -126,6 +131,26 @@ public class SessionController {
         }
     }
 
+    private boolean isSessionConflict(LocalDate date, String salle) {
+        String query = "SELECT COUNT(*) FROM session WHERE date = ? AND salle = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setDate(1, Date.valueOf(date));
+            statement.setString(2, salle);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // If count > 0, a conflict exists
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Erreur SQL", "Erreur lors de la vérification des conflits de session.");
+        }
+
+        return false; // Default to false if an error occurs
+    }
 
     public boolean canAddSession(long formationId) {
         String countQuery = "SELECT COUNT(*) FROM session WHERE formation_id = ?";
