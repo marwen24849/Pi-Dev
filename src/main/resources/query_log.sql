@@ -92,3 +92,48 @@ VALUES ('Catégorie', 'Niveau', 'Option 1', 'Option 2', 'Option 3', 'Option 4', 
  SELECT COUNT(*) AS nombre_quiz
 FROM quiz;
 ******************************************** ********************************************
+2025-02-25 16:37:31 
+ SELECT u.first_name, u.last_name
+FROM user u
+JOIN user_quiz uq ON u.id = uq.user_id
+JOIN quiz q ON uq.quiz_id = q.id;
+******************************************** ********************************************
+2025-02-26 09:19:05 
+ SELECT COUNT(*) AS nombre_de_questions
+FROM question;
+******************************************** ********************************************
+2025-02-26 09:19:17 
+ SELECT title 
+FROM quiz 
+WHERE passer = 1 
+ORDER BY passer DESC 
+LIMIT 1;
+******************************************** ********************************************
+2025-02-26 09:19:35 
+ SELECT MAX(score) AS meilleur_resultat
+FROM resultat;
+******************************************** ********************************************
+2025-02-26 09:19:47 
+ SELECT MAX(score) AS meilleur_score
+FROM resultat;
+******************************************** ********************************************
+2025-02-26 09:44:37 
+ SELECT u.first_name, u.last_name
+FROM user u
+JOIN response r ON u.id = r.user_id
+JOIN resultat res ON r.resultat_id = res.id
+ORDER BY res.score DESC
+LIMIT 1;
+******************************************** ********************************************
+2025-02-26 09:46:35 
+ SELECT u.first_name, u.last_name
+FROM user u
+JOIN response r ON u.id = r.user_id
+JOIN resultat res ON r.resultat_id = res.id
+ORDER BY res.score DESC
+LIMIT 1;
+******************************************** ********************************************
+2025-02-26 09:47:35 
+ SELECT COUNT(*) AS nombre_des_questions
+FROM question;
+******************************************** ********************************************

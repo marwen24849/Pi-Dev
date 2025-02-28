@@ -24,8 +24,9 @@ public class SidebarController {
 
     public Button gestionQuestionsButton;
     public VBox gestionQuestionsContainer;
-    @FXML
+    public VBox userQuizMenu;
 
+    @FXML
     private Button logoutButton;
 
     @FXML
@@ -112,6 +113,10 @@ public class SidebarController {
     @FXML
     private void toggleGestionQuizMenu() {
         toggleMenuVisibility(gestionQuizMenu, !gestionQuizMenu.isVisible());
+    }
+    @FXML
+    private void toggleUserQuizMenu() {
+        toggleMenuVisibility(userQuizMenu, !userQuizMenu.isVisible());
     }
 
     @FXML
@@ -223,5 +228,13 @@ public class SidebarController {
 
     public void handleAssistantSgrh(ActionEvent actionEvent) {
         loadContent("/Fxml/chat/Chat_SGRH.fxml");
+    }
+
+    public void handleListUserQuiz(ActionEvent actionEvent) {
+        loadContent("/Fxml/Quiz/UserQuizzesView.fxml");
+    }
+
+    public void handleQuizResults(ActionEvent actionEvent) {
+        loadContent("/Fxml/Quiz/UserQuizzesView.fxml");
     }
 }

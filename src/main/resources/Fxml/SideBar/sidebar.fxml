@@ -47,6 +47,16 @@
                                 </VBox>
                             </VBox>
 
+                            <VBox fx:id="userQuizContainer">
+                                <Button fx:id="userQuizButton" text="👤 Mes Quiz"
+                                        styleClass="sidebar-menu" onAction="#toggleUserQuizMenu"/>
+                                <VBox fx:id="userQuizMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handleListUserQuiz" text="📜 Mes Quiz" styleClass="menu-item"/>
+                                    <Button onAction="#handleQuizResults" text="📊 Mes Résultats" styleClass="menu-item"/>
+                                </VBox>
+                            </VBox>
+
+
                             <!-- Demande Congé -->
                             <VBox fx:id="demandeCongeContainer">
                                 <Button fx:id="demandeCongeButton" text="🗂️ Demande Congé"

@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -28,7 +29,6 @@ public class ResponseController implements Initializable {
     private Button nextButton, submitButton;
     @FXML
     private Label questionNumberLabel;
-
     private ToggleGroup optionsGroup;
     private Quiz quiz;
     private List<Question> questions;
@@ -42,6 +42,7 @@ public class ResponseController implements Initializable {
     private Timeline countdownTimer;
     private int timeRemaining ;
     private  int TIMEOUT_SECONDS ;
+    private Stage stage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -260,12 +261,13 @@ public class ResponseController implements Initializable {
 
     private void saveResponse(long resultatId) {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO response (id, quiz_id, resultat_id) VALUES (?, ?, ?)";
+            String query = "INSERT INTO response (id, quiz_id, resultat_id, user_id) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             String key = UUID.randomUUID().toString();
             ps.setString(1, key);
             ps.setLong(2, quiz.getId());
             ps.setLong(3, resultatId);
+            ps.setLong(4,1);
             ps.executeUpdate();
             for (Map.Entry<Long, String> entry : userAnswers.entrySet()) {
                 System.out.println(key);
@@ -301,5 +303,9 @@ public class ResponseController implements Initializable {
                         "Résultat : " + (passed ? "Réussi" : "Échoué")
         );
         alert.showAndWait();
+        stage.close();
+    }
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }
