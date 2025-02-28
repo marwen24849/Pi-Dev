@@ -13,7 +13,7 @@
 
         <HBox spacing="10.0">
             <Button text="Corriger la Grammaire" onAction="#handleCorrection" />
-            <Button text="Envoyer" onAction="#handleSubmit" />
+            <Button text="Envoyer" onAction="#handleSubmit" styleClass="send-button"  />
         </HBox>
     </VBox>
 

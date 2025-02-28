@@ -71,7 +71,7 @@ public class ListReclamationController {
                 }
 
                 Button resolveButton = new Button("✅ Marquer comme Résolue");
-                resolveButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 10px;");
+                resolveButton.setStyle("-fx-background-color: #3A4045; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 10px;");
                 resolveButton.setOnAction(e -> markAsResolved(reclamationId));
 
                 HBox topBox = new HBox(10, userLabel, dateLabel);
