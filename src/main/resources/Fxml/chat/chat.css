@@ -1,0 +1,100 @@
+/* Style général */
+.root {
+    -fx-font-family: 'Arial';
+    -fx-font-size: 14px;
+}
+
+.chat-scrollpane {
+    -fx-background: transparent;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.chat-box {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
+}
+
+.message-bubble {
+    -fx-background-radius: 15px;
+    -fx-padding: 10px;
+    -fx-wrap-text: true;
+    -fx-max-width: 400px;
+    -fx-font-size: 14px;
+}
+
+.user-message {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-alignment: center-right;
+}
+
+.assistant-message {
+    -fx-background-color: #E5E5E5;
+    -fx-text-fill: black;
+    -fx-alignment: center-left;
+}
+
+.code-block {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-background-color: #eef;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+    -fx-wrap-text: true;
+    -fx-max-width: 400px;
+}
+
+.text-bold {
+    -fx-font-weight: bold;
+}
+
+.text-italic {
+    -fx-font-style: italic;
+}
+
+.chat-input-box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D1D1D1;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+}
+
+.chat-input {
+    -fx-background-color: #F8F9FA;
+    -fx-border-color: #D1D1D1;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.chat-input:focused {
+    -fx-border-color: #007BFF;
+    -fx-background-color: #FFFFFF;
+}
+
+.send-button {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 20px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.send-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.send-button:pressed {
+    -fx-background-color: #004085;
+}

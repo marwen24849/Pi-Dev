@@ -1,5 +1,7 @@
 package esprit.tn.pidevrh.appbar;
 
+import esprit.tn.pidevrh.login.SessionManager;
+import esprit.tn.pidevrh.login.User;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -16,6 +21,15 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class SidebarController {
+
+    public Button gestionQuestionsButton;
+    public VBox gestionQuestionsContainer;
+    @FXML
+
+    private Button logoutButton;
+
+    @FXML
+    private VBox sidebar;
 
     @FXML
     private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu , gestionFormationMenu ,inscriptionFormationMenu;
@@ -69,11 +83,11 @@ public class SidebarController {
         AnchorPane.setLeftAnchor(contentArea, sidebarWidth);
     }
 
-
     private void toggleMenuVisibility(VBox menu, boolean isVisible) {
         menu.setVisible(isVisible);
         menu.setManaged(isVisible);
     }
+
 
     @FXML
     private void toggleGestionQuestionsMenu() {
@@ -94,6 +108,41 @@ public class SidebarController {
     @FXML
     private void toggleDemandeCongeMenu() {
         toggleMenuVisibility(demandeCongeMenu, !demandeCongeMenu.isVisible());
+    }
+    @FXML
+    public void handleUserList(){loadContent("/Fxml/Users_list/users_list.fxml");}
+    @FXML
+    public void  handleReclamation(){ loadContent("/Fxml/Reclamation/Reclamation.fxml");}
+    @FXML
+    public void handleReclamationList(){ loadContent("/Fxml/Reclamation/ListReclamations.fxml");}
+    public void handleAssistant(ActionEvent actionEvent) {
+        loadContent("/Fxml/chat/chat_view.fxml");
+    }
+    @FXML
+    public void handleLogout() {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirm Logout");
+        confirmationAlert.setHeaderText("Are you sure you want to log out?");
+        confirmationAlert.setContentText("Click OK to log out or Cancel to stay logged in.");
+
+
+        ButtonType result = confirmationAlert.showAndWait().orElse(ButtonType.CANCEL);
+
+
+        if (result == ButtonType.OK) {
+            SessionManager.getInstance().logout();
+            System.out.println("User logged out!");
+
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/login/Login.fxml"));
+                Stage stage = (Stage) logoutButton.getScene().getWindow();
+                stage.setScene(new Scene(loader.load()));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML

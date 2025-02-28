@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.quiz.ListQuestionQuiz">
+
+    <!-- Titre du quiz -->
+    <Label fx:id="quizTitleLabel" text="Quiz : Nom du Quiz"
+           style="-fx-font-size: 24px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+           AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
+
+    <!-- Titre principal -->
+    <Label text="Liste des Questions"
+           style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+           AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="50.0" />
+
+    <!-- Liste des questions -->
+    <ListView fx:id="questionListView"
+              AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="100.0" AnchorPane.bottomAnchor="20.0"/>
+
+</AnchorPane>

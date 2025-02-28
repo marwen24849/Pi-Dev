@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox prefHeight="600" prefWidth="800" spacing="10" style="-fx-background-color: #E9ECEF;"
+      stylesheets="@chat.css"
+      xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="esprit.tn.pidevrh.chat.SQLChatController">
+
+    <!-- Zone de chat -->
+    <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="chat-scrollpane">
+        <VBox fx:id="chatBox" prefHeight="870.0" prefWidth="795.0" spacing="10" styleClass="chat-box">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+        </VBox>
+    </ScrollPane>
+
+    <!-- Barre de saisie -->
+    <HBox spacing="10" styleClass="chat-input-box">
+        <TextField fx:id="messageField" promptText="Posez votre question SQL..."
+                   styleClass="chat-input" HBox.hgrow="ALWAYS" />
+        <Button fx:id="sendButton" styleClass="send-button" text="Envoyer">
+            <graphic>
+                <ImageView fitHeight="20" fitWidth="20" />
+            </graphic>
+        </Button>
+    </HBox>
+
+</VBox>
