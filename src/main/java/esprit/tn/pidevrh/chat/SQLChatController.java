@@ -105,7 +105,7 @@ public class SQLChatController {
 
     private TextFlow formatText(String text) {
         TextFlow textFlow = new TextFlow();
-        textFlow.setMaxWidth(600); // Largeur max
+        textFlow.setMaxWidth(600);
 
         String[] lines = text.split("\n");
         for (String line : lines) {

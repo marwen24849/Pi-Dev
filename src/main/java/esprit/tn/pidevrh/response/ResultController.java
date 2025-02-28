@@ -21,22 +21,14 @@ public class ResultController {
     @FXML
     private ListView<String> responsesListView;
 
-    private Long resultatId; // ID du résultat à afficher
-
-    /**
-     * Initialise les données du résultat.
-     *
-     * @param resultatId L'ID du résultat à afficher.
-     */
+    private Long resultatId;
     public void initializeData(Long resultatId) {
         this.resultatId = resultatId;
         loadResult();
         loadResponses();
     }
 
-    /**
-     * Charge les informations du résultat depuis la base de données.
-     */
+
     private void loadResult() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             String query = "SELECT score, percentage, resultat FROM resultat WHERE id = ?";
@@ -59,9 +51,7 @@ public class ResultController {
         }
     }
 
-    /**
-     * Charge les réponses de l'utilisateur depuis la base de données.
-     */
+
     private void loadResponses() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             String query = "SELECT question, answer FROM response_responses WHERE response_id IN " +
@@ -74,7 +64,7 @@ public class ResultController {
                 String question = rs.getString("question");
                 String answer = rs.getString("answer");
 
-                // Ajouter la question et la réponse à la ListView
+
                 responsesListView.getItems().add("Question : " + question + "\nRéponse : " + answer);
             }
         } catch (SQLException e) {
