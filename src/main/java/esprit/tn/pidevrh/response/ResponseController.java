@@ -1,6 +1,7 @@
 package esprit.tn.pidevrh.response;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
+import esprit.tn.pidevrh.login.SessionManager;
 import esprit.tn.pidevrh.question.Question;
 import esprit.tn.pidevrh.quiz.Quiz;
 import javafx.animation.KeyFrame;
@@ -43,9 +44,11 @@ public class ResponseController implements Initializable {
     private int timeRemaining ;
     private  int TIMEOUT_SECONDS ;
     private Stage stage;
+    private Long loggedInUserId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setUserId();
         optionsGroup = new ToggleGroup();
         option1.setToggleGroup(optionsGroup);
         option2.setToggleGroup(optionsGroup);
@@ -54,6 +57,12 @@ public class ResponseController implements Initializable {
         submitButton.setDisable(true);
         initializeTimeoutTimer();
         initializeCountdownTimer();
+
+    }
+
+    private void setUserId() {
+        if(SessionManager.getInstance().getUser() != null)
+            this.loggedInUserId = SessionManager.getInstance().getUser().getId();
 
     }
 
@@ -209,6 +218,7 @@ public class ResponseController implements Initializable {
     private void handleSubmit() {
         saveAnswer();
         calculateResult();
+        countdownTimer.stop();
         timeoutTimer.stop();
     }
 
@@ -267,7 +277,7 @@ public class ResponseController implements Initializable {
             ps.setString(1, key);
             ps.setLong(2, quiz.getId());
             ps.setLong(3, resultatId);
-            ps.setLong(4,1);
+            ps.setLong(4,loggedInUserId);
             ps.executeUpdate();
             for (Map.Entry<Long, String> entry : userAnswers.entrySet()) {
                 System.out.println(key);
@@ -294,6 +304,8 @@ public class ResponseController implements Initializable {
     }
 
     private void showResult(int totalScore, double percentage, boolean passed) {
+        countdownTimer.stop();
+        timeoutTimer.stop();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Résultat du quiz");
         alert.setHeaderText(null);
@@ -303,7 +315,11 @@ public class ResponseController implements Initializable {
                         "Résultat : " + (passed ? "Réussi" : "Échoué")
         );
         alert.showAndWait();
-        stage.close();
+        Platform.runLater(() -> {
+            if (stage != null) {
+                stage.close();
+            }
+        });
     }
     public void setStage(Stage stage) {
         this.stage = stage;
