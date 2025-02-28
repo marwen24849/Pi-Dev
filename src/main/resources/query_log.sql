@@ -137,3 +137,27 @@ LIMIT 1;
  SELECT COUNT(*) AS nombre_des_questions
 FROM question;
 ******************************************** ********************************************
+2025-02-28 12:40:48 
+ SELECT first_name, last_name FROM user;
+******************************************** ********************************************
+2025-02-28 12:41:10 
+ SELECT title 
+FROM quiz 
+ORDER BY difficultylevel DESC;
+******************************************** ********************************************
+2025-02-28 13:03:20 
+ SELECT 
+  q.id, 
+  q.title, 
+  q.category, 
+  q.difficultylevel, 
+  q.quizTime, 
+  q.minimum_success_percentage, 
+  r.resultat_id
+FROM 
+  quiz q 
+  JOIN user_quiz uq ON q.id = uq.quiz_id
+  LEFT JOIN response r ON q.id = r.quiz_id AND r.user_id = uq.user_id
+WHERE 
+  uq.user_id = 1 AND r.id IS NOT NULL;
+******************************************** ********************************************

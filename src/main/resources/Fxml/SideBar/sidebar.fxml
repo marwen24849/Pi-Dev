@@ -66,11 +66,8 @@
                                 </VBox>
                             </VBox>
 
-                            <VBox fx:id="user">
+                            <VBox fx:id="userListContainer">
                                 <Button fx:id="userListButton" text="Users List" styleClass="sidebar-menu" onAction="#handleUserList"  />
-
-
-
                             </VBox>
 
                             <VBox fx:id="reclamation">
@@ -83,8 +80,6 @@
                             </VBox>
 
                             <VBox fx:id="assistant">
-
-
                                 <Button fx:id="assistant1" text="🤖 Assistant"
                                         styleClass="sidebar-menu" onAction="#handleAssistant"/>
 

@@ -1,12 +1,12 @@
 package esprit.tn.pidevrh.quiz;
 
-
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import esprit.tn.pidevrh.login.SessionManager;
-import esprit.tn.pidevrh.login.User;
 import esprit.tn.pidevrh.response.ResponseController;
+import esprit.tn.pidevrh.response.ResultController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,23 +22,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserQuizzesController {
+public class UserResultatController {
 
+    public Button resultQuizButton;
     @FXML
     private ListView<Quiz> quizzesListView;
 
-    @FXML
-    private Button passQuizButton;
-
     private Long loggedInUserId;
-    private Stage stage;
+
 
     public void initialize() {
         setUserId();
         loadUserQuizzes();
     }
 
-    public void setUserId() {
+    private void setUserId() {
         if(SessionManager.getInstance().getUser() != null)
             this.loggedInUserId = SessionManager.getInstance().getUser().getId();
 
@@ -47,11 +45,12 @@ public class UserQuizzesController {
     private void loadUserQuizzes() {
         ObservableList<Quiz> quizzes = FXCollections.observableArrayList();
         String query = """
-        SELECT q.id, q.title, q.category, q.difficultylevel, q.quizTime, q.minimum_success_percentage
+        
+                SELECT q.id, q.title, q.category, q.difficultylevel, q.quizTime, q.minimum_success_percentage, r.resultat_id
         FROM quiz q
         JOIN user_quiz uq ON q.id = uq.quiz_id
         LEFT JOIN response r ON q.id = r.quiz_id AND r.user_id = uq.user_id
-        WHERE uq.user_id = ? AND r.id IS NULL
+        WHERE uq.user_id = ? AND r.id IS Not NULL
         """;
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -73,7 +72,6 @@ public class UserQuizzesController {
         } catch (SQLException e) {
             showAlert("Erreur", "Impossible de charger les quiz assignés.");
         }
-
         quizzesListView.setItems(quizzes);
         quizzesListView.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -106,14 +104,11 @@ public class UserQuizzesController {
                 }
             }
         });
-
-        passQuizButton.setDisable(true);
+        resultQuizButton.setDisable(true);
         quizzesListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            passQuizButton.setDisable(newSelection == null);
+            resultQuizButton.setDisable(newSelection == null);
         });
     }
-
-
     private String getDifficultyColor(String difficulty) {
         return switch (difficulty.toLowerCase()) {
             case "facile" -> "#2ecc71";
@@ -124,29 +119,49 @@ public class UserQuizzesController {
     }
 
 
-    @FXML
-    private void handlePassQuiz() {
+
+
+
+    public void handleResultatQuiz() {
         Quiz selectedQuiz = quizzesListView.getSelectionModel().getSelectedItem();
+
         if (selectedQuiz != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Response/quiz.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Resultat/result.fxml"));
                 Parent root = loader.load();
-                ResponseController controller = loader.getController();
-                controller.initializeQuiz(selectedQuiz.getId());
+                ResultController controller = loader.getController();
+                controller.initializeData(getIdResultatFromQuizUserId(selectedQuiz.getId()));
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setTitle("Passer Quiz : "+ selectedQuiz.getTitle());
+                stage.setTitle("Resultat Quiz " + selectedQuiz.getTitle());
                 stage.setScene(new Scene(root));
-                controller.setStage(stage);
                 stage.showAndWait();
                 initialize();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            showAlert("Quiz", "Vous allez passer le quiz : " + selectedQuiz.getTitle());
-
         }
+    }
+
+    private Long getIdResultatFromQuizUserId(Long quizId){
+        try(Connection con= DatabaseConnection.getConnection()) {
+            String sql = """
+                    select resultat_id
+                    from response
+                    where user_id=? AND quiz_id=?
+                 """;
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setLong(1,loggedInUserId);
+            ps.setLong(2,quizId);
+            ResultSet r = ps.executeQuery();
+            while(r.next()){
+                return r.getLong("resultat_id");
+            }
+
+        }catch(SQLException e){
+            showAlert("Erreur", "Impossible de charger les quiz assignés.");
+        }
+        return null;
     }
 
     private void showAlert(String title, String message) {
@@ -155,9 +170,5 @@ public class UserQuizzesController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
     }
 }
