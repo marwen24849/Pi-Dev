@@ -8,7 +8,7 @@ module esprit.tn.pidevrh {
     requires javafx.graphics;
     requires java.sql;
     requires java.net.http;
-
+    requires jdk.httpserver;
     requires java.desktop;
     requires mysql.connector.java;
     requires jbcrypt;

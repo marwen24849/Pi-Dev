@@ -81,11 +81,16 @@ public class FormationListController {
 
     private Callback<ListView<Formation>, ListCell<Formation>> createFormationCellFactory() {
         return param -> new ListCell<Formation>() {
-            private final Button updateButton = new Button("Modifier");
-            private final Button deleteButton = new Button("Supprimer");
+            private final Button updateButton = new Button("✏️ Modifier");
+            private final Button deleteButton = new Button("🗑️ Supprimer");
             private final Button manageButton = new Button("Consulter les sessions");
 
+
             {
+                updateButton.getStyleClass().add("update-button");
+                deleteButton.getStyleClass().add("delete-button");
+                manageButton.getStyleClass().add("manage-button");
+
                 updateButton.setOnAction(event -> handleUpdate(getItem()));
                 deleteButton.setOnAction(event -> handleDelete(getItem()));
                 manageButton.setOnAction(event -> {
@@ -110,7 +115,7 @@ public class FormationListController {
 
                     // Title label
                     Label titleLabel = new Label("Titre: " + formation.getTitre());
-                    titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+                    titleLabel.setStyle("-fx-text-fill: #c0392b ;-fx-font-weight: bold; -fx-font-size: 16px;");
 
                     // Description label
                     Label descriptionLabel = new Label("Description: " + formation.getDescription());

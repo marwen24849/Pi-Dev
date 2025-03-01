@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Pos?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.formation.FormationListController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.formation.FormationListController"  stylesheets="@styles.css">
 
     <!-- Title -->
-    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+    <Label styleClass="title-label" style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
            text="Liste des Formations"
            AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="50.0" />
 
@@ -15,12 +15,12 @@
     <HBox spacing="10.0" alignment="CENTER_LEFT"
           AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" AnchorPane.rightAnchor="20.0">
         <Label text="Rechercher :" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
-        <TextField fx:id="searchField" promptText="Saisir le titre de la formation..."
+        <TextField styleClass="text-field" fx:id="searchField" promptText="Saisir le titre de la formation..."
                    style="-fx-font-size: 14px; -fx-padding: 5px; -fx-pref-width: 300px;" />
     </HBox>
 
     <!-- ListView to display formations -->
-    <ListView fx:id="formationListView"
+    <ListView styleClass="list-view" fx:id="formationListView"
               AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
               AnchorPane.topAnchor="140.0" AnchorPane.bottomAnchor="100.0" />
 

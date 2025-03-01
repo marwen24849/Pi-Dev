@@ -2,6 +2,7 @@ package esprit.tn.pidevrh.session;
 
 import com.mysql.cj.exceptions.NumberOutOfRange;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -34,6 +35,9 @@ public class SessionController {
     private RadioButton onlineRadio;
 
     private ToggleGroup sessionTypeGroup;  // Define it as a private field
+
+    @FXML
+    private ProgressIndicator loadingIndicator;
 
     public void initialize() {
         // Disable past dates in DatePicker
@@ -73,6 +77,8 @@ public class SessionController {
     }
 
 
+
+
     @FXML
     void handleAddSession() {
         // Check if all fields are filled out
@@ -106,29 +112,69 @@ public class SessionController {
             return;
         }
 
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            // SQL query to insert the session into the database
-            String sql = "INSERT INTO session (formation_id, salle, date, is_online) VALUES (?, ?, ?, ?)";
+        // Use a wrapper to hold the zoomLink value
+        String[] zoomLinkWrapper = new String[1]; // Single-element array to hold the zoomLink
 
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setLong(1, formationId);  // Use the current formationId here
-            ps.setString(2, presentielRadio.isSelected() ? salle.getText() : null); // Set salle only for presentiel
-            ps.setDate(3, Date.valueOf(date.getValue()));
-            ps.setBoolean(4, onlineRadio.isSelected()); // Set is_online based on selection
-
-            // Execute the query
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                addedAlert("Succès", "La Session a été ajoutée avec succès !");
-                initialize();  // Reset the form after successful addition
-            } else {
-                showAlert("Erreur", "Aucune session ajoutée.");
-            }
-        } catch (SQLException e) {
-            // Log the error and show alert if something goes wrong
-            e.printStackTrace();
-            showAlert("Erreur SQL", "Erreur lors de l'ajout de la session dans la base de données. Détails : " + e.getMessage());
+        // Show a loading indicator (if available)
+        if (loadingIndicator != null) {
+            loadingIndicator.setVisible(true);
         }
+
+        // Create a Task for background processing
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                if (onlineRadio.isSelected()) {
+                    zoomLinkWrapper[0] = ZoomMeetingCreatorServerOAuth.createZoomMeeting(); // Create Zoom meeting and get the link
+                    if (zoomLinkWrapper[0] == null) {
+                        throw new Exception("Erreur lors de la création de la réunion Zoom.");
+                    }
+                }
+                return null;
+            }
+        };
+
+        // Handle task completion
+        task.setOnSucceeded(event -> {
+            try (Connection conn = DatabaseConnection.getConnection()) {
+                // SQL query to insert the session into the database
+                String sql = "INSERT INTO session (formation_id, salle, date, link, is_online) VALUES (?, ?, ?, ?, ?)";
+
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setLong(1, formationId);  // Use the current formationId here
+                ps.setString(2, presentielRadio.isSelected() ? salle.getText() : null); // Set salle only for presentiel
+                ps.setDate(3, Date.valueOf(date.getValue()));
+                ps.setString(4, zoomLinkWrapper[0]); // Set the Zoom meeting link from the wrapper
+                ps.setBoolean(5, onlineRadio.isSelected());
+
+                // Execute the query
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected > 0) {
+                    addedAlert("Succès", "La Session a été ajoutée avec succès !");
+                    initialize();  // Reset the form after successful addition
+                } else {
+                    showAlert("Erreur", "Aucune session ajoutée.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert("Erreur SQL", "Erreur lors de l'ajout de la session dans la base de données. Détails : " + e.getMessage());
+            } finally {
+                if (loadingIndicator != null) {
+                    loadingIndicator.setVisible(false); // Hide loading indicator
+                }
+            }
+        });
+
+        // Handle task failure
+        task.setOnFailed(event -> {
+            showAlert("Erreur", "Erreur lors de la création de la réunion Zoom.");
+            if (loadingIndicator != null) {
+                loadingIndicator.setVisible(false); // Hide loading indicator
+            }
+        });
+
+        // Start the task in a new thread
+        new Thread(task).start();
     }
 
     private boolean isSessionConflict(LocalDate date, String salle) {

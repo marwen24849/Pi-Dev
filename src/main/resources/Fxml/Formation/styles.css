@@ -1,0 +1,80 @@
+/* General styles for buttons */
+.button {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-cursor: hand;
+}
+
+/* Specific styles for different buttons */
+.update-button {
+    -fx-background-color: #3498db; /* Blue */
+}
+
+.update-button:hover {
+    -fx-background-color: #f1c40f; /* Darker Blue */
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c; /* Red */
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b; /* Darker Red */
+}
+
+.manage-button {
+    -fx-background-color: #2ecc71; /* Green */
+}
+
+.manage-button:hover {
+    -fx-background-color: #27ae60; /* Darker Green */
+}
+.
+/* Styles for the ListView */
+.list-view {
+    -fx-background-color: #f7f7f7;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+}
+
+/* Styles for the ListView cells */
+.list-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-margin: 5px;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #3498db; /* Blue */
+    -fx-text-fill: white;
+}
+
+/* Styles for the search bar */
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db; /* Blue */
+}
+
+/* Styles for labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495E;
+}
+
+/* Styles for the title */
+.title-label {
+    -fx-font-size: 28px;
+    -fx-text-fill: #34495E;
+    -fx-font-weight: bold;
+}

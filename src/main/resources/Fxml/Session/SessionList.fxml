@@ -9,5 +9,5 @@
     <!-- Replace TableView with ListView -->
     <ListView fx:id="sessionListView" prefWidth="282.0"/>
 
-    <Button onAction="#openAddSession" text="Add Session" />
+    <Button onAction="#openAddSession" text="Ajouter Session" />
 </VBox>

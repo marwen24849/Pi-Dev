@@ -33,12 +33,13 @@
 
 
             <!-- Salle (Room) -->
-            <Label fx:id="salleLabel" style="-fx-font-size: 14px;" text="Salle (Room) :" GridPane.rowIndex="2" />
+            <Label fx:id="salleLabel" style="-fx-font-size: 14px;" text="Salle :" GridPane.rowIndex="2" />
             <TextField fx:id="salle" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2" visible="false" />
         </GridPane>
 
         <!-- Bouton -->
         <Button fx:id="addSession" onAction="#handleAddSession" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Session" />
+        <ProgressIndicator fx:id="loadingIndicator" visible="false" />
     </VBox>
 
 </AnchorPane>
