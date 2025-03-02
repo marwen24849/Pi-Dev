@@ -40,14 +40,13 @@ public class ReclamationController {
     private void handleCorrection() {
         String text = reclamationTextArea.getText();
         if (text.isEmpty()) {
-            showAlert("Erreur", "Veuillez écrire une réclamation avant de corriger.");
+            showAlert("Erreur", "Veuillez écrire une réclamation ");
             return;
         }
 
         String correctedText = correctGrammar(text);
         if (correctedText != null) {
             reclamationTextArea.setText(correctedText);
-            showAlert("Correction", "Texte corrigé avec succès !");
         } else {
             showAlert("Erreur", "Impossible de corriger la grammaire. Vérifiez votre connexion internet.");
         }
@@ -89,68 +88,51 @@ public class ReclamationController {
 
     private String correctGrammar(String text) {
         try {
-            URL url = new URL("https://api.languagetool.org/v2/check");
+            String apiKey = EnvLoader.get("HUGGINGFACE_API_KEY");
+            String model = "mistralai/Mistral-7B-Instruct-v0.3";
+
+            URL url = new URL("https://api-inference.huggingface.co/models/" + model);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Authorization", "Bearer " + apiKey);
+            conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
+            String prompt = "Je vais soumettre une réclamation via l'application de l'entreprise. Peux-tu rédiger un message professionnel et poli basé sur le texte suivant : " + text + " ? Assure-toi qu'il soit clair, bien structuré et adapté à une communication formelle et en  français et ne me donne que la reclamation que je vais l envoyer.";
 
-            String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
-            String data = "text=" + encodedText + "&language=fr";
+
+
+
+
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("inputs", prompt);
+            requestBody.put("parameters", new JSONObject()
+                    .put("max_new_tokens", 512)
+                    .put("temperature", 0.7)
+                    .put("return_full_text", false));
 
             try (OutputStream os = conn.getOutputStream()) {
-                os.write(data.getBytes());
-                os.flush();
+                os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
             }
-
 
             int responseCode = conn.getResponseCode();
             if (responseCode != 200) {
-                System.err.println("API request failed. Response Code: " + responseCode);
+                System.err.println("Hugging Face API Error: " + responseCode);
                 return null;
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
+            String response = reader.lines().collect(Collectors.joining());
             reader.close();
 
-            JSONObject jsonResponse = new JSONObject(response.toString());
-            JSONArray matches = jsonResponse.getJSONArray("matches");
+            JSONArray jsonResponse = new JSONArray(response);
+            String generatedText = jsonResponse.getJSONObject(0).getString("generated_text");
 
-            return applyCorrections(text, matches);
+            return generatedText.replace(prompt, "").trim();
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private String applyCorrections(String text, JSONArray matches) {
-        StringBuilder correctedText = new StringBuilder(text);
-        int offsetCorrection = 0;
-
-        for (int i = 0; i < matches.length(); i++) {
-            JSONObject match = matches.getJSONObject(i);
-            JSONArray replacements = match.getJSONArray("replacements");
-
-            if (replacements.length() > 0) {
-                String replacement = replacements.getJSONObject(0).getString("value");
-                int offset = match.getInt("offset") + offsetCorrection;
-                int length = match.getInt("length");
-
-
-                correctedText.replace(offset, offset + length, replacement);
-
-
-                offsetCorrection += replacement.length() - length;
-            }
-        }
-
-        return correctedText.toString();
     }
 
     private String generateAIEmail(String userReclamation , String Firstname) {
