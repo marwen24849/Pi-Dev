@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -146,6 +147,10 @@ public class QuizListController {
                 Label difficultyLabel = new Label("Difficulté : " + quiz.getDifficultylevel());
                 difficultyLabel.setStyle("-fx-text-fill: #c0392b;");
 
+                Hyperlink assignLink = new Hyperlink("👤 Assigner à un utilisateur");
+                assignLink.setStyle("-fx-text-fill: #2ecc71; -fx-font-size: 14px;");
+                assignLink.setOnAction(event -> handleAssignToUser(quiz));
+
 
                 Button updateButton = new Button("✏️ Modifier");
                 Button deleteButton = new Button("🗑️ Supprimer");
@@ -156,13 +161,33 @@ public class QuizListController {
                 Hyperlink viewQuestionsLink = new Hyperlink("📜 Voir Questions");
                 viewQuestionsLink.setStyle("-fx-text-fill: #3498db; -fx-font-size: 14px;");
                 viewQuestionsLink.setOnAction(event -> handleViewQuestions(quiz));
-                HBox buttonBox = new HBox(10, updateButton, deleteButton, viewQuestionsLink);
+                HBox buttonBox = new HBox(10, updateButton, deleteButton, viewQuestionsLink, assignLink);
                 VBox vbox = new VBox(6, titleLabel, categoryLabel, percentageLabel,quizTime,difficultyLabel, buttonBox);
                 vbox.setStyle("-fx-padding: 10px; -fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7; -fx-border-radius: 5px;");
                 setGraphic(vbox);
             }
         }
 
+        private void handleAssignToUser(Quiz quiz) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Quiz/AssignUserModal.fxml"));
+                Parent root = loader.load();
+
+                AssignUserModalController controller = loader.getController();
+                controller.setQuizId(quiz.getId());
+
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Affecter le quiz à un utilisateur");
+                stage.setScene(new Scene(root));
+                controller.setStage(stage);
+
+                stage.showAndWait();
+
+            } catch (IOException e) {
+                showAlert("Erreur", "Impossible d'ouvrir la fenêtre d'affectation");
+            }
+        }
         private void handleViewQuestions(Quiz quiz) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Quiz/ListQuestions.fxml"));

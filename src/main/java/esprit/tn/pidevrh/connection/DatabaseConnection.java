@@ -9,13 +9,35 @@ public class DatabaseConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
+    private static DatabaseConnection instance;
+    private Connection connection;
 
-    public static Connection getConnection() {
+    private DatabaseConnection() {
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
+
             System.out.println("Erreur de connexion à la base de données : " + e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null || instance.connection == null || isConnectionClosed(instance.connection)) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
+    }
+
+    public static Connection getConnection() {
+        return getInstance().connection;
+    }
+
+    private static boolean isConnectionClosed(Connection conn) {
+        try {
+            return conn == null || conn.isClosed();
+        } catch (SQLException e) {
+            return true;
         }
     }
 }

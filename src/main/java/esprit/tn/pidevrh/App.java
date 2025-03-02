@@ -18,7 +18,7 @@ public class App extends Application {
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Response/quiz.fxml"));
         Parent root = loader.load();
         ResultController controller = loader.getController();
-        controller.initializeData(20L);
+        controller.initializeData(22L);
 
         Scene scene = new Scene(root);
         //scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/Css/style.css")).toExternalForm());

@@ -4,54 +4,22 @@
     -fx-font-size: 14px;
 }
 
-/* Style pour les bulles de message */
-.message-bubble {
-    -fx-background-radius: 15px;
+.chat-scrollpane {
+    -fx-background: transparent;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.chat-box {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #FFFFFF;
     -fx-padding: 10px;
-    -fx-font-size: 14px;
-    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
 }
 
-/* Style pour les messages de l'utilisateur */
-.user-message {
-    -fx-background-color: #4CAF50;
-    -fx-alignment: center-right;
-}
-
-/* Style pour les messages de l'assistant */
-.assistant-message {
-    -fx-background-color: #007BFF;
-    -fx-alignment: center-left;
-}
-
-/* Style pour le champ de texte */
-.text-field {
-    -fx-background-color: #f8f8f8;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 15px;
-    -fx-background-radius: 15px;
-    -fx-padding: 5 10;
-}
-
-/* Style pour le bouton d'envoi */
-.button {
-    -fx-background-color: #007BFF;
-    -fx-text-fill: white;
-    -fx-background-radius: 15px;
-    -fx-padding: 5 15;
-}
-
-.button:hover {
-    -fx-background-color: #005bb5;
-}
-
-./* Style général */
-.root {
-    -fx-font-family: 'Arial';
-    -fx-font-size: 14px;
-}
-
-/* Style pour les bulles de message */
 .message-bubble {
     -fx-background-radius: 15px;
     -fx-padding: 10px;
@@ -60,19 +28,18 @@
     -fx-font-size: 14px;
 }
 
-/* Messages utilisateur */
 .user-message {
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;
+    -fx-alignment: center-right;
 }
 
-/* Messages assistant */
 .assistant-message {
     -fx-background-color: #E5E5E5;
     -fx-text-fill: black;
+    -fx-alignment: center-left;
 }
 
-/* Zones de code */
 .code-block {
     -fx-font-family: "Consolas", "Courier New", monospace;
     -fx-background-color: #eef;
@@ -83,12 +50,51 @@
     -fx-max-width: 400px;
 }
 
-/* Texte en gras */
 .text-bold {
     -fx-font-weight: bold;
 }
 
-/* Texte en italique */
 .text-italic {
     -fx-font-style: italic;
+}
+
+.chat-input-box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D1D1D1;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+}
+
+.chat-input {
+    -fx-background-color: #F8F9FA;
+    -fx-border-color: #D1D1D1;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.chat-input:focused {
+    -fx-border-color: #007BFF;
+    -fx-background-color: #FFFFFF;
+}
+
+.send-button {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 20px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.send-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.send-button:pressed {
+    -fx-background-color: #004085;
 }

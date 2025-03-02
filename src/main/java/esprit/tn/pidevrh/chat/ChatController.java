@@ -1,5 +1,6 @@
 package esprit.tn.pidevrh.chat;
 
+import esprit.tn.pidevrh.login.SessionManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -30,10 +31,12 @@ public class ChatController {
 
     private final LLMChatAgent chatAgent = new LLMChatAgent();
     private final ChatService chatService = new ChatService();
-    private final String userId = "1";
+    private  String userId = "1";
 
     @FXML
     private void initialize() {
+        if(SessionManager.getInstance().getUser() != null)
+            userId = String.valueOf(SessionManager.getInstance().getUser().getId());
         sendButton.setOnAction(event -> sendMessage());
         messageField.setOnAction(event -> sendMessage());
         List<Chat> chatHistory = chatService.getChatHistory(userId, 50);
