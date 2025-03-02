@@ -83,7 +83,7 @@ public class FormationUserController {
             }
 
         } catch (SQLException e) {
-            showAlert("Erreur", "Impossible de charger les formations et leurs utilisateurs: " + e.getMessage());
+            showAlert("Erreur", "Impossible de charger les formations et leurs employes: " + e.getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ public class FormationUserController {
         header.setSpacing(50);
 
         Label formationHeader = createHeaderLabel("Formation", 250);
-        Label userHeader = createHeaderLabel("Utilisateurs", 500);
+        Label userHeader = createHeaderLabel("Employés", 500);
 
         header.getChildren().addAll(formationHeader, userHeader);
         return header;
@@ -142,7 +142,7 @@ public class FormationUserController {
 
         // If no users exist, display a default message
         if (users.isEmpty()) {
-            Label noUsersLabel = new Label("Aucun utilisateur");
+            Label noUsersLabel = new Label("Aucun employé");
             usersContainer.getChildren().add(noUsersLabel);
         }
 
@@ -153,8 +153,8 @@ public class FormationUserController {
     private void handleBanUserFromFormation(User user, long formationId, String formationName) {
         // Show a confirmation dialog to confirm banning
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("retirerutilisateur");
-        alert.setHeaderText("Êtes-vous sûr de vouloir bannir cet utilisateur de la formation ?");
+        alert.setTitle("retirer Employé");
+        alert.setHeaderText("Êtes-vous sûr de vouloir bannir cet employé de la formation ?");
         alert.setContentText("User: " + user.getFirstName() + " " + user.getLastName() + " - Formation: " + formationName);
 
         alert.showAndWait().ifPresent(response -> {
@@ -173,10 +173,10 @@ public class FormationUserController {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                showAlert("Success", "L'utilisateur a été banni de la formation..");
+                showAlert("Success", "L'employé a été banni de la formation..");
                 loadFormationsWithUsers(); // Reload the formation list to reflect the change
             } else {
-                showAlert("Error", "Impossible de bannir l'utilisateur de la formation.");
+                showAlert("Error", "Impossible de bannir l'employé de la formation.");
             }
         } catch (SQLException e) {
             showAlert("Error", "An error occurred while banning the user: " + e.getMessage());

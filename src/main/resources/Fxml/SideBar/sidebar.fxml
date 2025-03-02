@@ -59,7 +59,7 @@
 
                             <!-- Gestion Formation -->
                             <VBox fx:id="gestionFormationContainer">
-                                <Button fx:id="gestionFormationButton" text="📚 Gestion Formation"
+                                <Button fx:id="gestionFormationButton" text="📚 Gestion Formations"
                                         styleClass="sidebar-menu" onAction="#toggleFormationMenu"/>
                                 <VBox fx:id="gestionFormationMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
                                     <Button onAction="#handleAddFormation" text="➕ Ajouter Formation" styleClass="menu-item"/>
@@ -71,7 +71,7 @@
                             </VBox>
                             <!-- S'inscrire a une Formation -->
                             <VBox fx:id="gestionInscriptionFormationContainer1">
-                                <Button fx:id="gestionInscriptionFormationButton1" text="📚 S'inscrire a une  Formation"
+                                <Button fx:id="gestionInscriptionFormationButton1" text="📚 Formations"
                                         styleClass="sidebar-menu" onAction="#toggleInscriptionFormationMenu"/>
                                 <VBox fx:id="inscriptionFormationMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
                                     <Button onAction="#handleInscriptionFormation" text="📜 Liste Formation" styleClass="menu-item"/>

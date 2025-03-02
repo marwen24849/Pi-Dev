@@ -10,13 +10,13 @@
     <VBox spacing="20.0" AnchorPane.topAnchor="40.0" AnchorPane.leftAnchor="20.0"
           AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0">
 
-        <Label text="Liste des Formations et leurs Utilisateurs" styleClass="header-title" />
+        <Label text="Liste des Formations et leurs Employés" styleClass="header-title" />
 
         <VBox fx:id="formationUserContainer" spacing="10.0" styleClass="formation-user-list-container">
             <!-- Header for Formation and Users -->
             <HBox styleClass="formation-user-header">
                 <Label text="Formation" styleClass="column-header" prefWidth="250"/>
-                <Label text="Utilisateurs" styleClass="column-header" prefWidth="500"/>
+                <Label text="Employés" styleClass="column-header" prefWidth="500"/>
             </HBox>
         </VBox>
     </VBox>
