@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -35,6 +38,11 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import esprit.tn.pidevrh.google.GoogleCalendarService;
 import com.google.api.services.calendar.Calendar;
+
+import javafx.scene.image.Image;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 
 
 public class ProjetController {
@@ -297,6 +305,23 @@ public class ProjetController {
         }
     }
 
+    private Image generateQRCode(String meetLink) {
+        try {
+            // Construct the Google Charts API URL
+            String encodedLink = URLEncoder.encode(meetLink, StandardCharsets.UTF_8);
+            String apiUrl = "https://quickchart.io/chart?cht=qr&chs=300x300&chl=" + encodedLink;
+
+            URL url = new URI(apiUrl).toURL();
+
+            // Load the QR code image from the API
+            InputStream inputStream = url.openStream();
+            return new Image(inputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // if the QR code cannot be generated
+        }
+    }
+
     private void showAlertWithHyperlink(String title, String message, String meetLink) {
         // Create a custom dialog
         Dialog<Void> dialog = new Dialog<>();
@@ -314,12 +339,18 @@ public class ProjetController {
             }
         });
 
-        // Add the hyperlink to the dialog
+        // Generate the QR code
+        Image qrCodeImage = generateQRCode(meetLink);
+        ImageView qrCodeView = new ImageView(qrCodeImage);
+
+        // Add the hyperlink and QR code to the dialog
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.add(new Label("Google Meet Link:"), 0, 0);
         gridPane.add(hyperlink, 1, 0);
+        gridPane.add(new Label("QR Code:"), 0, 1);
+        gridPane.add(qrCodeView, 1, 1);
 
         // Set the dialog content
         dialog.getDialogPane().setContent(gridPane);
