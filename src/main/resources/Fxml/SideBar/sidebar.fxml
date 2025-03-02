@@ -56,7 +56,19 @@
                                 </VBox>
                             </VBox>
 
+                            <!-- Gestion department et equipe -->
+                            <VBox fx:id="gestionequipedepartment">
+                                <Button fx:id="gestionequipedepartmentButton" text="📝 Gestion Equipe et Departements "
+                                        styleClass="sidebar-menu" onAction="#toggleEquipe"/>
+                                <VBox fx:id="gestionEquipeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handlegestionequipe" text="➕ Gestion Equipe" styleClass="menu-item"/>
+                                    <Button onAction="#handlegestiondepartments" text="📜 Gestion Département" styleClass="menu-item"/>
+                                </VBox>
+                            </VBox>
 
+                            <VBox fx:id="gestionProjet">
+                                <Button fx:id="gestionProjetButton" text="Gestion Projet" styleClass="sidebar-menu" onAction="#handleGestionProjet"  />
+                            </VBox>
                             <!-- Demande Congé -->
                             <VBox fx:id="demandeCongeContainer">
                                 <Button fx:id="demandeCongeButton" text="🗂️ Demande Congé"

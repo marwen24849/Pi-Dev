@@ -241,30 +241,45 @@ public class ProjetController {
         LocalDate dateDebut = dateDebutPicker.getValue();
         LocalDate dateFin = dateFinPicker.getValue();
 
+
         if (!validateInputs(nomProjet, equipeName, responsable, dateDebut, dateFin)) {
             return;
         }
 
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            int equipeId = getTeamId(equipeName);
+        // Requête SQL pour insérer le projet
+        String insertSQL = "INSERT INTO projet (nom_projet, equipe, responsable, date_debut, date_fin) VALUES (?, ?, ?, ?, ?)";
 
-            String insertSQL = "INSERT INTO projet (nom_projet, equipe, responsable, date_debut, date_fin) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+
+            // Récupérer l'ID de l'équipe à partir de son nom
+            int equipeId = getTeamId(equipeName, connection);
+            if (equipeId == -1) {
+                showAlert("Erreur", "L'équipe sélectionnée n'existe pas.", Alert.AlertType.ERROR);
+                return;
+            }
             preparedStatement.setString(1, nomProjet);
             preparedStatement.setInt(2, equipeId);
             preparedStatement.setString(3, responsable);
             preparedStatement.setTimestamp(4, Timestamp.valueOf(dateDebut.atStartOfDay()));
             preparedStatement.setTimestamp(5, Timestamp.valueOf(dateFin.atStartOfDay()));
-            preparedStatement.executeUpdate();
 
-            String projectSummary = nomProjet + " - " + equipeName + " - " + responsable + " - " + dateDebut + " to " + dateFin;
-            projectListView.getItems().add(projectSummary);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                // Ajouter le projet à la vue
+                String projectSummary = nomProjet + " - " + equipeName + " - " + responsable + " - " + dateDebut + " to " + dateFin;
+                projectListView.getItems().add(projectSummary);
 
-            clearFields();
-            loadAvailableTeams();
-            showAlert("Succès", "Projet ajouté avec succès!", Alert.AlertType.INFORMATION);
+                // Effacer les champs et recharger les équipes disponibles
+                clearFields();
+                loadAvailableTeams();
+                showAlert("Succès", "Projet ajouté avec succès!", Alert.AlertType.INFORMATION);
+            } else {
+                showAlert("Erreur", "Le projet n'a pas pu être ajouté.", Alert.AlertType.ERROR);
+            }
         } catch (SQLException e) {
-            showAlert("Erreur", "Erreur lors de l'ajout du projet: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+            showAlert("Erreur", "Erreur lors de l'ajout du projet: Une erreur est survenue.", Alert.AlertType.ERROR);
         }
     }
 
@@ -367,8 +382,8 @@ public class ProjetController {
 
 
 
-    private int getTeamId(String teamName) {
-        try (Connection connection = DatabaseConnection.getConnection()) {
+    private int getTeamId(String teamName, Connection connection) throws SQLException {
+
             String query = "SELECT id FROM equipe WHERE name = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, teamName);
@@ -377,9 +392,7 @@ public class ProjetController {
             if (resultSet.next()) {
                 return resultSet.getInt("id");
             }
-        } catch (SQLException e) {
-            showAlert("Erreur", "Erreur lors de la récupération de l'ID de l'équipe: " + e.getMessage(), Alert.AlertType.ERROR);
-        }
+
         return -1;  // If no matching team found, return -1
     }
 
