@@ -93,6 +93,7 @@ public class QuestionController {
         return true;
     }
 
+
     private void initChamp(){
         this.categoryField.clear();
         this.difficultyField.clear();
@@ -104,6 +105,7 @@ public class QuestionController {
         this.scoreField.clear();
         this.titleField.clear();
     }
+
 
     private void insertQuestion(String title, String option1, String option2, String option3, String option4,
                                 String rightAnswer, int score, String category, String difficulty) {
@@ -128,6 +130,7 @@ public class QuestionController {
 
                 showAlert("Succès", "La question a été ajoutée avec succès !");
                 initChamp();
+
             }
 
         } catch (SQLException e) {

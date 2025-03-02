@@ -8,6 +8,7 @@ module esprit.tn.pidevrh {
     requires java.sql;
     requires java.net.http;
 
+
     requires java.desktop;
     requires mysql.connector.java;
     requires jbcrypt;
@@ -23,6 +24,19 @@ module esprit.tn.pidevrh {
 
 
     opens esprit.tn.pidevrh.leave to javafx.fxml;
+
+    requires com.google.api.client.auth;
+    requires com.google.api.client.extensions.java6.auth;
+    requires com.google.api.client.extensions.jetty.auth;
+    requires google.api.client;
+    requires com.google.api.client;
+    requires com.google.api.services.calendar;
+    requires com.google.api.client.json.jackson2;
+    requires jdk.httpserver;
+
+    exports esprit.tn.pidevrh.teams_departements to javafx.graphics, javafx.fxml;
+    opens esprit.tn.pidevrh.teams_departements to javafx.fxml, javafx.base;
+
     opens esprit.tn.pidevrh to javafx.fxml;
     exports esprit.tn.pidevrh;
     exports esprit.tn.pidevrh.question to javafx.fxml;
@@ -31,6 +45,7 @@ module esprit.tn.pidevrh {
     opens esprit.tn.pidevrh.question to javafx.fxml, javafx.base;
     exports esprit.tn.pidevrh.quiz to javafx.fxml;
     opens esprit.tn.pidevrh.quiz to javafx.fxml, java.base, javafx.base;
+
     exports esprit.tn.pidevrh.response to javafx.fxml;
     opens esprit.tn.pidevrh.response to javafx.fxml, java.base, javafx.base;
     exports esprit.tn.pidevrh.login to javafx.fxml;
@@ -48,4 +63,6 @@ module esprit.tn.pidevrh {
 
     exports esprit.tn.pidevrh.leave;
 
+
+    opens esprit.tn.pidevrh.projet to javafx.fxml, javafx.base;
 }

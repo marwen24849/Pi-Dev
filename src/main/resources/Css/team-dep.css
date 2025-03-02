@@ -1,0 +1,75 @@
+/* Card styling */
+.team-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
+.team-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 4);
+}
+
+/* Modern button styling */
+.modern-button {
+    -fx-background-color: linear-gradient(to bottom right, #487eb0, #40739e);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.modern-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #40739e, #487eb0);
+    -fx-effect: dropshadow(gaussian, rgba(72,126,176,0.3), 10, 0, 0, 3);
+}
+
+.modern-button:pressed {
+    -fx-background-color: #487eb0;
+    -fx-translate-y: 1;
+}
+
+/* ListView styling */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #dcdde1;
+    -fx-background-radius: 5;
+}
+
+.list-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #bdc3c7;
+}
+
+/* Delete button styling */
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b;
+    -fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.3), 10, 0, 0, 3);
+}
+
+.delete-button:pressed {
+    -fx-background-color: #e74c3c;
+    -fx-translate-y: 1;
+}

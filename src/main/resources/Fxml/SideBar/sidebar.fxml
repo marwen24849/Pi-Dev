@@ -110,5 +110,6 @@
         <!-- Toggle Button -->
         <Button fx:id="toggleButton" onAction="#handleToggleSidebar" styleClass="toggle-button" text="≡"
                 AnchorPane.leftAnchor="15" AnchorPane.topAnchor="15"/>
+
     </children>
 </AnchorPane>

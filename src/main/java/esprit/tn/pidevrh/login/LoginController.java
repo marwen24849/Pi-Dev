@@ -1,5 +1,6 @@
 package esprit.tn.pidevrh.login;
 
+
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import esprit.tn.pidevrh.email.EmailService;
 import javafx.fxml.FXML;
@@ -33,9 +34,6 @@ public class LoginController {
 
     @FXML
     private Button signUpButton;
-
-
-
 
 
     @FXML
@@ -149,7 +147,6 @@ public class LoginController {
         });
 
 
-
         alert.showAndWait();
     }
 
@@ -247,7 +244,7 @@ public class LoginController {
 
         if (userExists) {
             String emailBody = "Your verification code is: " + verificationCode;
-            new Thread(()-> EmailService.sendEmail(email, "Password Reset Request", emailBody)).start();
+            new Thread(() -> EmailService.sendEmail(email, "Password Reset Request", emailBody)).start();
 
             showVerificationPopUp(verificationCode, email);
 
@@ -427,7 +424,6 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
 
 
 }
