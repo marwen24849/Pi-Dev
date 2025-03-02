@@ -42,6 +42,9 @@ public class SidebarController {
     public Button userQuizButton;
     public Button gestionQuizButton;
     public VBox gestionQuestionsContainer;
+    public VBox gestionEquipeMenu;
+    public VBox gestionequipedepartment;
+    public VBox gestionProjet;
     @FXML
     private VBox sidebarWrapper, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu, userQuizMenu;
     @FXML
@@ -84,6 +87,9 @@ public class SidebarController {
 
         SGRHAssistant.setVisible(roleTest);
         SGRHAssistant.setManaged(roleTest);
+        gestionequipedepartment.setVisible(roleTest);
+        gestionequipedepartment.setManaged(roleTest);
+        gestionProjet.setVisible(roleTest);
 
 
         userQuizContainer.setVisible(!roleTest);
@@ -263,5 +269,21 @@ public class SidebarController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void toggleEquipe(ActionEvent actionEvent) {
+        toggleMenuVisibility(gestionEquipeMenu, !gestionEquipeMenu.isVisible());
+    }
+
+    public void handlegestionequipe(ActionEvent actionEvent) {
+        loadContent("/Fxml/TeamDepartement/team-department-assignment.fxml");
+    }
+
+    public void handlegestiondepartments(ActionEvent actionEvent) {
+        loadContent("/Fxml/TeamDepartement/DepartmentView.fxml");
+    }
+
+    public void handleGestionProjet(ActionEvent actionEvent) {
+        loadContent("/Fxml/Projet/projet.fxml");
     }
 }

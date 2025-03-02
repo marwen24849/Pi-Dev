@@ -39,15 +39,15 @@
 
             <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="Nombre de Questions :" GridPane.rowIndex="5" />
             <TextField fx:id="questionCountField" style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;                               -fx-border-color: #dce4ec; -fx-border-radius: 8px;                               -fx-padding: 8px;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
         </GridPane>
 
 

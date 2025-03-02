@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="esprit.tn.pidevrh.teams_departements.TeamDepartmentAssignmentController" spacing="10" styleClass="main-layout" stylesheets="@../../Css/team-dep.css">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <!-- ListView to display teams with card-like layout -->
+    <ListView fx:id="teamListView" styleClass="list-view">
+    </ListView>
+
+    <!-- Input fields and button to add a new team -->
+    <HBox spacing="10" styleClass="input-box">
+        <TextField fx:id="nameInput" promptText="Team Name" styleClass="modern-textfield"/>
+        <TextField fx:id="membersInput" promptText="Number of Members" styleClass="modern-textfield"/>
+        <Button text="Add Team" onAction="#handleAddTeam" styleClass="modern-button"/>
+    </HBox>
+
+    <!-- Optional: Filter input field -->
+    <HBox spacing="10" styleClass="input-box">
+        <TextField fx:id="filterInput" promptText="Filter Teams" styleClass="modern-textfield"/>
+    </HBox>
+</VBox>
