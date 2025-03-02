@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.session.SessionListController">
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.session.SessionListController" stylesheets="@session-list.css">
     <Label text="Sessions for the selected Formation" />
 
     <!-- Replace TableView with ListView -->
-    <ListView fx:id="sessionListView" prefWidth="282.0"/>
+    <ListView fx:id="sessionListView" prefWidth="282.0" styleClass="list-view" />
 
     <Button onAction="#openAddSession" text="Ajouter Session" />
 </VBox>

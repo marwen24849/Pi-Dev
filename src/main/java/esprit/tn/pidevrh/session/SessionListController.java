@@ -143,6 +143,10 @@ public class SessionListController {
                 Button updateButton = new Button("Modifier");
                 Button deleteButton = new Button("Supprimer");
 
+                // Add CSS classes to buttons
+                updateButton.getStyleClass().add("update-button");
+                deleteButton.getStyleClass().add("button");
+
                 updateButton.setOnAction(event -> handleUpdate(session));  // Handle update
                 deleteButton.setOnAction(event -> handleDelete(session));  // Handle delete
 
@@ -158,7 +162,7 @@ public class SessionListController {
                 }
 
                 sessionBox.getChildren().add(actionBox);
-                sessionBox.setStyle("-fx-padding: 10px; -fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7; -fx-border-radius: 5px;");
+                sessionBox.getStyleClass().add("session-box"); // Add CSS class to session box
 
                 setGraphic(sessionBox);
             }
