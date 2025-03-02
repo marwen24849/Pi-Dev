@@ -38,7 +38,7 @@ public class SQLProcessorAI {
             }
             schemaText.append("\n");
         }
-
+        System.out.println(schemaText);
         String promptText = String.format("""
                 Base de données : SGRH
                 
@@ -200,6 +200,7 @@ public class SQLProcessorAI {
     }
 
 
+
     static class ColumnInfo {
         private final String name;
         private final String type;
@@ -216,6 +217,8 @@ public class SQLProcessorAI {
         public String getType() {
             return type;
         }
+
+
     }
 
     public static void main(String[] args) {

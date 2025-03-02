@@ -57,6 +57,8 @@ public class SidebarController {
             System.err.println("Error: Sidebar is null! Check FXML fx:id.");
             return;
         }
+        if(roleTest)
+            loadContent("/Fxml/Dashboard/admin_dashboard.fxml");
 
         sidebarWrapper.setTranslateX(0);
         toggleMenuVisibility(gestionQuestionsMenu, false);

@@ -102,7 +102,7 @@
 
         </VBox>
 
-        <!-- Content Area -->
+
         <AnchorPane fx:id="contentArea" styleClass="content-area"
                     AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250"
                     AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>

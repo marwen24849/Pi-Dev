@@ -161,3 +161,43 @@ FROM
 WHERE 
   uq.user_id = 1 AND r.id IS NOT NULL;
 ******************************************** ********************************************
+2025-02-28 18:13:51 
+ SELECT COUNT(*) AS nombre_de_questions
+FROM question;
+******************************************** ********************************************
+2025-02-28 18:42:31 
+ SELECT MAX(score) AS meilleur_resultat
+FROM resultat
+WHERE id IN (
+  SELECT resultat_id
+  FROM response
+  WHERE user_id = (
+    SELECT id
+    FROM user
+    WHERE first_name = 'Sirine'
+  )
+);
+******************************************** ********************************************
+2025-02-28 18:46:29 
+ SELECT u.first_name, u.last_name 
+FROM user u 
+JOIN response r ON u.id = r.user_id 
+JOIN resultat res ON r.resultat_id = res.id 
+JOIN user_quiz uq ON r.user_id = uq.user_id 
+JOIN quiz q ON uq.quiz_id = q.id 
+ORDER BY res.score DESC 
+LIMIT 1;
+******************************************** ********************************************
+2025-02-28 18:48:33 
+ SELECT u.first_name, u.last_name 
+FROM user u 
+JOIN response r ON u.id = r.user_id 
+JOIN resultat res ON r.resultat_id = res.id 
+ORDER BY res.score DESC 
+LIMIT 1;
+******************************************** ********************************************
+2025-03-02 09:31:30 
+ SELECT COUNT(*) AS nombre_de_tables
+FROM information_schema.tables
+WHERE table_schema = 'SGRH';
+******************************************** ********************************************

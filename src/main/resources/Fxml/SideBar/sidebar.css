@@ -96,9 +96,9 @@
 }
 
 
-.logout-button {
+#toggleButton {
     -fx-background-color: rgba(255, 255, 255, 0.12);
-    -fx-text-fill: #FF6B6B;  /* Soft red */
+    -fx-text-fill: #FF6B6B;
     -fx-font-weight: 600;
     -fx-padding: 14px 35px;
     -fx-background-radius: 0;
@@ -107,25 +107,37 @@
     -fx-font-size: 14px;
 }
 
-.logout-button:hover {
+#toggleButton:hover {
     -fx-background-color: rgba(255, 107, 107, 0.15);
     -fx-text-fill: #FF5555;
 }
 
 
-.toggle-button {
+#toggleButton {
     -fx-background-color: transparent;
-    -fx-text-fill:  #2D3640;;
+    -fx-text-fill: #2D3640;
     -fx-font-size: 24px;
     -fx-font-weight: 300;
-    -fx-padding: 8px 16px;
+    -fx-padding: 10px 18px;
     -fx-cursor: hand;
     -fx-border-width: 0;
+    -fx-border-radius: 8px;
+    -fx-transition: all 0.3s ease-in-out;
 }
 
-.toggle-button:hover {
-    -fx-text-fill: #D1D9E0;
+#toggleButton:hover {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #2D3640;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.3, 0, 2);
 }
+
+#toggleButton:pressed {
+    -fx-background-color: #1C252C;
+    -fx-text-fill: #D1D9E0;
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
 
 
 .content-area {

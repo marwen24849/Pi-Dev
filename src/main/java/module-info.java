@@ -41,6 +41,8 @@ module esprit.tn.pidevrh {
 
     exports esprit.tn.pidevrh.formation to javafx.fxml;
     opens esprit.tn.pidevrh.formation to javafx.fxml, java.base, javafx.base;
+    exports esprit.tn.pidevrh.dashboard to javafx.fxml;
+    opens esprit.tn.pidevrh.dashboard to javafx.fxml, java.base, javafx.base;
     exports esprit.tn.pidevrh.chat to javafx.fxml;
     opens esprit.tn.pidevrh.chat to javafx.fxml, java.base, javafx.base;
 
