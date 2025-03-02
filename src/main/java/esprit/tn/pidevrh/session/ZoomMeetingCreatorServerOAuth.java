@@ -5,14 +5,18 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
+
+import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONObject;
+
 
 public class ZoomMeetingCreatorServerOAuth {
 
-    // Server-to-Server OAuth credentials
-    private static final String CLIENT_ID = "qxrYBY5RF2OyJZy3_el6Q";
-    private static final String CLIENT_SECRET = "bb2Kgn7UbrN23cg2RKbkkQUAjY99vNRJ";
-    private static final String ACCOUNT_ID = "7F3LawFISnOnRzpxxSYhGg"; // Available in your Zoom app settings
+    private static final Dotenv dotenv = Dotenv.load();
+    // Get credentials from .env file
+    private static final String CLIENT_ID = dotenv.get("ZOOM_CLIENT_ID");
+    private static final String CLIENT_SECRET = dotenv.get("ZOOM_CLIENT_SECRET");
+    private static final String ACCOUNT_ID = dotenv.get("ZOOM_ACCOUNT_ID");
 
     public static String createZoomMeeting() {
         try {
