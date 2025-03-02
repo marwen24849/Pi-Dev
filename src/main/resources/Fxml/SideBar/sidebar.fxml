@@ -64,6 +64,9 @@
                                 <VBox fx:id="gestionFormationMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
                                     <Button onAction="#handleAddFormation" text="➕ Ajouter Formation" styleClass="menu-item"/>
                                     <Button onAction="#handleListFormation" text="📜 Liste Formation" styleClass="menu-item"/>
+                                    <Button fx:id="formationUserButton" text="👥 Formation-User"
+                                            styleClass="sidebar-menu" onAction="#handleFormationUser"/>
+
                                 </VBox>
                             </VBox>
                             <!-- S'inscrire a une Formation -->

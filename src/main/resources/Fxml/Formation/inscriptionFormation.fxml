@@ -14,7 +14,7 @@
     <!-- Search Bar UI -->
     <HBox spacing="10.0" alignment="CENTER_LEFT"
           AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" AnchorPane.rightAnchor="20.0">
-        <Label text="Rechercher :" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
+        <Label text="Rechercher :" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50; -fx-font-family: 'Arial', sans-serif; -fx-effect: dropshadow(gaussian, #BDC3C7, 5, 0, 1, 1); -fx-padding: 5px 10px; -fx-background-color: #ECF0F1; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #BDC3C7; -fx-border-width: 1px;" />
         <TextField styleClass="text-field" fx:id="searchField" promptText="Saisir le titre de la formation..."
                    style="-fx-font-size: 14px; -fx-padding: 5px; -fx-pref-width: 300px;" />
     </HBox>

@@ -23,6 +23,7 @@ import java.io.IOException;
 public class SidebarController {
 
     public Button gestionQuestionsButton;
+    public Button formationUserButton;
     public VBox gestionQuestionsContainer;
     @FXML
 
@@ -111,6 +112,7 @@ public class SidebarController {
     }
     @FXML
     public void handleUserList(){loadContent("/Fxml/Users_list/users_list.fxml");}
+
     @FXML
     public void  handleReclamation(){ loadContent("/Fxml/Reclamation/Reclamation.fxml");}
     @FXML
@@ -173,6 +175,10 @@ public class SidebarController {
     public void handleListFormation(ActionEvent actionEvent) {
         loadContent("/Fxml/Formation/ListFormations.fxml");
     }
+    public void handleFormationUser(ActionEvent actionEvent) {
+        loadContent("/Fxml/Formation/formationUser.fxml");
+    }
+
     private void loadContent(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));

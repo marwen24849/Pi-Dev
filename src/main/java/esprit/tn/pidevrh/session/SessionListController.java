@@ -60,7 +60,15 @@ public class SessionListController {
             while (resultSet.next()) {
                 Session session = new Session();
                 session.setId(resultSet.getLong("id"));
-                session.setDate(resultSet.getDate("date").toLocalDate());
+
+                // Handle the possibility of null dates
+                java.sql.Date sqlDate = resultSet.getDate("date");
+                if (sqlDate != null) {
+                    session.setDate(sqlDate.toLocalDate()); // Convert to LocalDate if not null
+                } else {
+                    session.setDate(null); // Or handle it accordingly if date is null
+                }
+
                 session.setSalle(resultSet.getString("salle"));
                 session.setOnline(resultSet.getBoolean("is_online")); // Set online status
                 session.setRoomLink(resultSet.getString("link")); // Set the link for online sessions
@@ -128,24 +136,27 @@ public class SessionListController {
             } else {
                 // Create a layout for each session
                 Label dateLabel = new Label("Date: " + session.getDate());
+                dateLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50; -fx-font-style: italic; -fx-wrap-text: true; -fx-max-width: 300px;");
                 Label typeLabel = new Label("Type: " + (session.isOnline() ? "En ligne" : "Présentiel"));
+                typeLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2980b9; -fx-font-style: italic;");
 
                 // Conditional display of salle or link
                 Label salleLabel = new Label();
                 Label linkLabel = new Label();
                 if (session.isOnline()) {
-                    linkLabel.setText("Link: " + session.getRoomLink());
+                    linkLabel.setText("Lien: " + session.getRoomLink());
+                    linkLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #F08080; -fx-font-style: italic;");
                 } else {
                     salleLabel.setText("Salle: " + session.getSalle());
                 }
 
                 // Buttons for update and delete
-                Button updateButton = new Button("Modifier");
-                Button deleteButton = new Button("Supprimer");
+                Button updateButton = new Button("✏️ Modifier");
+                Button deleteButton = new Button("🗑️ Supprimer");
 
                 // Add CSS classes to buttons
                 updateButton.getStyleClass().add("update-button");
-                deleteButton.getStyleClass().add("button");
+                deleteButton.getStyleClass().add("delete-button");
 
                 updateButton.setOnAction(event -> handleUpdate(session));  // Handle update
                 deleteButton.setOnAction(event -> handleDelete(session));  // Handle delete

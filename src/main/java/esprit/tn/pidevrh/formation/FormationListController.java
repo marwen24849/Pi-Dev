@@ -115,19 +115,20 @@ public class FormationListController {
 
                     // Title label
                     Label titleLabel = new Label("Titre: " + formation.getTitre());
-                    titleLabel.setStyle("-fx-text-fill: #c0392b ;-fx-font-weight: bold; -fx-font-size: 16px;");
+                    titleLabel.setStyle("-fx-text-fill: #c0392b; -fx-font-weight: bold; -fx-font-size: 18px;");
+
 
                     // Description label
                     Label descriptionLabel = new Label("Description: " + formation.getDescription());
-                    descriptionLabel.setStyle("-fx-font-size: 14px;");
+                    descriptionLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50; -fx-font-style: italic; -fx-wrap-text: true; -fx-max-width: 300px;");
 
                     // Duration label
                     Label durationLabel = new Label("Durée: " + formation.getDuree() + " jours");
-                    durationLabel.setStyle("-fx-font-size: 14px;");
+                    durationLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2980b9; -fx-font-style: italic;");
 
                     // Capacity label
                     Label capacityLabel = new Label("Capacité: " + formation.getCapacity());
-                    capacityLabel.setStyle("-fx-font-size: 14px;");
+                    capacityLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #27ae60; -fx-font-style: italic;");
 
                     // Action buttons in HBox
                     HBox actionButtons = new HBox(10, updateButton, deleteButton, manageButton);
@@ -191,7 +192,7 @@ public class FormationListController {
             SessionListController controller = loader.getController();
             controller.setFormationId(formationId);
             Stage stage = new Stage();
-            stage.setTitle("Manage Sessions - Formation ID:" + formationId);
+            stage.setTitle("Consulter les sessions ");
             stage.setScene(new Scene(root));
             stage.showAndWait();
         } catch (IOException e) {

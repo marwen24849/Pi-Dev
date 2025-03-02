@@ -26,7 +26,7 @@
             <!-- Session Type (Radio Buttons) -->
             <Label style="-fx-font-size: 14px;" text="Type de Session :" />
             <HBox spacing="10" GridPane.columnIndex="1">
-                <RadioButton fx:id="presentielRadio" text="Présentiel" onAction="#handleSessionTypeChange" />
+                <RadioButton fx:id="presentielRadio" text="Présentielle" onAction="#handleSessionTypeChange" />
                 <RadioButton fx:id="onlineRadio" text="En ligne" onAction="#handleSessionTypeChange" />
             </HBox>
 
@@ -38,7 +38,7 @@
         </GridPane>
 
         <!-- Bouton -->
-        <Button fx:id="addSession" onAction="#handleAddSession" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Session" />
+        <Button fx:id="addSession" onAction="#handleAddSession" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Session" />
         <ProgressIndicator fx:id="loadingIndicator" visible="false" />
     </VBox>
 

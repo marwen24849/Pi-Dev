@@ -1,39 +1,100 @@
-
-/* Style général de la pagination */
-.pagination {
-    -fx-margin-top: 50px;
+/* Root styling */
+.root {
+    -fx-background-color: #f4f4f4; /* Light gray background */
+    -fx-padding: 20px;
 }
-
-/* Style des boutons de pagination */
-.pagination .button {
-    -fx-background-color: #92e038;
+.button {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
     -fx-background-radius: 5px;
     -fx-padding: 5px 10px;
-    -fx-border-radius: 5px;
     -fx-cursor: hand;
 }
 
-/* Style des boutons de pagination au survol */
-.pagination .button:hover {
-    -fx-background-color: #7cc030;
+/* Title label */
+.title-label {
+    -fx-font-size: 28px;
+    -fx-text-fill: #34495E; /* Dark blue-gray text */
+    -fx-font-weight: bold;
 }
 
-/* Style des boutons de pagination sélectionnés */
-.pagination .button:selected {
-    -fx-background-color: #6aa828;
-    -fx-text-fill: white;
+/* ListView styling - Remove any padding and border for the entire list */
+.list-view {
+    -fx-background-color: transparent; /* No background color for ListView */
+    -fx-border-color: transparent; /* No border for ListView */
+    -fx-padding: 0; /* Remove padding from ListView */
 }
 
-/* Style des boutons de pagination désactivés */
-.pagination .button:disabled {
-    -fx-background-color: #ccc;
-    -fx-text-fill: #666;
+/* ListView cells - Now each cell is fully visible and independent */
+
+
+
+
+/* Selected cell styling */
+.list-cell:filled:selected {
+    -fx-background-color: #3498db; /* Blue background for selected cell */
+    -fx-text-fill: white; /* White text for selected cell */
+}
+.list-cell:hover{
+    -fx-background-color: #ffffff; /* White background */
+
+}
+/* Text fields */
+.text-field {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-border-color: #ddd; /* Light gray border */
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
 }
 
-/* Style du label de la pagination (numéro de page actuel) */
-.pagination .label {
+.text-field:focused {
+    -fx-border-color: #3498db; /* Blue for focused text fields */
+}
+
+/* Labels */
+.label {
     -fx-font-size: 14px;
-    -fx-text-fill: #34495E;
+    -fx-text-fill: #34495E; /* Dark blue-gray text */
 }
+
+/* Custom styling for session cells */
+.session-box {
+    -fx-background-color: #f7f7f7; /* White background */
+    -fx-border-color: #ddd; /* Light gray border */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+}
+.session-box:hover{
+}
+.session-box .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50; /* Dark blue-gray text */
+}
+
+.update-button {
+    -fx-background-color: #3498db; /* Blue */
+}
+
+.update-button:hover {
+    -fx-background-color: #0d6efd; /* Darker Blue */
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c; /* Red */
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b; /* Darker Red */
+
+
+    /* Manage button */
+    .manage-button {
+        -fx-background-color: #27AE60; /* Green */
+    }
+
+    .manage-button:hover {
+        -fx-background-color: #219653; /* Slightly darker green */
+    }}

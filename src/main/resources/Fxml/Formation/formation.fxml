@@ -35,7 +35,7 @@
         </GridPane>
 
         <!-- Bouton -->
-        <Button fx:id="addFormation" onAction="#handleAddFormation" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Formation" />
+        <Button fx:id="addFormation" onAction="#handleAddFormation" style="-fx-background-color: #2C3E50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Formation" />
     </VBox>
 
 </AnchorPane>

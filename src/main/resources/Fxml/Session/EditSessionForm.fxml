@@ -9,23 +9,26 @@
     <!-- Session Type (Radio Buttons) -->
     <HBox spacing="10">
         <Label text="Type de Session :" />
-        <RadioButton fx:id="presentielRadio" text="Présentiel" toggleGroup="$sessionTypeGroup" onAction="#handleSessionTypeChange" />
+        <RadioButton fx:id="presentielRadio" text="Présentielle" toggleGroup="$sessionTypeGroup" onAction="#handleSessionTypeChange" />
         <RadioButton fx:id="onlineRadio" text="En ligne" toggleGroup="$sessionTypeGroup" onAction="#handleSessionTypeChange" />
     </HBox>
 
-    <!-- Salle Field (Visible for Présentiel) -->
-    <TextField fx:id="salleField" promptText="Salle de la session" visible="false" />
+    <!-- Salle Field (Label + TextField) -->
+    <HBox fx:id="salleHBox" spacing="10" visible="false">
+        <Label fx:id="salleLabel" text="Salle" />
+        <TextField fx:id="salleField" promptText="Salle de la session" />
+    </HBox>
 
-    <!-- Link Field (Visible for Online) -->
-    <TextField fx:id="linkField" promptText="Lien de la session" visible="false" />
-
-    <!-- Date Field -->
-    <DatePicker fx:id="datePicker" promptText="Sélectionner la date" />
+    <!-- Date Field (Label + DatePicker) -->
+    <HBox fx:id="dateHBox" spacing="10" visible="false">
+        <Label fx:id="dateLabel" text="Date" />
+        <DatePicker fx:id="datePicker" promptText="Sélectionner la date" />
+    </HBox>
 
     <!-- Buttons -->
     <HBox spacing="10">
         <!-- Save Button -->
-        <Button text="Enregistrer" onAction="#handleSave" />
+        <Button text="Enregistrer" onAction="#handleSave" style="-fx-background-color: #2c3e50; -fx-text-fill: white;"/>
 
         <!-- Cancel Button -->
         <Button text="Annuler" onAction="#handleCancel" style="-fx-background-color: #ff0000; -fx-text-fill: white;" />

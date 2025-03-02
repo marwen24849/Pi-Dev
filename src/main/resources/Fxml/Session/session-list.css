@@ -3,6 +3,14 @@
     -fx-background-color: #f4f4f4; /* Light gray background */
     -fx-padding: 20px;
 }
+.button {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-cursor: hand;
+}
 
 /* Title label */
 .title-label {
@@ -11,30 +19,27 @@
     -fx-font-weight: bold;
 }
 
-/* ListView styling */
+/* ListView styling - Remove any padding and border for the entire list */
 .list-view {
-    -fx-background-color: #ffffff; /* White background */
-    -fx-border-color: #ddd; /* Light gray border */
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
+    -fx-background-color: transparent; /* No background color for ListView */
+    -fx-border-color: transparent; /* No border for ListView */
+    -fx-padding: 0; /* Remove padding from ListView */
 }
 
-/* ListView cells */
-.list-cell {
-    -fx-background-color: #ffffff; /* White background */
-    -fx-border-color: #ddd; /* Light gray border */
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
-    -fx-margin: 5px;
-}
+/* ListView cells - Now each cell is fully visible and independent */
 
+
+
+
+/* Selected cell styling */
 .list-cell:filled:selected {
-    -fx-background-color: #3498db; /* Blue for selected cells */
-    -fx-text-fill: white; /* White text for selected cells */
+    -fx-background-color: #3498db; /* Blue background for selected cell */
+    -fx-text-fill: white; /* White text for selected cell */
 }
+.list-cell:hover{
+    -fx-background-color: #ffffff; /* White background */
 
+}
 /* Text fields */
 .text-field {
     -fx-background-color: #ffffff; /* White background */
@@ -55,52 +60,35 @@
 
 /* Custom styling for session cells */
 .session-box {
-    -fx-background-color: #ffffff; /* White background */
+    -fx-background-color: #f7f7f7; /* White background */
     -fx-border-color: #ddd; /* Light gray border */
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-padding: 10px;
     -fx-spacing: 5px;
 }
-
+.session-box:hover{
+}
 .session-box .label {
     -fx-font-size: 14px;
     -fx-text-fill: #2c3e50; /* Dark blue-gray text */
 }
 
-/* General button styling */
-.button {
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #FFFFFF; /* White text */
-    -fx-background-radius: 5px;
-    -fx-padding: 5px 10px;
-    -fx-cursor: hand;
-    -fx-background-color: #3A4045; /* Dark gray */
-    -fx-border-width: 0;
-}
-
-.button:hover {
-    -fx-background-color: #4A6A8A; /* Lighter blue-gray for hover */
-}
-
-/* Update button */
 .update-button {
-    -fx-background-color: #74B9FF; /* Light blue */
+    -fx-background-color: #3498db; /* Blue */
 }
 
 .update-button:hover {
-    -fx-background-color: #5FA8E6; /* Slightly darker blue */
+    -fx-background-color: #0d6efd; /* Darker Blue */
 }
 
-/* Delete button */
 .delete-button {
-    -fx-background-color: #FF7675; /* Soft red */
+    -fx-background-color: #e74c3c; /* Red */
 }
 
 .delete-button:hover {
-    -fx-background-color: #E65A5A; /* Slightly darker red */
-}
+    -fx-background-color: #c0392b; /* Darker Red */
+
 
 /* Manage button */
 .manage-button {
@@ -109,4 +97,4 @@
 
 .manage-button:hover {
     -fx-background-color: #219653; /* Slightly darker green */
-}
+}}

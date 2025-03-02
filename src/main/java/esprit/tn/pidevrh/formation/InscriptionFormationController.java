@@ -94,6 +94,7 @@ public class InscriptionFormationController {
 
             {
                 manageButton.getStyleClass().add("manage-button");
+                inscriptionButton.getStyleClass().add("inscription-button");
                 manageButton.setOnAction(event -> {
                     Formation selectedFormation = getItem();
                     if (selectedFormation != null) {
@@ -123,19 +124,19 @@ public class InscriptionFormationController {
 
                     // Title label
                     Label titleLabel = new Label("Titre: " + formation.getTitre());
-                    titleLabel.setStyle("-fx-text-fill: #c0392b ;-fx-font-weight: bold; -fx-font-size: 16px;");
+                    titleLabel.setStyle("-fx-text-fill: #c0392b ;-fx-font-weight: bold; -fx-font-size: 18px;");
 
                     // Description label
                     Label descriptionLabel = new Label("Description: " + formation.getDescription());
-                    descriptionLabel.setStyle("-fx-font-size: 14px;");
+                    descriptionLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50; -fx-font-style: italic; -fx-wrap-text: true; -fx-max-width: 300px;");
 
                     // Duration label
                     Label durationLabel = new Label("Durée: " + formation.getDuree() + " jours");
-                    durationLabel.setStyle("-fx-font-size: 14px;");
+                    durationLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2980b9; -fx-font-style: italic;");
 
                     // Capacity label
                     Label capacityLabel = new Label("Capacité: " + formation.getCapacity());
-                    capacityLabel.setStyle("-fx-font-size: 14px;");
+                    capacityLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #27ae60; -fx-font-style: italic;");
 
                     // Action buttons in HBox
                     HBox actionButtons = new HBox(10,  manageButton,inscriptionButton);
@@ -271,7 +272,7 @@ public class InscriptionFormationController {
                         "Voici les sessions:\n\n" + sessionsInfo.toString();
 
                 // Step 8: Send email to the user
-                boolean emailSent = EmailService.sendEmail(loggedInUser.getEmail(), "Formation Enrollment Confirmation", emailContent);
+                boolean emailSent = EmailService.sendEmail(loggedInUser.getEmail(), "Confirmation d'Inscription à la Formation", emailContent);
 
                 if (!emailSent) {
                     showAlert("Email Error", "Failed to send confirmation email.");

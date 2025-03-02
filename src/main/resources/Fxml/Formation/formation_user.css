@@ -1,0 +1,37 @@
+/* formation_user.css */
+.header-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.column-header {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.formation-user-list-container {
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 10;
+}
+
+.formation-user-card {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(gaussian, #000000, 5, 0.2, 0, 0);
+}
+
+.formation-info {
+    -fx-text-fill: #555555;
+    -fx-font-size: 13px;
+}
+
+.user-info {
+    -fx-text-fill: #555555;
+    -fx-font-size: 13px;
+}
+
+.action-button {
+    -fx-background-color: #ff5555;
+    -fx-text-fill: white;
+}

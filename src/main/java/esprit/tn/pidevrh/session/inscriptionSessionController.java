@@ -95,13 +95,19 @@ public class inscriptionSessionController {
             } else {
                 // Create a layout for each session
                 Label dateLabel = new Label("Date: " + session.getDate());
+                dateLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50; -fx-font-style: italic; -fx-wrap-text: true; -fx-max-width: 300px;");
+
                 Label typeLabel = new Label("Type: " + (session.isOnline() ? "En ligne" : "Présentiel"));
+                typeLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2980b9; -fx-font-style: italic;");
+
 
                 // Conditional display of salle or link
                 Label salleLabel = new Label();
                 Label linkLabel = new Label();
                 if (session.isOnline()) {
                     linkLabel.setText("Link: " + session.getRoomLink());
+                    linkLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #F08080; -fx-font-style: italic;");
+
                 } else {
                     salleLabel.setText("Salle: " + session.getSalle());
                 }
