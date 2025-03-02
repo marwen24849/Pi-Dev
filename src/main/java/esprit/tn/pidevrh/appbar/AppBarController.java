@@ -24,6 +24,11 @@ public class AppBarController {
     private Button addQuiz;
 
 
+    @FXML
+    private Button departmentButton; // New button for Departments
+
+
+
     public void handleListQuestions() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Question/ListQuestions.fxml"));
@@ -64,6 +69,28 @@ public class AppBarController {
         }catch (Exception e){
             e.printStackTrace();
             showAlert("Erreur", "Impossible de charger la vue de Quiz.");
+        }
+    }
+
+
+    // New method to handle Departments button
+    public void handleDepartments(ActionEvent actionEvent) {
+        loadView("/Fxml/TeamDepartment/DepartmentView.fxml", departmentButton, "Erreur", "Impossible de charger la vue des départements.");
+    }
+
+    private void loadView(String fxmlPath, Button button, String errorTitle, String errorMessage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) button.getScene().getWindow();
+            stage.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/Css/style.css")).toExternalForm());
+
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(errorTitle, errorMessage);
         }
     }
 

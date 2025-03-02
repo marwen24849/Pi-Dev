@@ -19,6 +19,6 @@
     <ListView fx:id="quizListView" style="-fx-border-color: #ccc; -fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0" />
 
 
-    <Pagination fx:id="pagination" layoutX="20.0" layoutY="557.0" style="-fx-font-size: 14px;" AnchorPane.bottomAnchor="-15.399999999999977" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+    <Pagination fx:id="pagination" styleClass="pagination" layoutX="20.0" layoutY="557.0" style="-fx-font-size: 14px;" AnchorPane.bottomAnchor="-15.399999999999977" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"  />
 
 </AnchorPane>

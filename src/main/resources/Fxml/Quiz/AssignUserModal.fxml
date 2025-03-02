@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" spacing="10" prefWidth="400" prefHeight="500" fx:controller="esprit.tn.pidevrh.quiz.AssignUserModalController"
+      style="-fx-background-color: #f4f4f4; -fx-padding: 20px; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+
+    <!-- Titre -->
+    <Label text="Sélectionnez un utilisateur" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <!-- Champ de recherche -->
+    <TextField fx:id="searchField" promptText="Rechercher un utilisateur..."
+               style="-fx-font-size: 14px; -fx-padding: 8px; -fx-border-radius: 5px;"/>
+
+    <!-- Liste des utilisateurs -->
+    <ListView fx:id="usersListView" style="-fx-background-color: white; -fx-border-radius: 5px;"/>
+
+    <!-- Boutons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px;"/>
+
+        <Button text="Valider" onAction="#handleConfirm"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px;"/>
+    </HBox>
+</VBox>
