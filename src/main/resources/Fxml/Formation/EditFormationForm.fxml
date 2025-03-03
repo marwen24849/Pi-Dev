@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="10" style="-fx-padding: 20;" fx:controller="esprit.tn.pidevrh.formation.FormationUpdateController">
+    <Label text="Modifier la Formation" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <TextField fx:id="titleField" promptText="Titre de la formation" />
+    <TextField fx:id="descriptionField"  promptText="Description de la formation" />
+    <TextField fx:id="durationField" promptText="Durée de la formation" />
+    <TextField fx:id="capacityField" promptText="Durée de la formation" />
+
+
+    <HBox spacing="10">
+        <Button text="Enregistrer" onAction="#handleSave" />
+        <Button text="Annuler" onAction="#handleCancel" style="-fx-background-color: #ff0000; -fx-text-fill: white;"/>
+    </HBox>
+</VBox>

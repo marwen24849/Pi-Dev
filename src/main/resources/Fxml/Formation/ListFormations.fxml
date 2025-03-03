@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Pos?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.formation.FormationListController"  stylesheets="@styles.css">
+
+    <!-- Title -->
+    <Label styleClass="title-label" style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+           text="Liste des Formations"
+           AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="50.0" />
+
+    <!-- Search Bar UI -->
+    <HBox spacing="10.0" alignment="CENTER_LEFT"
+          AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" AnchorPane.rightAnchor="20.0">
+        <Label text="Rechercher :" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50; -fx-font-family: 'Arial', sans-serif; -fx-effect: dropshadow(gaussian, #BDC3C7, 5, 0, 1, 1); -fx-padding: 5px 10px; -fx-background-color: #ECF0F1; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #BDC3C7; -fx-border-width: 1px;" />
+
+        <TextField styleClass="text-field" fx:id="searchField" promptText="Saisir le titre de la formation..."
+                   style="-fx-font-size: 14px; -fx-padding: 5px; -fx-pref-width: 300px;" />
+    </HBox>
+
+    <!-- ListView to display formations -->
+    <ListView styleClass="list-view" fx:id="formationListView"
+              AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="140.0" AnchorPane.bottomAnchor="100.0" />
+
+
+</AnchorPane>

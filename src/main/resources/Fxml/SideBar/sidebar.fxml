@@ -82,6 +82,24 @@
                                 <Button fx:id="userListButton" text="Users List" styleClass="sidebar-menu" onAction="#handleUserList"  />
                             </VBox>
 
+                            <!-- Gestion Formation -->
+                            <VBox fx:id="gestionFormationContainer">
+                                <Button fx:id="gestionFormationButton" text="📚 Gestion Formations"
+                                        styleClass="sidebar-menu" onAction="#toggleFormationMenu"/>
+                                <VBox fx:id="gestionFormationMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handleAddFormation" text="➕ Ajouter Formation" styleClass="menu-item"/>
+                                    <Button onAction="#handleListFormation" text="📜 Liste Formation" styleClass="menu-item"/>
+                                    <Button fx:id="formationUserButton" text="👥 Formation-User"
+                                            styleClass="sidebar-menu" onAction="#handleFormationUser"/>
+
+                                </VBox>
+                            </VBox>
+
+                            <VBox fx:id="inscritformation">
+                                <Button onAction="#handleInscriptionFormation" text="📜 Liste Formation" styleClass="sidebar-menu"/>
+
+                            </VBox>
+
                             <VBox fx:id="reclamation">
                                 <Button fx:id="RecalmationtButton" text="Reclamation" styleClass="sidebar-menu" onAction="#handleReclamation" />
                             </VBox>

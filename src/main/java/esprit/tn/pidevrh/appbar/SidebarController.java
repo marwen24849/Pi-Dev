@@ -45,6 +45,9 @@ public class SidebarController {
     public VBox gestionEquipeMenu;
     public VBox gestionequipedepartment;
     public VBox gestionProjet;
+    public VBox gestionFormationContainer;
+    public VBox inscritformation;
+    public VBox gestionFormationMenu;
     @FXML
     private VBox sidebarWrapper, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu, userQuizMenu;
     @FXML
@@ -91,9 +94,14 @@ public class SidebarController {
         gestionequipedepartment.setManaged(roleTest);
         gestionProjet.setVisible(roleTest);
 
+        gestionFormationContainer.setVisible(roleTest);
+        gestionFormationContainer.setManaged(roleTest);
+
 
         userQuizContainer.setVisible(!roleTest);
         userQuizContainer.setManaged(!roleTest);
+
+        inscritformation.setVisible(!roleTest);
 
         demandeCongeContainer.setVisible(!roleTest);
         demandeCongeContainer.setManaged(!roleTest);
@@ -285,5 +293,22 @@ public class SidebarController {
 
     public void handleGestionProjet(ActionEvent actionEvent) {
         loadContent("/Fxml/Projet/projet.fxml");
+    }
+
+    public void toggleFormationMenu(ActionEvent actionEvent) {
+        toggleMenuVisibility(gestionFormationMenu, !gestionFormationMenu.isVisible());
+
+    }
+
+    public void handleFormationUser(ActionEvent actionEvent) {
+        loadContent("/Fxml/Formation/formationUser.fxml");
+    }
+
+    public void handleListFormation(ActionEvent actionEvent) {
+        loadContent("/Fxml/Formation/ListFormations.fxml");
+    }
+
+    public void handleInscriptionFormation(ActionEvent actionEvent) {
+        loadContent("/Fxml/Formation/inscriptionFormation.fxml");
     }
 }
