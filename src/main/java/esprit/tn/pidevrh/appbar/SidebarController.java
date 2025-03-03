@@ -65,6 +65,8 @@ public class SidebarController {
         }
         if(roleTest)
             loadContent("/Fxml/Dashboard/admin_dashboard.fxml");
+        else
+            loadContent("/Fxml/Dashboard/UserDashboard.fxml");
 
         sidebarWrapper.setTranslateX(0);
         toggleMenuVisibility(gestionQuestionsMenu, false);

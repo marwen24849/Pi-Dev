@@ -55,6 +55,7 @@ public class LoginController {
                 Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Fxml/SideBar/sidebar.fxml")));
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 stage.setScene(new Scene(root));
+                stage.setFullScreen(true);
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
