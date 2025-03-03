@@ -25,7 +25,7 @@ public class FormationListController {
     private ListView<Formation> formationListView;
 
     @FXML
-    private TextField searchField;  // Replace ComboBox with a search bar
+    private TextField searchField;
 
     private ObservableList<Formation> formationsObservableList;
 

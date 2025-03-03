@@ -5,9 +5,7 @@ package esprit.tn.pidevrh.dashboard;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 import esprit.tn.pidevrh.login.SessionManager;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,30 +22,50 @@ public class AdminDashboardController {
     @FXML private Label totalQuizzesLabel;
     @FXML private Label totalFormationsLabel;
     @FXML private Label averageSuccessLabel;
-
-    @FXML private PieChart quizPassChart;
     @FXML private PieChart difficultyChart;
     @FXML private BarChart<String, Number> barChart;
-
-    @FXML private TableView<UserStat> topUsersTable;
-    @FXML private TableColumn<UserStat, String> userColumn;
-    @FXML private TableColumn<UserStat, Integer> scoreColumn;
-
-
-
+    @FXML private BarChart<String, Number> projectChart;
     @FXML private Label totalLeavesLabel;
     @FXML private Label pendingLeavesLabel;
     @FXML private Label approvedLeavesLabel;
     @FXML private Label rejectedLeavesLabel;
 
     public void initialize() {
-
         loadGeneralStats();
         loadLeaveStats();
-        loadQuizPassChart();
         loadDifficultyChart();
         loadBarChart();
+        loadProjectChart();
     }
+
+    private void loadProjectChart() {
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Projets");
+
+        String query = """
+        SELECT 
+            SUM(CASE WHEN date_debut > NOW() THEN 1 ELSE 0 END) AS a_venir,
+            SUM(CASE WHEN date_debut <= NOW() AND (date_fin IS NULL OR date_fin > NOW()) THEN 1 ELSE 0 END) AS en_cours,
+            SUM(CASE WHEN date_fin <= NOW() THEN 1 ELSE 0 END) AS termines
+        FROM projet;
+    """;
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                series.getData().add(new XYChart.Data<>("À venir", rs.getInt("a_venir")));
+                series.getData().add(new XYChart.Data<>("En cours", rs.getInt("en_cours")));
+                series.getData().add(new XYChart.Data<>("Terminés", rs.getInt("termines")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        projectChart.getData().clear();
+        projectChart.getData().add(series);
+    }
+
 
     private void loadGeneralStats() {
         try (Connection connection = DatabaseConnection.getConnection()) {
@@ -90,19 +108,7 @@ public class AdminDashboardController {
         }
     }
 
-    private void loadQuizPassChart() {
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement("SELECT passer, COUNT(*) FROM quiz GROUP BY passer")) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String label = rs.getBoolean(1) ? "Passé" : "Non passé";
-                int count = rs.getInt(2);
-                quizPassChart.getData().add(new PieChart.Data(label, count));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     private void loadDifficultyChart() {
         try (Connection connection = DatabaseConnection.getConnection();
@@ -133,18 +139,4 @@ public class AdminDashboardController {
         barChart.getData().add(series);
     }
 
-    private void loadTopUsersTable() {
-        userColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
-        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement("SELECT u.first_name, AVG(r.score) AS avg_score FROM user u JOIN resultat r ON u.id = r.id GROUP BY u.id ORDER BY avg_score DESC LIMIT 5")) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                topUsersTable.getItems().add(new UserStat(rs.getString(1), rs.getInt(2)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

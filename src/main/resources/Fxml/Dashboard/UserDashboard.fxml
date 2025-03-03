@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="833.0" prefWidth="865.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.dashboard.UserDashboardController">
+<AnchorPane prefHeight="833.0" prefWidth="889.0" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.pidevrh.dashboard.UserDashboardController">
 
-    <VBox prefHeight="833.0" prefWidth="850.0" spacing="20" styleClass="dashboard-root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="0.0">
-        <HBox>
-            <Label prefHeight="55.0" prefWidth="329.0" styleClass="dashboard-title" text="Tableau de bord de l'Utilisateur" />
-            <Label fx:id="username" prefHeight="55.0" prefWidth="511.0" styleClass="dashboard-title" />
+    <VBox prefHeight="833.0" prefWidth="880.0" spacing="20" styleClass="dashboard-root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="0.0">
+        <HBox alignment="CENTER">
+            <Label prefHeight="55.0" prefWidth="378.0" styleClass="dashboard-title" text="Tableau de bord de l'Utilisateur" textAlignment="CENTER" textFill="#bf5f5f" />
+            <Label fx:id="username" prefHeight="55.0" prefWidth="398.0" styleClass="dashboard-title" textAlignment="CENTER" textFill="#d94b4b" />
         </HBox>
 
         <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="102.0" prefWidth="979.0" spacing="20">
@@ -56,7 +53,7 @@
             </VBox>
         </HBox>
 
-        <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="350.0" prefWidth="1100.0" spacing="20">
+        <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="469.0" prefWidth="865.0" spacing="20">
             <VBox prefHeight="302.0" prefWidth="540.0" styleClass="chart-card" HBox.hgrow="ALWAYS">
                 <Label styleClass="chart-title" text="Répartition des Quiz Passés" />
                 <PieChart fx:id="quizPassChart" maxHeight="Infinity" maxWidth="Infinity" prefHeight="352.0" prefWidth="500.0" styleClass="chart" />
