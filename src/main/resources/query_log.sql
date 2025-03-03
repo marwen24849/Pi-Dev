@@ -205,3 +205,15 @@ WHERE table_schema = 'SGRH';
  SELECT COUNT(*) AS nombre_d_equipe
 FROM equipe;
 ******************************************** ********************************************
+2025-03-03 14:16:19 
+ SELECT COUNT(*) AS nombre_de_questions
+FROM question;
+******************************************** ********************************************
+2025-03-03 14:16:39 
+ SELECT u.first_name, u.last_name
+FROM user u
+JOIN response r ON u.id = r.user_id
+JOIN resultat res ON r.resultat_id = res.id
+ORDER BY res.score DESC
+LIMIT 1;
+******************************************** ********************************************

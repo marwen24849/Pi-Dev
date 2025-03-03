@@ -27,6 +27,7 @@
                 <ScrollPane fx:id="sidebarScrollPane" fitToWidth="true" styleClass="sidebar-scroll">
                     <content>
                         <VBox fx:id="sidebarMenuContainer" spacing="15" styleClass="sidebar-menu-container">
+
                             <!-- Gestion Questions -->
                             <VBox fx:id="gestionQuestionsContainer">
                                 <Button fx:id="gestionQuestionsButton" text="📚 Gestion Questions"
@@ -47,6 +48,54 @@
                                 </VBox>
                             </VBox>
 
+
+                            <!-- Gestion Equipe et Departements -->
+                            <VBox fx:id="gestionequipedepartment">
+                                <Button fx:id="gestionequipedepartmentButton" text="👥 Gestion Equipe et Départements"
+                                        styleClass="sidebar-menu" onAction="#toggleEquipe"/>
+                                <VBox fx:id="gestionEquipeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handlegestionequipe" text="📋 Gestion Equipe" styleClass="menu-item"/>
+                                    <Button onAction="#handlegestiondepartments" text="🏢 Gestion Département" styleClass="menu-item"/>
+                                </VBox>
+                            </VBox>
+
+                            <!-- Gestion Projet -->
+                            <VBox fx:id="gestionProjet">
+                                <Button fx:id="gestionProjetButton" text="📊 Gestion Projet" styleClass="sidebar-menu" onAction="#handleGestionProjet"/>
+                            </VBox>
+
+
+
+                            <!-- Users List -->
+                            <VBox fx:id="userListContainer">
+                                <Button fx:id="userListButton" text="👥 Users List" styleClass="sidebar-menu" onAction="#handleUserList"/>
+                            </VBox>
+
+                            <!-- Gestion Formations -->
+                            <VBox fx:id="gestionFormationContainer">
+                                <Button fx:id="gestionFormationButton" text="📚 Gestion Formations"
+                                        styleClass="sidebar-menu" onAction="#toggleFormationMenu"/>
+                                <VBox fx:id="gestionFormationMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handleAddFormation" text="➕ Ajouter Formation" styleClass="menu-item"/>
+                                    <Button onAction="#handleListFormation" text="📜 Liste Formation" styleClass="menu-item"/>
+                                    <Button fx:id="formationUserButton" text="👥 Formation-User"
+                                            styleClass="menu-item" onAction="#handleFormationUser"/>
+                                </VBox>
+                            </VBox>
+
+
+
+                            <VBox fx:id="Listreclamation">
+                                <Button fx:id="RecalmationtList" text="📋 Liste des Réclamations" styleClass="sidebar-menu" onAction="#handleReclamationList"/>
+                            </VBox>
+
+                            <VBox fx:id="SGRHAssistant">
+                                <Button fx:id="sgrhIa" text="🤖 SGRH Assistant"
+                                        styleClass="sidebar-menu" onAction="#handleAssistantSgrh"/>
+                            </VBox>
+
+
+                            <!-- Mes Quiz -->
                             <VBox fx:id="userQuizContainer">
                                 <Button fx:id="userQuizButton" text="👤 Mes Quiz"
                                         styleClass="sidebar-menu" onAction="#toggleUserQuizMenu"/>
@@ -54,20 +103,6 @@
                                     <Button onAction="#handleListUserQuiz" text="📜 Mes Quiz" styleClass="menu-item"/>
                                     <Button onAction="#handleQuizResults" text="📊 Mes Résultats" styleClass="menu-item"/>
                                 </VBox>
-                            </VBox>
-
-                            <!-- Gestion department et equipe -->
-                            <VBox fx:id="gestionequipedepartment">
-                                <Button fx:id="gestionequipedepartmentButton" text="📝 Gestion Equipe et Departements "
-                                        styleClass="sidebar-menu" onAction="#toggleEquipe"/>
-                                <VBox fx:id="gestionEquipeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
-                                    <Button onAction="#handlegestionequipe" text="➕ Gestion Equipe" styleClass="menu-item"/>
-                                    <Button onAction="#handlegestiondepartments" text="📜 Gestion Département" styleClass="menu-item"/>
-                                </VBox>
-                            </VBox>
-
-                            <VBox fx:id="gestionProjet">
-                                <Button fx:id="gestionProjetButton" text="Gestion Projet" styleClass="sidebar-menu" onAction="#handleGestionProjet"  />
                             </VBox>
                             <!-- Demande Congé -->
                             <VBox fx:id="demandeCongeContainer">
@@ -77,61 +112,28 @@
                                     <Button onAction="#handleAddDemande" text="📄 Ajouter Demande" styleClass="menu-item"/>
                                 </VBox>
                             </VBox>
-
-                            <VBox fx:id="userListContainer">
-                                <Button fx:id="userListButton" text="Users List" styleClass="sidebar-menu" onAction="#handleUserList"  />
-                            </VBox>
-
-                            <!-- Gestion Formation -->
-                            <VBox fx:id="gestionFormationContainer">
-                                <Button fx:id="gestionFormationButton" text="📚 Gestion Formations"
-                                        styleClass="sidebar-menu" onAction="#toggleFormationMenu"/>
-                                <VBox fx:id="gestionFormationMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
-                                    <Button onAction="#handleAddFormation" text="➕ Ajouter Formation" styleClass="menu-item"/>
-                                    <Button onAction="#handleListFormation" text="📜 Liste Formation" styleClass="menu-item"/>
-                                    <Button fx:id="formationUserButton" text="👥 Formation-User"
-                                            styleClass="sidebar-menu" onAction="#handleFormationUser"/>
-
-                                </VBox>
+                            <!-- Réclamations -->
+                            <VBox fx:id="reclamation">
+                                <Button fx:id="RecalmationtButton" text="📩 Réclamation" styleClass="sidebar-menu" onAction="#handleReclamation"/>
                             </VBox>
 
                             <VBox fx:id="inscritformation">
                                 <Button onAction="#handleInscriptionFormation" text="📜 Liste Formation" styleClass="sidebar-menu"/>
-
                             </VBox>
-
-                            <VBox fx:id="reclamation">
-                                <Button fx:id="RecalmationtButton" text="Reclamation" styleClass="sidebar-menu" onAction="#handleReclamation" />
-                            </VBox>
-
-
-                            <VBox fx:id="Listreclamation">
-                                <Button fx:id="RecalmationtList" text="Liste des Reclamations" styleClass="sidebar-menu" onAction="#handleReclamationList"  />
-                            </VBox>
-
                             <VBox fx:id="assistant">
                                 <Button fx:id="assistant1" text="🤖 Assistant"
                                         styleClass="sidebar-menu" onAction="#handleAssistant"/>
-
-                            </VBox>
-
-                            <VBox fx:id="SGRHAssistant">
-                                <Button fx:id="sgrhIa" text="🤖 SGRH Assistant"
-                                        styleClass="sidebar-menu" onAction="#handleAssistantSgrh"/>
-
                             </VBox>
                         </VBox>
                     </content>
                 </ScrollPane>
 
-                <!-- Logout Button (Fixed at Bottom) -->
-                <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Logout" AnchorPane.leftAnchor="20" AnchorPane.bottomAnchor="10" />
+                <!-- Logout Button -->
+                <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Logout"
+                        AnchorPane.leftAnchor="20" AnchorPane.bottomAnchor="10"/>
 
             </VBox>
-
-
         </VBox>
-
 
         <AnchorPane fx:id="contentArea" styleClass="content-area"
                     AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250"

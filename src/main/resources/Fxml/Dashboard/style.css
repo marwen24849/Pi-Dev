@@ -4,52 +4,51 @@
     -fx-base: #ecf0f1;
 }
 
-/* Style des boutons */
-.button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 5px 10px;
-    -fx-border-radius: 5px;
+.dashboard-root {
+    -fx-padding: 20;
+    -fx-spacing: 10;
+    -fx-background-color: #f4f4f4;
 }
 
-.button:hover {
-    -fx-background-color: #2980b9;
-}
-
-/* Style des onglets */
-.tab-pane .tab-header-area .tab-header-background {
-    -fx-background-color: #2c3e50;
-}
-
-.tab-pane .tab {
-    -fx-background-color: #34495e;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-}
-
-.tab-pane .tab:selected {
-    -fx-background-color: #3498db;
-}
-
-/* Style des listes */
-.list-view {
-    -fx-border-color: #bdc3c7;
-    -fx-border-radius: 5px;
-}
-
-/* Style des tableaux */
-.table-view {
-    -fx-border-color: #bdc3c7;
-    -fx-border-radius: 5px;
-}
-
-.table-view .column-header {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-}
-
-/* Style des labels */
-.label {
+.dashboard-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
     -fx-text-fill: #2c3e50;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-padding: 15;
+}
+
+.card-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: #3498db;
+}
+
+.card-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.chart-card {
+    -fx-background-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-padding: 15;
+}
+
+.chart-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.chart {
+    -fx-padding: 10;
 }
