@@ -12,7 +12,7 @@
         <TextArea fx:id="reclamationTextArea" promptText="Écrivez votre réclamation ici..." wrapText="true" prefHeight="200.0"/>
 
         <HBox spacing="10.0">
-            <Button text="Corriger la Grammaire" onAction="#handleCorrection" />
+            <Button text="Utiliser l'IA" onAction="#handleCorrection" />
             <Button text="Envoyer" onAction="#handleSubmit" styleClass="send-button"  />
         </HBox>
     </VBox>

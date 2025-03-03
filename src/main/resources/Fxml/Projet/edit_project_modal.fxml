@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.pidevrh.projet.EditProjectController"
+            style="-fx-background-color: #f9fafc;">
+
+    <VBox alignment="CENTER" spacing="20.0" AnchorPane.topAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+
+        <Label text="Modifier le Projet"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+        <GridPane hgap="15.0" vgap="15.0"
+                  style="-fx-padding: 20px; -fx-background-color: #ffffff;
+                         -fx-border-color: #dce4ec; -fx-border-radius: 12px;
+                         -fx-background-radius: 12px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+            <columnConstraints>
+                <ColumnConstraints minWidth="150.0" halignment="RIGHT" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <Label text="Nom du Projet:" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="nomProjetField" GridPane.columnIndex="1"/>
+
+            <Label text="Équipe:" GridPane.rowIndex="1" style="-fx-font-size: 16px;"/>
+            <ComboBox fx:id="equipeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Responsable:" GridPane.rowIndex="2" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="responsableField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label text="Date de Début:" GridPane.rowIndex="3" style="-fx-font-size: 16px;"/>
+            <DatePicker fx:id="dateDebutPicker" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label text="Date de Fin:" GridPane.rowIndex="4" style="-fx-font-size: 16px;"/>
+            <DatePicker fx:id="dateFinPicker" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        </GridPane>
+
+        <Button fx:id="saveButton" text="Sauvegarder" onAction="#handleSaveChanges"
+                style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-size: 16px;"/>
+        <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 16px;"/>
+    </VBox>
+</AnchorPane>

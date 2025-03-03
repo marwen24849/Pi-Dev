@@ -3,6 +3,7 @@ package esprit.tn.pidevrh.quiz;
 public class Quiz {
 
     private int time;
+
     private Long Id;
 
     private String title;
@@ -21,6 +22,7 @@ public class Quiz {
 
     public Quiz() {
     }
+
 
     public Quiz(int time, String title, String category, double minimumSuccessPercentage, String difficultylevel, boolean passer) {
         this.time = time;

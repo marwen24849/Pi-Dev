@@ -24,7 +24,6 @@ public class SQLChatController {
     @FXML
     private Button sendButton;
 
-    private final String userId = "1";
 
     @FXML
     private void initialize() {
@@ -40,11 +39,7 @@ public class SQLChatController {
             new Thread(() -> {
                 try (Connection connection = DatabaseConnection.getConnection()) {
                     Map<String, List<SQLProcessorAI.ColumnInfo>> schemaInfo = SQLProcessorAI.getDatabaseSchema(connection);
-
-                    // Générer la requête SQL
                     String sqlQuery = SQLProcessorAI.generateSQLQuery(userQuestion, schemaInfo);
-
-                    // Vérifier le type de requête
                     if (sqlQuery.trim().toUpperCase().startsWith("SELECT")) {
                         List<Map<String, Object>> results = SQLProcessorAI.executeSQLWithResults(sqlQuery);
                         Platform.runLater(() -> displayResults(results));
@@ -105,7 +100,7 @@ public class SQLChatController {
 
     private TextFlow formatText(String text) {
         TextFlow textFlow = new TextFlow();
-        textFlow.setMaxWidth(600); // Largeur max
+        textFlow.setMaxWidth(600);
 
         String[] lines = text.split("\n");
         for (String line : lines) {

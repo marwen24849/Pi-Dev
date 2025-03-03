@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.dashboard.UserDashboardController">
+    <top>
+        <HBox alignment="CENTER" spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
+            <ImageView fitHeight="50.0" fitWidth="50.0">
+                <Image url="@logo.png" />
+            </ImageView>
+            <Label style="-fx-text-fill: white; -fx-font-size: 20px;" text="Tableau de Bord Utilisateur" />
+            <Label fx:id="dateTimeLabel" style="-fx-text-fill: white; -fx-font-size: 14px;" />
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane>
+            <Tab text="Tableau de Bord">
+                <ScrollPane>
+                    <VBox prefHeight="778.0" prefWidth="542.0" spacing="10" style="-fx-padding: 10;">
+                        <Label fx:id="welcomeLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Bienvenue, " />
+                        <Separator />
+
+                        <!-- Récapitulatif des formations -->
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Formations suivies/en cours :" />
+                        <ListView fx:id="formationListView" style="-fx-pref-height: 100px;" />
+
+                        <!-- État des demandes de congé -->
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="État des demandes de congé :" />
+                        <TableView fx:id="leaveStatusTable" prefHeight="400.0" prefWidth="239.0">
+                            <columns>
+                                <TableColumn fx:id="statusColumn" prefWidth="146.3999695777893" text="Statut" />
+                                <TableColumn fx:id="startDateColumn" prefWidth="178.4000244140625" text="Date de début" />
+                                <TableColumn fx:id="endDateColumn" prefWidth="192.79995727539062" text="Date de fin" />
+                            </columns>
+                        </TableView>
+
+                        <!-- Liste des quiz disponibles -->
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Quiz disponibles :" />
+                        <ListView fx:id="quizListView" style="-fx-pref-height: 100px;" />
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+            <Tab text="Accès Rapide">
+                <VBox spacing="10" style="-fx-padding: 10;">
+                    <Button fx:id="requestLeaveButton" style="-fx-pref-width: 200px;" text="Demander un congé" />
+                    <Button fx:id="viewScheduleButton" style="-fx-pref-width: 200px;" text="Voir mon planning" />
+                    <Button fx:id="viewSessionsButton" style="-fx-pref-width: 200px;" text="Consulter les sessions" />
+                    <Button fx:id="manageResultsButton" style="-fx-pref-width: 200px;" text="Gérer mes résultats" />
+                </VBox>
+            </Tab>
+
+            <Tab text="Actualités">
+                <ScrollPane>
+                    <VBox spacing="10" style="-fx-padding: 10;">
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Dernières actualités :" />
+                        <ListView fx:id="newsListView" style="-fx-pref-height: 200px;" />
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+            <Tab text="Statistiques">
+                <VBox spacing="10" style="-fx-padding: 10;">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Progression des formations :" />
+                    <ImageView fx:id="progressChart" fitHeight="200" fitWidth="400" />
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Statistiques des congés :" />
+                    <ImageView fx:id="leaveChart" fitHeight="200" fitWidth="400" />
+                </VBox>
+            </Tab>
+
+            <Tab text="Communication">
+                <VBox spacing="10" style="-fx-padding: 10;">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Chat interne :" />
+                    <TextArea fx:id="chatArea" style="-fx-pref-height: 150px;" />
+                    <Button fx:id="sendMessageButton" style="-fx-pref-width: 100px;" text="Envoyer" />
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Membres de l'équipe :" />
+                    <ListView fx:id="teamMembersListView" style="-fx-pref-height: 100px;" />
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
+            <Label style="-fx-text-fill: white;" text="© 2023 MonEntreprise. Tous droits réservés." />
+        </HBox>
+    </bottom>
+</BorderPane>

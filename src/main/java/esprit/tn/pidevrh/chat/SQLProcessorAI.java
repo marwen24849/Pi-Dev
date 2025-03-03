@@ -38,7 +38,7 @@ public class SQLProcessorAI {
             }
             schemaText.append("\n");
         }
-
+        System.out.println(schemaText);
         String promptText = String.format("""
                 Base de données : SGRH
                 
@@ -81,14 +81,13 @@ public class SQLProcessorAI {
         }
     }
 
-    // Extraire la requête SQL de la réponse de l’API
+
     private static String extractSQLQuery(String response) {
         int start = response.indexOf("```sql") + 6;
         int end = response.indexOf("```", start);
         return (start >= 0 && end >= 0) ? response.substring(start, end).trim() : "Erreur : Impossible d'extraire la requête SQL.";
     }
 
-    // Exécuter une requête SQL (SELECT, INSERT, UPDATE, DELETE)
     public static void executeSQL(String query) {
         try (Connection connection = DatabaseConnection.getConnection();
              Statement stmt = connection.createStatement()) {
@@ -201,6 +200,7 @@ public class SQLProcessorAI {
     }
 
 
+
     static class ColumnInfo {
         private final String name;
         private final String type;
@@ -217,6 +217,8 @@ public class SQLProcessorAI {
         public String getType() {
             return type;
         }
+
+
     }
 
     public static void main(String[] args) {
