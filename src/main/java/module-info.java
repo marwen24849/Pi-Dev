@@ -9,6 +9,10 @@ module esprit.tn.pidevrh {
     requires java.net.http;
     requires com.google.gson;
     requires java.sql;
+    requires kernel;
+    requires layout;
+    requires java.mail;
+    requires activation;
 
     opens esprit.tn.pidevrh.congeApprove to javafx.fxml; // Ouvre le package pour JavaFX
     exports esprit.tn.pidevrh.congeApprove;

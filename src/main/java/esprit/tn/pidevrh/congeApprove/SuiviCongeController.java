@@ -41,8 +41,7 @@ public class SuiviCongeController {
             System.out.println("🔍 Exécution de la requête...");
 
             while (resultSet.next()) {
-                String congeInfo = "ID: " + resultSet.getInt("id") +
-                        " | Utilisateur: " + resultSet.getString("username") +
+                String congeInfo = " | Utilisateur: " + resultSet.getString("username") +
                         " | Début: " + resultSet.getDate("start_date").toLocalDate() +
                         " | Fin: " + resultSet.getDate("end_date").toLocalDate();
 
