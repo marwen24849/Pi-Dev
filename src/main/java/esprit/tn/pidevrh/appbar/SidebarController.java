@@ -1,48 +1,127 @@
 package esprit.tn.pidevrh.appbar;
 
+import esprit.tn.pidevrh.login.SessionManager;
+import esprit.tn.pidevrh.login.User;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 
 public class SidebarController {
 
     @FXML
-    private VBox sidebarWrapper, sidebarMenuContainer, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu, gestionCongeMenu;
-
+    public Button gestionQuestionsButton, logoutButton, toggleButton;
+    public VBox sidebarMenuContainer;
+    public VBox gestionQuizContainer;
+    public VBox userQuizContainer;
+    public VBox demandeCongeContainer;
+    public VBox userListContainer;
+    public VBox reclamation;
+    public VBox Listreclamation;
+    public VBox assistant;
+    public Button assistant1;
+    public VBox SGRHAssistant;
+    public Button sgrhIa;
+    public Button RecalmationtList;
+    public Button RecalmationtButton;
+    public Button userListButton;
+    public Button demandeCongeButton;
+    public Button userQuizButton;
+    public Button gestionQuizButton;
+    public VBox gestionQuestionsContainer;
+    public VBox gestionEquipeMenu;
+    public VBox gestionequipedepartment;
+    public VBox gestionProjet;
+    public VBox gestionFormationContainer;
+    public VBox inscritformation;
+    public VBox gestionFormationMenu;
+    public VBox gestionCongeContainer;
+    public VBox gestionCongeMenu;
     @FXML
-    private Button toggleButton;
-
-    @FXML
-    private ScrollPane sidebarScrollPane;
-
+    private VBox sidebarWrapper, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu, userQuizMenu;
     @FXML
     private AnchorPane contentArea;
-
-    private boolean isSidebarOpen = true; // Sidebar starts open
+    private boolean isSidebarOpen = true;
+    private boolean roleTest=false;
 
     @FXML
     public void initialize() {
+        if(SessionManager.getInstance().getUser() != null)
+            roleTest = SessionManager.getInstance().getUser().getRole() == User.Role.ADMIN;
         if (sidebarWrapper == null) {
             System.err.println("Error: Sidebar is null! Check FXML fx:id.");
             return;
         }
+        if(roleTest)
+            loadContent("/Fxml/Dashboard/admin_dashboard.fxml");
+        else
+            loadContent("/Fxml/Dashboard/UserDashboard.fxml");
 
         sidebarWrapper.setTranslateX(0);
         toggleMenuVisibility(gestionQuestionsMenu, false);
         toggleMenuVisibility(gestionQuizMenu, false);
         toggleMenuVisibility(demandeCongeMenu, false);
-        toggleMenuVisibility(gestionCongeMenu, false); // Ajout du menu Gestion Congé
+        manageVisibilityBasedOnRole();
         handleToggleSidebar();
     }
+
+    private void manageVisibilityBasedOnRole() {
+
+        gestionQuestionsContainer.setVisible(roleTest);
+        gestionQuestionsContainer.setManaged(roleTest);
+
+        gestionQuizContainer.setVisible(roleTest);
+        gestionQuizContainer.setManaged(roleTest);
+
+        userListContainer.setVisible(roleTest);
+        userListContainer.setManaged(roleTest);
+
+        Listreclamation.setVisible(roleTest);
+        Listreclamation.setManaged(roleTest);
+
+        SGRHAssistant.setVisible(roleTest);
+        SGRHAssistant.setManaged(roleTest);
+        gestionequipedepartment.setVisible(roleTest);
+        gestionequipedepartment.setManaged(roleTest);
+        gestionProjet.setVisible(roleTest);
+
+        gestionFormationContainer.setVisible(roleTest);
+        gestionFormationContainer.setManaged(roleTest);
+
+        gestionCongeContainer.setVisible(roleTest);
+        gestionCongeContainer.setManaged(roleTest);
+
+
+        userQuizContainer.setVisible(!roleTest);
+        userQuizContainer.setManaged(!roleTest);
+
+        inscritformation.setVisible(!roleTest);
+
+        demandeCongeContainer.setVisible(!roleTest);
+        demandeCongeContainer.setManaged(!roleTest);
+
+
+
+        reclamation.setVisible(!roleTest);
+        reclamation.setManaged(!roleTest);
+
+        assistant.setVisible(!roleTest);
+        assistant.setManaged(!roleTest);
+    }
+
 
     @FXML
     private void handleToggleSidebar() {
@@ -51,10 +130,10 @@ public class SidebarController {
 
         if (isSidebarOpen) {
             transition.setToX(-sidebarWidth);
-            toggleButton.setText("☰"); // Collapse icon
+            toggleButton.setText("☰");
         } else {
             transition.setToX(0);
-            toggleButton.setText("≡"); // Expand icon
+            toggleButton.setText("≡");
         }
         transition.play();
         isSidebarOpen = !isSidebarOpen;
@@ -71,6 +150,57 @@ public class SidebarController {
         menu.setManaged(isVisible);
     }
 
+
+
+
+    private void loadContent(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+
+            AnchorPane.setTopAnchor(root, 0.0);
+            AnchorPane.setRightAnchor(root, 0.0);
+            AnchorPane.setBottomAnchor(root, 0.0);
+            AnchorPane.setLeftAnchor(root, 0.0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger la vue demandée: " + fxmlPath);
+        }
+    }
+
+
+    @FXML
+    public void handleLogout() {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirm Logout");
+        confirmationAlert.setHeaderText("Are you sure you want to log out?");
+        confirmationAlert.setContentText("Click OK to log out or Cancel to stay logged in.");
+
+
+        ButtonType result = confirmationAlert.showAndWait().orElse(ButtonType.CANCEL);
+
+
+        if (result == ButtonType.OK) {
+            SessionManager.getInstance().logout();
+            System.out.println("User logged out!");
+
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/login/Login.fxml"));
+                Stage stage = (Stage) logoutButton.getScene().getWindow();
+                stage.setScene(new Scene(loader.load()));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     @FXML
     private void toggleGestionQuestionsMenu() {
         toggleMenuVisibility(gestionQuestionsMenu, !gestionQuestionsMenu.isVisible());
@@ -80,15 +210,14 @@ public class SidebarController {
     private void toggleGestionQuizMenu() {
         toggleMenuVisibility(gestionQuizMenu, !gestionQuizMenu.isVisible());
     }
+    @FXML
+    private void toggleUserQuizMenu() {
+        toggleMenuVisibility(userQuizMenu, !userQuizMenu.isVisible());
+    }
 
     @FXML
     private void toggleDemandeCongeMenu() {
         toggleMenuVisibility(demandeCongeMenu, !demandeCongeMenu.isVisible());
-    }
-
-    @FXML
-    private void toggleGestionCongeMenu() {
-        toggleMenuVisibility(gestionCongeMenu, !gestionCongeMenu.isVisible());
     }
 
     @FXML
@@ -112,47 +241,43 @@ public class SidebarController {
     }
 
     @FXML
+
+    public void handleUserList(){loadContent("/Fxml/Users_list/users_list.fxml");}
+
+    @FXML
+    public void  handleReclamation(){ loadContent("/Fxml/Reclamation/Reclamation.fxml");}
+
+    @FXML
+    public void handleReclamationList(){ loadContent("/Fxml/Reclamation/ListReclamations.fxml");}
+
+    @FXML
     public void handleAddDemande(ActionEvent actionEvent) {
         loadContent("/Fxml/Leave/LeaveRequest.fxml");
     }
-
     @FXML
-    public void handleALisDemande(ActionEvent actionEvent) {
-        loadContent("/Fxml/Leave/ListRequest.fxml");
+    public void handleAddFormation() {
+        loadContent("/Fxml/Formation/formation.fxml");
     }
-
     @FXML
-    public void handleListConge() {
-        loadContent("/Fxml/Leave/LeaveManagement.fxml");
-    }
-
-    @FXML
-    public void handleAddConge() {
+    public void handleAddDemande() {
         loadContent("/Fxml/Leave/LeaveRequest.fxml");
+
     }
     @FXML
-    public void handleSuiviConge() {
-        loadContent("/Fxml/Leave/suivi_conge.fxml");
+    public void handleAssistant(ActionEvent actionEvent) {
+        loadContent("/Fxml/chat/chat_view.fxml");
     }
-
-
-    private void loadContent(String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-
-            contentArea.getChildren().clear();
-            contentArea.getChildren().add(root);
-
-            AnchorPane.setTopAnchor(root, 0.0);
-            AnchorPane.setRightAnchor(root, 0.0);
-            AnchorPane.setBottomAnchor(root, 0.0);
-            AnchorPane.setLeftAnchor(root, 0.0);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Erreur", "Impossible de charger la vue demandée: " + fxmlPath);
-        }
+    @FXML
+    public void handleAssistantSgrh(ActionEvent actionEvent) {
+        loadContent("/Fxml/chat/Chat_SGRH.fxml");
+    }
+    @FXML
+    public void handleListUserQuiz(ActionEvent actionEvent) {
+        loadContent("/Fxml/Quiz/UserQuizzesView.fxml");
+    }
+    @FXML
+    public void handleQuizResults(ActionEvent actionEvent) {
+        loadContent("/Fxml/Quiz/UserResultatView.fxml");
     }
 
     private void showAlert(String title, String message) {
@@ -161,5 +286,54 @@ public class SidebarController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void toggleEquipe(ActionEvent actionEvent) {
+        toggleMenuVisibility(gestionEquipeMenu, !gestionEquipeMenu.isVisible());
+    }
+
+    public void handlegestionequipe(ActionEvent actionEvent) {
+        loadContent("/Fxml/TeamDepartement/team-department-assignment.fxml");
+    }
+
+    public void handlegestiondepartments(ActionEvent actionEvent) {
+        loadContent("/Fxml/TeamDepartement/DepartmentView.fxml");
+    }
+
+    public void handleGestionProjet(ActionEvent actionEvent) {
+        loadContent("/Fxml/Projet/projet.fxml");
+    }
+
+    public void toggleFormationMenu(ActionEvent actionEvent) {
+        toggleMenuVisibility(gestionFormationMenu, !gestionFormationMenu.isVisible());
+
+    }
+
+    public void handleFormationUser(ActionEvent actionEvent) {
+        loadContent("/Fxml/Formation/formationUser.fxml");
+    }
+
+    public void handleListFormation(ActionEvent actionEvent) {
+        loadContent("/Fxml/Formation/ListFormations.fxml");
+    }
+
+    public void handleInscriptionFormation(ActionEvent actionEvent) {
+        loadContent("/Fxml/Formation/inscriptionFormation.fxml");
+    }
+
+    public void toggleGestionCongeMenu(ActionEvent actionEvent) {
+        toggleMenuVisibility(gestionCongeMenu, !gestionCongeMenu.isVisible());
+    }
+
+    public void handleListConge(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/LeaveManagement.fxml");
+    }
+
+    public void handleSuiviConge(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/suivi_conge.fxml");
+    }
+
+    public void handleALisDemande(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/ListRequest.fxml");
     }
 }

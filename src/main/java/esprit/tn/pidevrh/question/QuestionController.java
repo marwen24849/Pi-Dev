@@ -69,7 +69,6 @@ public class QuestionController {
         String category = categoryField.getText().trim();
         String difficulty = difficultyField.getText().trim();
 
-        // Validation des champs
         if (isValidInput(title, option1, option2, option3, option4, rightAnswer, scoreText, category, difficulty)) {
             int score = Integer.parseInt(scoreText);
             insertQuestion(title, option1, option2, option3, option4, rightAnswer, score, category, difficulty);
@@ -94,6 +93,20 @@ public class QuestionController {
         return true;
     }
 
+
+    private void initChamp(){
+        this.categoryField.clear();
+        this.difficultyField.clear();
+        this.option1Field.clear();
+        this.option2Field.clear();
+        this.option3Field.clear();
+        this.option4Field.clear();
+        this.rightAnswerField.clear();
+        this.scoreField.clear();
+        this.titleField.clear();
+    }
+
+
     private void insertQuestion(String title, String option1, String option2, String option3, String option4,
                                 String rightAnswer, int score, String category, String difficulty) {
         String sql = "INSERT INTO question (question_title, option1, option2, option3, option4, right_answer, score, category, difficultylevel) " +
@@ -116,6 +129,8 @@ public class QuestionController {
             if (rowsAffected > 0) {
 
                 showAlert("Succès", "La question a été ajoutée avec succès !");
+                initChamp();
+
             }
 
         } catch (SQLException e) {

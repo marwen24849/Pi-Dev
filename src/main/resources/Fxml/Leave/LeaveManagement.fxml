@@ -3,14 +3,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.leave.LeaveManagementController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@leavestyle.css"
+            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            fx:controller="esprit.tn.pidevrh.leave.LeaveManagementController">
 
-    <children>
-        <VBox prefWidth="800.0" spacing="10">
-            <Label text="Gestion des Congés" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <!-- Page Title -->
+    <Label text="Gestion des Congés"
+           styleClass="title-label"
+           AnchorPane.leftAnchor="20.0"
+           AnchorPane.topAnchor="30.0" />
 
-            <ListView fx:id="leaveListView" prefHeight="500.0"/>
-        </VBox>
-    </children>
+    <!-- Form Container -->
+
+
+    <!-- Leave Requests List -->
+    <ListView fx:id="leaveListView"
+              styleClass="input-field"
+              AnchorPane.leftAnchor="20.0"
+              AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="140.0"
+              AnchorPane.bottomAnchor="60.0" />
+
+    <!-- Pagination -->
+    <Pagination fx:id="pagination" styleClass="pagination"
+                AnchorPane.bottomAnchor="20.0"
+                AnchorPane.leftAnchor="20.0"
+                AnchorPane.rightAnchor="20.0" />
 </AnchorPane>

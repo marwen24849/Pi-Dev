@@ -1,0 +1,85 @@
+/* ============================================= */
+/* GENERAL STYLING */
+/* ============================================= */
+.root {
+    -fx-background-color: #F8FAFC;
+    -fx-font-family: 'Segoe UI', sans-serif;
+}
+
+/* Title Styling */
+.title-label {
+    -fx-text-fill: #2C3E50;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-padding: 15px 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+}
+
+/* ============================================= */
+/* LEAVE REQUEST LIST STYLING */
+/* ============================================= */
+.input-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D1D9E0;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2D3640;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 5, 0, 0, 2);
+}
+
+.input-field:focused {
+    -fx-border-color: #6FB2FF;
+    -fx-border-width: 2px;
+}
+
+/* Leave List Styling */
+.list-view {
+    -fx-border-color: #D1D9E0;
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 8px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
+
+/* ============================================= */
+/* BUTTON STYLING */
+/* ============================================= */
+.btn-primary {
+    -fx-background-color: #6FB2FF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12px 25px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(111, 178, 255, 0.5), 8, 0.3, 0, 3);
+    -fx-transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #5AA6FF;
+}
+
+/* ============================================= */
+/* PAGINATION & SCROLLBAR */
+/* ============================================= */
+.pagination {
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 6px;
+    -fx-border-color: #D1D9E0;
+    -fx-padding: 8px;
+}
+
+.scroll-bar {
+    -fx-background-color: #E0E4E7;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #BDC3C7;
+    -fx-background-radius: 6px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #AAB2B9;
+}

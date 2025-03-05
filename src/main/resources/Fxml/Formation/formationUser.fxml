@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@formation_user.css" fx:controller="esprit.tn.pidevrh.formation.FormationUserController">
+
+    <VBox spacing="20.0" AnchorPane.topAnchor="40.0" AnchorPane.leftAnchor="20.0"
+          AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0">
+
+        <Label text="Liste des Formations et leurs Employés" styleClass="header-title" />
+
+        <VBox fx:id="formationUserContainer" spacing="10.0" styleClass="formation-user-list-container">
+            <!-- Header for Formation and Users -->
+            <HBox styleClass="formation-user-header">
+                <Label text="Formation" styleClass="column-header" prefWidth="250"/>
+                <Label text="Employés" styleClass="column-header" prefWidth="500"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</AnchorPane>

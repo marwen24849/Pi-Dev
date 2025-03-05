@@ -1,6 +1,7 @@
 package esprit.tn.pidevrh.leave;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
+import esprit.tn.pidevrh.login.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,7 @@ public class LeaveDisplayController {
     @FXML private ListView<Leave> leaveListView;
     private ObservableList<Leave> leaveRequests = FXCollections.observableArrayList();
 
-    private final long STATIC_USER_ID = 5;
+    private final long STATIC_USER_ID = SessionManager.getInstance().getUser().getId();
 
     @FXML
     public void initialize() {

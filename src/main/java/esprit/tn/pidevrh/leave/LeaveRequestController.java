@@ -1,10 +1,14 @@
 package esprit.tn.pidevrh.leave;
 
+
 import esprit.tn.pidevrh.connection.DatabaseConnection;
+import esprit.tn.pidevrh.login.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
+import javafx.application.Platform;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,9 +26,11 @@ public class LeaveRequestController {
     @FXML private Button submitButton;
     @FXML private Button uploadButton;
     @FXML private Button checkHolidayButton;
+    @FXML private Button extractTextButton;
+    @FXML private HBox buttonContainer; // Container for buttons
 
     private File selectedFile;
-    private final long STATIC_USER_ID = 5;
+    private final long STATIC_USER_ID = SessionManager.getInstance().getUser().getId();
     private final int MAX_LEAVE_DAYS = 30;
 
     @FXML
@@ -34,7 +40,15 @@ public class LeaveRequestController {
         uploadButton.setDisable(true);
         autreCongeField.setDisable(true);
         checkHolidayButton.setOnAction(event -> handleCheckHolidays());
+
+        // ✅ Add "Extract Text" Button next to "Check Holiday" Button
+
+        extractTextButton.setDisable(true);
+        extractTextButton.setOnAction(event -> handleExtractText());
+
+
     }
+
     @FXML
     public void handleCheckHolidays() {
         TextInputDialog dialog = new TextInputDialog();
@@ -60,14 +74,17 @@ public class LeaveRequestController {
         String selectedType = congeComboBox.getValue();
         if ("Maladie".equals(selectedType)) {
             uploadButton.setDisable(false);
+            extractTextButton.setDisable(selectedFile == null); // Enable Extract Text button if file is uploaded
             autreCongeField.setDisable(true);
             autreCongeField.clear();
         } else if ("Autre".equals(selectedType)) {
             autreCongeField.setDisable(false);
             uploadButton.setDisable(true);
+            extractTextButton.setDisable(true);
             selectedFile = null;
         } else {
             uploadButton.setDisable(true);
+            extractTextButton.setDisable(true);
             autreCongeField.setDisable(true);
             autreCongeField.clear();
             selectedFile = null;
@@ -97,32 +114,7 @@ public class LeaveRequestController {
         String justification = justificationField.getText().trim();
         String autre = autreCongeField.getText().trim();
 
-        if ("Maladie".equals(typeConge) && (selectedFile == null || !selectedFile.exists() || !selectedFile.canRead())) {
-            showAlert("Erreur", "Veuillez téléverser un certificat médical valide.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        if ("Autre".equals(typeConge) && autre.isEmpty()) {
-            showAlert("Erreur", "Veuillez spécifier le type de congé dans le champ 'Autre'.", Alert.AlertType.ERROR);
-            return;
-        }
-
         insertLeaveRequest(typeConge, autre, justification, startDate, endDate, selectedFile, requestedDays);
-    }
-
-    private int getRemainingLeaveDays(long userId) {
-        String query = "SELECT solde_conge FROM user WHERE id = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("solde_conge");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 
     private void insertLeaveRequest(String typeConge, String autre, String justification, LocalDate startDate, LocalDate endDate, File certificateFile, int requestedDays) {
@@ -144,10 +136,10 @@ public class LeaveRequestController {
             preparedStatement.setDate(6, Date.valueOf(endDate));
             preparedStatement.setLong(8, STATIC_USER_ID);
 
+            FileInputStream fis = null;
             if (certificateFile != null && certificateFile.exists() && certificateFile.canRead()) {
-                try (FileInputStream fis = new FileInputStream(certificateFile)) {
-                    preparedStatement.setBinaryStream(7, fis, (int) certificateFile.length());
-                }
+                fis = new FileInputStream(certificateFile);
+                preparedStatement.setBinaryStream(7, fis, certificateFile.length());
             } else {
                 preparedStatement.setNull(7, java.sql.Types.BLOB);
             }
@@ -160,12 +152,16 @@ public class LeaveRequestController {
 
             connection.commit();
             showAlert("Succès", "Demande de congé soumise avec succès !", Alert.AlertType.INFORMATION);
+
+            if (fis != null) {
+                fis.close(); // Fermer après exécution
+            }
+
         } catch (SQLException | IOException e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors de la soumission de la demande de congé : " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
     @FXML
     public void handleUpload() {
         FileChooser fileChooser = new FileChooser();
@@ -174,10 +170,51 @@ public class LeaveRequestController {
 
         if (file != null && file.canRead()) {
             selectedFile = file;
+            extractTextButton.setDisable(false); // Enable Extract Text button when file is uploaded
             showAlert("Fichier sélectionné", "Certificat médical sélectionné : " + file.getName(), Alert.AlertType.INFORMATION);
         } else {
             showAlert("Erreur", "Le fichier sélectionné est illisible ou introuvable.", Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    private void handleExtractText() {
+        if (selectedFile == null || !selectedFile.exists()) {
+            showAlert("Erreur", "Veuillez sélectionner une image valide !", Alert.AlertType.ERROR);
+            return;
+        }
+
+        extractTextButton.setDisable(true); // ✅ Disable button while processing
+
+        // ✅ Call API to extract text asynchronously
+        ExtractText.extractTextFromImage(selectedFile).thenAccept(extractedText -> {
+            // ✅ Update UI safely using Platform.runLater
+            Platform.runLater(() -> {
+                extractTextButton.setDisable(false); // ✅ Re-enable button after processing
+                showAlert("Texte Extrait", extractedText, Alert.AlertType.INFORMATION);
+            });
+        }).exceptionally(e -> {
+            Platform.runLater(() -> {
+                extractTextButton.setDisable(false);
+                showAlert("Erreur", "Impossible d'extraire le texte: " + e.getMessage(), Alert.AlertType.ERROR);
+            });
+            return null;
+        });
+    }
+
+    private int getRemainingLeaveDays(long userId) {
+        String query = "SELECT solde_conge FROM user WHERE id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("solde_conge");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     private void showAlert(String title, String message, Alert.AlertType type) {

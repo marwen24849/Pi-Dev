@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class QuizUpdateController {
 
     @FXML
-    private Button EditQuiz;
+    public TextField quizTime;
 
     @FXML
     private ComboBox<Double> percentageComboBox;
@@ -35,12 +35,13 @@ public class QuizUpdateController {
         }
         titleField.setText(quiz.getTitle());
         percentageComboBox.setValue(quiz.getMinimumSuccessPercentage());
+        quizTime.setText(String.valueOf(quiz.getTime()));
 
     }
 
     @FXML
     private void handleSave(){
-        String sql = "UPDATE quiz SET title=?, minimum_success_percentage=? WHERE id=?";
+        String sql = "UPDATE quiz SET title=?, minimum_success_percentage=?, quizTime=? WHERE id=?";
 
 
         try (Connection connection = DatabaseConnection.getConnection()){
@@ -48,7 +49,8 @@ public class QuizUpdateController {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, titleField.getText());
             preparedStatement.setDouble(2, percentageComboBox.getValue());
-            preparedStatement.setLong(3,quiz.getId());
+            preparedStatement.setInt(3, Integer.parseInt(quizTime.getText()));
+            preparedStatement.setLong(4,quiz.getId());
             preparedStatement.executeUpdate();
         }catch(SQLException e) {
             e.printStackTrace();

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="833.0" prefWidth="889.0" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.pidevrh.dashboard.UserDashboardController">
+
+    <VBox prefHeight="833.0" prefWidth="880.0" spacing="20" styleClass="dashboard-root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="0.0">
+        <HBox alignment="CENTER">
+            <Label prefHeight="55.0" prefWidth="378.0" styleClass="dashboard-title" text="Tableau de bord de l'Utilisateur" textAlignment="CENTER" textFill="#bf5f5f" />
+            <Label fx:id="username" prefHeight="55.0" prefWidth="398.0" styleClass="dashboard-title" textAlignment="CENTER" textFill="#d94b4b" />
+        </HBox>
+
+        <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="102.0" prefWidth="979.0" spacing="20">
+            <VBox prefHeight="101.0" prefWidth="313.0" styleClass="card" HBox.hgrow="ALWAYS">
+                <Label styleClass="card-title" text="📊 Nombre de quiz passés :" />
+                <Label fx:id="totalQuizzesTakenLabel" styleClass="card-value" text="0" />
+            </VBox>
+
+            <VBox prefHeight="101.0" prefWidth="294.0" styleClass="card" HBox.hgrow="ALWAYS">
+                <Label styleClass="card-title" text="📌 Taux de réussite :" />
+                <Label fx:id="successRateLabel" styleClass="card-value" text="0%" />
+            </VBox>
+
+            <VBox prefHeight="102.0" prefWidth="169.0" styleClass="card" HBox.hgrow="ALWAYS">
+                <Label styleClass="card-title" text="📚 Nombre de formations :" />
+                <Label fx:id="totalFormationsLabel" styleClass="card-value" text="0" />
+            </VBox>
+        </HBox>
+
+        <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="102.0" prefWidth="1020.0" spacing="20">
+            <VBox prefHeight="101.0" prefWidth="270.0" styleClass="card" HBox.hgrow="ALWAYS">
+                <Label styleClass="card-title" text="🗓️ Demandes de congé :" />
+                <Label fx:id="totalLeavesLabel" styleClass="card-value" text="0" />
+            </VBox>
+
+            <VBox prefHeight="101.0" prefWidth="115.0" styleClass="card" HBox.hgrow="ALWAYS">
+                <Label styleClass="card-title" text="⏳ En attente :" />
+                <Label fx:id="pendingLeavesLabel" styleClass="card-value" text="0" />
+            </VBox>
+
+            <VBox styleClass="card" HBox.hgrow="ALWAYS">
+                <Label styleClass="card-title" text="✅ Acceptées :" />
+                <Label fx:id="approvedLeavesLabel" styleClass="card-value" text="0" />
+            </VBox>
+
+            <VBox prefHeight="101.0" prefWidth="139.0" styleClass="card" HBox.hgrow="ALWAYS">
+                <Label styleClass="card-title" text="❌ Refusées :" />
+                <Label fx:id="rejectedLeavesLabel" styleClass="card-value" text="0" />
+            </VBox>
+        </HBox>
+
+        <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="469.0" prefWidth="865.0" spacing="20">
+            <VBox prefHeight="302.0" prefWidth="540.0" styleClass="chart-card" HBox.hgrow="ALWAYS">
+                <Label styleClass="chart-title" text="Répartition des Quiz Passés" />
+                <PieChart fx:id="quizPassChart" maxHeight="Infinity" maxWidth="Infinity" prefHeight="352.0" prefWidth="500.0" styleClass="chart" />
+            </VBox>
+
+            <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
+                <Label styleClass="chart-title" text="Répartition par Difficulté" />
+                <PieChart fx:id="difficultyChart" maxHeight="Infinity" maxWidth="Infinity" styleClass="chart" />
+            </VBox>
+        </HBox>
+    </VBox>
+</AnchorPane>

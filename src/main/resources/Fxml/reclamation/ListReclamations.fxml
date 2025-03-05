@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="esprit.tn.pidevrh.Reclamation.ListReclamationController">
+    <ScrollPane fitToWidth="true" fitToHeight="true"
+                AnchorPane.topAnchor="0"
+                AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0">
+        <VBox fx:id="reclamationContainer" spacing="10" style="-fx-padding: 10;">
+            <Label text="Liste des Réclamations" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        </VBox>
+    </ScrollPane>
+</AnchorPane>

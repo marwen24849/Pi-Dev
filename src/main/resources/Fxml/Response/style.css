@@ -10,7 +10,7 @@
     -fx-padding: 30px;
     -fx-border-radius: 15px;
     -fx-background-radius: 15px;
-    -fx-box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 /* ---- Numéro de la Question ---- */
@@ -75,4 +75,10 @@
 .submit-button:disabled {
     -fx-background-color: #bdc3c7;
     -fx-text-fill: #7f8c8d;
+}
+/* ---- Temps Restant ---- */
+.time-remaining-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #e74c3c;
+    -fx-font-weight: bold;
 }

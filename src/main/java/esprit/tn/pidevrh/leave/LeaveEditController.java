@@ -1,6 +1,7 @@
 package esprit.tn.pidevrh.leave;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
+import esprit.tn.pidevrh.login.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -27,7 +28,7 @@ public class LeaveEditController {
     private Leave leave;
     private LeaveDisplayController parentController;
     private File selectedCertificate;
-    private final long STATIC_USER_ID = 5;
+    private final long STATIC_USER_ID = SessionManager.getInstance().getUser().getId();
 
     @FXML
     public void initialize() {
@@ -78,6 +79,7 @@ public class LeaveEditController {
     }
 
     @FXML
+
     private void saveChanges() {
         String selectedType = congeComboBox.getSelectionModel().getSelectedItem();
         String previousType = leave.getTypeConge();
@@ -124,7 +126,9 @@ public class LeaveEditController {
                 preparedStatement.executeUpdate();
             }
 
-            parentController.loadLeaveRequests();
+            // Reload the list to reflect the changes after saving the updated leave request
+            parentController.loadLeaveRequests();  // This should reload the leave requests after the update
+
             closeWindow();
             showAlert("Succès", "Demande mise à jour avec succès", Alert.AlertType.INFORMATION);
 
