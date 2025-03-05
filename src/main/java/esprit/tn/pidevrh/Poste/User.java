@@ -19,6 +19,11 @@ public class User {
         this.role = role;
     }
 
+    public User(long id, String firstname) {
+        this.id = id;
+        this.firstname = firstname;
+    }
+
     public User() {
     }
 
