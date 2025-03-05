@@ -48,6 +48,15 @@
                                 </VBox>
                             </VBox>
 
+                            <VBox fx:id="gestionCongeContainer">
+                                <Button fx:id="gestionCongeButton" text="📂 Gestion Congé"
+                                        styleClass="sidebar-menu" onAction="#toggleGestionCongeMenu"/>
+                                <VBox fx:id="gestionCongeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handleListConge" text="📄 Liste des Congés" styleClass="menu-item"/>
+                                    <Button onAction="#handleSuiviConge" text="📄 suivi des Congés" styleClass="menu-item"/>
+                                </VBox>
+                            </VBox>
+
 
                             <!-- Gestion Equipe et Departements -->
                             <VBox fx:id="gestionequipedepartment">
@@ -106,12 +115,16 @@
                             </VBox>
                             <!-- Demande Congé -->
                             <VBox fx:id="demandeCongeContainer">
-                                <Button fx:id="demandeCongeButton" text="🗂️ Demande Congé"
+                                <Button fx:id="demandeCongeButton" text="📋 Demande Congé"
                                         styleClass="sidebar-menu" onAction="#toggleDemandeCongeMenu"/>
                                 <VBox fx:id="demandeCongeMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
-                                    <Button onAction="#handleAddDemande" text="📄 Ajouter Demande" styleClass="menu-item"/>
+                                    <Button onAction="#handleAddDemande" text="➕ Ajouter Demande" styleClass="menu-item"/>
+                                    <Button onAction="#handleALisDemande" text="📄 Liste Demandes" styleClass="menu-item"/>
                                 </VBox>
                             </VBox>
+
+
+
                             <!-- Réclamations -->
                             <VBox fx:id="reclamation">
                                 <Button fx:id="RecalmationtButton" text="📩 Réclamation" styleClass="sidebar-menu" onAction="#handleReclamation"/>

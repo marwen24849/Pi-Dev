@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.pidevrh.leave.LeaveEditController">
+
+    <VBox alignment="CENTER" spacing="15.0" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <!-- Titre -->
+        <Label text="Modifier la Demande de Congé"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+        <!-- Formulaire -->
+        <GridPane hgap="10.0" vgap="10.0" style="-fx-padding: 15px;">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120.0" halignment="RIGHT" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <Label text="Type de Congé :"
+                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
+            <ComboBox fx:id="congeComboBox" GridPane.columnIndex="1"
+                      onAction="#handleCongeSelection"
+                      promptText="Sélectionnez le type de congé"
+                      style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
+                             -fx-border-color: #dce4ec; -fx-border-radius: 8px;
+                             -fx-padding: 8px;" />
+
+            <Label text="Autre Type :" GridPane.rowIndex="1" />
+            <TextField fx:id="autreField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Date de Début :" GridPane.rowIndex="2" />
+            <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label text="Date de Fin :" GridPane.rowIndex="3" />
+            <DatePicker fx:id="endDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+            <Label text="Justification :" GridPane.rowIndex="4" />
+            <TextArea fx:id="justificationField" GridPane.columnIndex="1" GridPane.rowIndex="4" prefRowCount="3" />
+
+            <Label text="Certificat Médical :" GridPane.rowIndex="5" />
+            <TextField fx:id="medicalCertificateField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button fx:id="uploadCertificateButton" text="📂 Télécharger" onAction="#uploadCertificate" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+        </GridPane>
+
+        <!-- Boutons -->
+        <HBox spacing="10.0" alignment="CENTER">
+            <Button fx:id="saveButton" text="Enregistrer" onAction="#saveChanges"
+                    style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold;" />
+            <Button fx:id="cancelButton" text="Annuler" onAction="#closeWindow"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" />
+        </HBox>
+    </VBox>
+</AnchorPane>
