@@ -83,7 +83,15 @@
                                 </VBox>
                             </VBox>
 
-
+                            <!-- Gestion Poste -->
+                            <VBox fx:id="gestionPosteContainer">
+                                <Button fx:id="gestionPosteButton" text="🗂 Gestion Poste"
+                                        styleClass="sidebar-menu" onAction="#toggleGestionPosteMenu"/>
+                                <VBox fx:id="gestionPosteMenu" visible="false" managed="false" spacing="8" styleClass="submenu">
+                                    <Button onAction="#handleAddPoste" text="➕ Ajouter Poste" styleClass="menu-item"/>
+                                    <Button onAction="#handleListPoste" text="📜 Lister Poste" styleClass="menu-item"/>
+                                </VBox>
+                            </VBox>
 
                             <VBox fx:id="Listreclamation">
                                 <Button fx:id="RecalmationtList" text="📋 Liste des Réclamations" styleClass="sidebar-menu" onAction="#handleReclamationList"/>

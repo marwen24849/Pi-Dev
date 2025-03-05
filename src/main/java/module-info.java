@@ -66,7 +66,8 @@ module esprit.tn.pidevrh {
     exports esprit.tn.pidevrh.dashboard to javafx.fxml;
     opens esprit.tn.pidevrh.dashboard to javafx.fxml, java.base, javafx.base;
 
-
+    opens esprit.tn.pidevrh.Poste to javafx.fxml , javafx.base;
+    exports esprit.tn.pidevrh.Poste;
 
     opens esprit.tn.pidevrh.projet to javafx.fxml, javafx.base;
 }

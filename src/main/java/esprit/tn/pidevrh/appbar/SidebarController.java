@@ -18,9 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
-import java.util.Objects;
 
 public class SidebarController {
 
@@ -29,6 +27,8 @@ public class SidebarController {
     public VBox sidebarMenuContainer;
     public VBox gestionQuizContainer;
     public VBox userQuizContainer;
+    @FXML
+    private VBox gestionPosteMenu;
     public VBox demandeCongeContainer;
     public VBox userListContainer;
     public VBox reclamation;
@@ -140,6 +140,13 @@ public class SidebarController {
         AnchorPane.setLeftAnchor(contentArea, sidebarWidth);
     }
 
+    @FXML
+    private void toggleGestionPosteMenu() {
+        boolean isVisible = gestionPosteMenu.isVisible();
+        gestionPosteMenu.setVisible(!isVisible);
+        gestionPosteMenu.setManaged(!isVisible);
+    }
+
     private void toggleMenuVisibility(VBox menu, boolean isVisible) {
         menu.setVisible(isVisible);
         menu.setManaged(isVisible);
@@ -235,11 +242,9 @@ public class SidebarController {
         loadContent("/Fxml/Quiz/Quiz.fxml");
     }
 
-    private void loadContent(String fxmlPath) {
-        try {
-            // Charger le FXML et créer un Parent
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
+    @FXML
+
+    public void handleUserList(){loadContent("/Fxml/Users_list/users_list.fxml");}
 
     @FXML
     public void  handleReclamation(){ loadContent("/Fxml/Reclamation/Reclamation.fxml");}
@@ -277,7 +282,6 @@ public class SidebarController {
         loadContent("/Fxml/Quiz/UserResultatView.fxml");
     }
 
-
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -289,6 +293,15 @@ public class SidebarController {
     public void toggleEquipe(ActionEvent actionEvent) {
         toggleMenuVisibility(gestionEquipeMenu, !gestionEquipeMenu.isVisible());
     }
+
+
+    @FXML
+    public void handleListPoste() {
+        loadContent("/Fxml/Poste/ListPostes.fxml");
+    }
+
+    @FXML
+    public void handleAddPoste(ActionEvent event) {loadContent("/Fxml/Poste/PosteAdd.fxml");}
 
     public void handlegestionequipe(ActionEvent actionEvent) {
         loadContent("/Fxml/TeamDepartement/team-department-assignment.fxml");

@@ -1,6 +1,7 @@
 package esprit.tn.pidevrh.Poste;
 
 import esprit.tn.pidevrh.connection.DatabaseConnection;
+import esprit.tn.pidevrh.login.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ public class PosteService {
 
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setFirstname(rs.getString("first_name"));
-                user.setLastname(rs.getString("last_name"));
+                user.setId(rs.getLong("id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
                 users.add(user);
             }
 

@@ -1,5 +1,6 @@
 package esprit.tn.pidevrh.Poste;
 
+import esprit.tn.pidevrh.login.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,7 +49,7 @@ public class PosteController {
         userComboBox.setConverter(new StringConverter<User>() {
             @Override
             public String toString(User user) {
-                return (user != null) ? user.getFirstname() + " " + user.getLastname() : "";
+                return (user != null) ? user.getFirstName() + " " + user.getLastName() : "";
             }
 
             @Override
