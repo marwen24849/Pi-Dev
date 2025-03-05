@@ -41,6 +41,8 @@
                     <MenuButton styleClass="sidebar-menu" text="Gestion Poste">
                         <items>
                             <MenuItem onAction="#handleAddPoste" styleClass="menu-item" text="Ajouter Poste" />
+                            <MenuItem onAction="#handleListPoste" styleClass="menu-item" text="Lister Poste" />
+
                         </items>
                     </MenuButton>
                 </VBox>

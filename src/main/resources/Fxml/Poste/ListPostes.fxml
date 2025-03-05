@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Pos?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.pidevrh.Poste.PosteListController">
 
+    <!-- Title -->
+    <Label text="Liste des Postes" style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
+           AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+
+    <!-- Filter Section -->
+    <HBox spacing="10.0" alignment="CENTER_LEFT"
+          AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" AnchorPane.rightAnchor="20.0">
+        <Label text="Filtrer par état :" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
+        <ComboBox fx:id="stateFilter" promptText="Choisir un état"
+                  style="-fx-font-size: 14px; -fx-padding: 5px;" />
+        <Button text="Filtrer" fx:id="filterButton"
+                style="-fx-background-color: #92e038; -fx-text-fill: white; -fx-font-size: 14px;
+                       -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
+    </HBox>
+
+    <!-- TableView -->
+    <TableView fx:id="posteTable" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+               AnchorPane.topAnchor="120.0" AnchorPane.bottomAnchor="80.0">
+        <columns>
+            <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
+            <TableColumn fx:id="contentColumn" prefWidth="150.0" text="Contenu" />
+            <TableColumn fx:id="salaireColumn" prefWidth="100.0" text="Salaire" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="200.0" text="Description" />
+            <TableColumn fx:id="dateColumn" prefWidth="120.0" text="Date" />
+            <TableColumn fx:id="stateColumn" prefWidth="100.0" text="État" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10.0" alignment="CENTER"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+          AnchorPane.bottomAnchor="10.0">
+
+        <!-- Action Buttons -->
+        <Button text="Mettre à jour" fx:id="editButton"
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px;
+                   -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
+
+        <Button text="Supprimer" fx:id="deleteButton"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px;
+                   -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
+
+        <!-- Pagination -->
+        <Pagination fx:id="pagination"
+                    pageCount="10" currentPageIndex="0"
+                    style="-fx-font-size: 12px; -fx-pref-width: 200px; -fx-pref-height: 30px;" />
+    </HBox>
 </AnchorPane>

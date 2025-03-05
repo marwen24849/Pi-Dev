@@ -1,29 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.pidevrh.Poste.PosteController" stylesheets="@poste-styles.css">
+    <children>
+        <!-- Contenu principal -->
+        <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+            <!-- Titre -->
+            <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 10px;" text="Ajouter un Poste" />
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+            <!-- Formulaire -->
+            <GridPane hgap="15.0" style="-fx-padding: 20px; -fx-background-color: #f7f9fc; -fx-border-color: #d1dce5; -fx-border-radius: 10px; -fx-background-radius: 10px;" vgap="15.0">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="150.0" />
+                    <ColumnConstraints hgrow="ALWAYS" />
+                </columnConstraints>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.Poste.PosteController">
+                <!-- Content Field -->
+                <Label style="-fx-font-size: 14px;" text="Contenu du Poste :" GridPane.rowIndex="0" />
+                <TextField fx:id="contentField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
+                <!-- Salary Field -->
+                <Label style="-fx-font-size: 14px;" text="Salaire :" GridPane.rowIndex="1" />
+                <TextField fx:id="salaireField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <Label layoutX="20" layoutY="20" text="Content:" />
-    <TextField fx:id="contentField" layoutX="100" layoutY="20" prefWidth="200" />
+                <!-- Description Field -->
+                <Label style="-fx-font-size: 14px;" text="Description :" GridPane.rowIndex="2" />
+                <TextArea fx:id="descriptionField" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label layoutX="20" layoutY="60" text="Salaire:" />
-    <TextField fx:id="salaireField" layoutX="100" layoutY="60" prefWidth="200" />
+                <!-- Date Picker -->
+                <Label style="-fx-font-size: 14px;" text="Date du Poste :" GridPane.rowIndex="3" />
+                <DatePicker fx:id="datePicker" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-    <Label layoutX="20" layoutY="100" text="Description:" />
-    <TextArea fx:id="descriptionArea" layoutX="100" layoutY="100" prefWidth="200" prefHeight="100" />
+                <!-- State ComboBox -->
+                <Label style="-fx-font-size: 14px;" text="État :" GridPane.rowIndex="4" />
+                <ComboBox fx:id="stateComboBox" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Active" />
+                            <String fx:value="Not Active" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
 
-    <Label layoutX="20" layoutY="220" text="Date Poste:" />
-    <DatePicker fx:id="datePostePicker" layoutX="100" layoutY="220" />
+                <!-- User ComboBox -->
+                <Label style="-fx-font-size: 14px;" text="Utilisateur :" GridPane.rowIndex="5" />
+                <ComboBox fx:id="userComboBox" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <items>
+                        <!-- Users will be dynamically loaded from the database -->
+                    </items>
+                </ComboBox>
+            </GridPane>
 
-    <Label layoutX="20" layoutY="260" text="State:" />
-    <TextField fx:id="stateField" layoutX="100" layoutY="260" prefWidth="200" />
-
-    <Button text="Add Poste" onAction="#addPoste" layoutX="100" layoutY="300" />
+            <!-- Bouton -->
+            <Button fx:id="submitButton" onAction="#addPoste" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Poste" />
+        </VBox>
+    </children>
 </AnchorPane>

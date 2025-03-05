@@ -1,6 +1,5 @@
 package esprit.tn.pidevrh.Poste;
 
-import esprit.tn.pidevrh.User;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
 
 import java.sql.*;
@@ -17,22 +16,17 @@ public class PosteService {
     public List<User> getAvailableUsers() {
 
         List<User> users = new ArrayList<>();
-        logger.info("users query issue");
 
-        String query = "SELECT id, first_name, last_name , email ,password ,role   FROM users";
-        logger.info("users query done");
+        String query = "SELECT id ,  first_name, last_name    FROM user";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getLong("id"));
-                user.setFirstname(rs.getString("firstname"));
+                user.setId(rs.getInt("id"));
+                user.setFirstname(rs.getString("first_name"));
                 user.setLastname(rs.getString("last_name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
                 users.add(user);
             }
 
@@ -171,8 +165,6 @@ public class PosteService {
     }
 
 
-
-
     // DELETE: Remove a Poste by ID
     public boolean deletePoste(long id) {
         String query = "DELETE FROM post WHERE id = ?";
@@ -190,5 +182,32 @@ public class PosteService {
 
     }
 
+    public List<Poste> getPostesByState(String state) {
+        List<Poste> postes = new ArrayList<>();
+        String query = "SELECT * FROM post WHERE state = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, state);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Poste poste = new Poste(
+                        rs.getLong("id"),
+                        rs.getString("content"),
+                        rs.getDouble("salaire"),
+                        rs.getString("description"),
+                        rs.getDate("date_poste"),
+                        rs.getString("state")
+                );
+                postes.add(poste);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return postes;
+    }
 
 }

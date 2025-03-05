@@ -1,6 +1,5 @@
 package esprit.tn.pidevrh.appbar;
 
-import esprit.tn.pidevrh.Poste.PosteController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -89,7 +88,6 @@ public class AppBarController {
             contentArea.getChildren().add(root);
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Error loading PosteAdd.fxml");
         }
     }
 

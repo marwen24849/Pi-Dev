@@ -1,6 +1,4 @@
-package esprit.tn.pidevrh;
-
-import java.util.Date;
+package esprit.tn.pidevrh.Poste;
 
 public class User {
     private long id;
@@ -87,4 +85,9 @@ public class User {
                 ", role='" + role + '\'' +
                 '}';
     }
+
+
+
+
+
 }

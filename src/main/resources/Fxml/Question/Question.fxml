@@ -16,6 +16,7 @@
 
         <!-- Formulaire -->
         <GridPane hgap="15.0" style="-fx-padding: 20px; -fx-background-color: #f7f9fc; -fx-border-color: #d1dce5; -fx-border-radius: 10px; -fx-background-radius: 10px;" vgap="15.0">
+
             <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" minWidth="150.0" />
                 <ColumnConstraints hgrow="ALWAYS" />

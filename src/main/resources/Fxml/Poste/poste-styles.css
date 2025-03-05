@@ -1,0 +1,80 @@
+/* Root and General Styles */
+.root {
+    -fx-background-color: #f4f4f4;
+}
+
+/* Title Label */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3498db;
+}
+
+
+
+/* TableView */
+.poste-table {
+    -fx-background-color: white; /* White background for the table */
+    -fx-border-color: #d1dce5; /* Light gray border */
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-background-radius: 5px; /* Rounded corners for the background */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); /* Subtle shadow for depth */
+}
+/* Table Header */
+.table-view .column-header {
+    -fx-background-color: #3498db; /* Blue background for headers */
+    -fx-text-fill: white; /* White text for headers */
+    -fx-font-size: 14px; /* Font size for headers */
+    -fx-font-weight: bold; /* Bold text for headers */
+    -fx-alignment: CENTER; /* Center-align header text */
+}
+
+/* Table Rows */
+.table-row-cell {
+    -fx-background-color: white; /* White background for rows */
+    -fx-border-color: #d1dce5; /* Light gray border between rows */
+    -fx-border-width: 0 0 1 0; /* Border only at the bottom of each row */
+}
+
+/* Alternate Row Colors */
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9; /* Light gray background for odd rows */
+}
+
+/* Selected Row */
+.table-row-cell:selected {
+    -fx-background-color: #3498db; /* Blue background for selected rows */
+    -fx-text-fill: white; /* White text for selected rows */
+}
+
+/* Table Cells */
+.table-cell {
+    -fx-font-size: 14px; /* Font size for table cells */
+    -fx-text-fill: #333; /* Dark gray text color */
+    -fx-alignment: CENTER; /* Center-align cell content */
+}
+
+/* Pagination Styling */
+.pagination {
+    -fx-page-information-visible: false; /* Hide page information */
+}
+
+.pagination .pagination-control {
+    -fx-background-color: transparent; /* Transparent background for pagination */
+}
+
+.pagination .button {
+    -fx-background-color: #3498db; /* Blue background for pagination buttons */
+    -fx-text-fill: white; /* White text for pagination buttons */
+    -fx-font-size: 14px; /* Font size for pagination buttons */
+    -fx-background-radius: 5px; /* Rounded corners for buttons */
+    -fx-cursor: hand; /* Hand cursor on hover */
+}
+
+.pagination .button:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}
+
+.pagination .button:selected {
+    -fx-background-color: #2980b9; /* Darker blue for selected page */
+}

@@ -23,8 +23,10 @@ public class Poste {
         this.datePoste = datePoste;
         this.state = state;
     }
+    
+    
 
-    public Poste(long id, long userId, String content, double salaire, String description, Date datePoste , String state) {
+    public Poste(long id, long userId, String content, double salaire, String description, java.sql.Date  datePoste , String state) {
         this.id = id;
         this.userId = userId;
         this.content = content;
@@ -34,6 +36,16 @@ public class Poste {
         this.state = state;
 
     }
+
+    public Poste(Long userId, String content, double salaire, String description, java.sql.Date datePoste, String state) {
+        this.userId = userId;
+        this.content = content;
+        this.salaire = salaire;
+        this.description = description;
+        this.datePoste = datePoste;
+        this.state = state;
+    }
+
 
     public long getId() {
         return id;

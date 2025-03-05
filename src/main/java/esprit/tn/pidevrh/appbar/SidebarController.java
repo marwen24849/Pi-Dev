@@ -87,6 +87,14 @@ public class SidebarController {
         loadContent("/Fxml/Quiz/Quiz.fxml");
     }
 
+    @FXML
+    public void handleListPoste() {
+        loadContent("/Fxml/Poste/ListPostes.fxml");
+    }
+
+    @FXML
+    public void handleAddPoste(ActionEvent event) {loadContent("/Fxml/Poste/PosteAdd.fxml");}
+
     private void loadContent(String fxmlPath) {
         try {
             // Charger le FXML et créer un Parent
@@ -109,8 +117,7 @@ public class SidebarController {
         }
     }
 
-    @FXML
-    public void handleAddPoste(ActionEvent event) {loadContent("/Fxml/Poste/PosteAdd.fxml");}
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
