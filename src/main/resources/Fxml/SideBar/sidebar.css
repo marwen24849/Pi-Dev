@@ -138,30 +138,7 @@
     -fx-scale-y: 0.95;
 }
 
-#logoutButton {
-    -fx-background-color: #FF4C4C; /* Rouge vif pour attirer l'attention */
-    -fx-text-fill: #FFFFFF; /* Texte en blanc */
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 5px;
-    -fx-cursor: hand;
-    -fx-border-width: 0;
-    -fx-transition: all 0.3s ease-in-out;
-}
-
-#logoutButton:hover {
-    -fx-background-color: #D43F3F; /* Rouge plus foncé au survol */
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
-#logoutButton:pressed {
-    -fx-background-color: #B83232; /* Rouge encore plus foncé quand cliqué */
-    -fx-scale-x: 0.95;
-    -fx-scale-y: 0.95;
-}
-
+.logout-button {     -fx-background-color: rgba(255, 255, 255, 0.12);     -fx-text-fill: #FF6B6B;  /* Soft red */     -fx-font-weight: 600;     -fx-padding: 14px 35px;     -fx-background-radius: 0;     -fx-cursor: hand;     -fx-border-width: 0;     -fx-font-size: 14px;}.logout-button:hover {     -fx-background-color: rgba(255, 107, 107, 0.15);     -fx-text-fill: #FF5555;}
 
 
 

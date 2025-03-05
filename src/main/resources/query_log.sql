@@ -217,3 +217,41 @@ JOIN resultat res ON r.resultat_id = res.id
 ORDER BY res.score DESC
 LIMIT 1;
 ******************************************** ********************************************
+2025-03-04 12:21:08 
+ SELECT COUNT(*) AS nombre_des_questions
+FROM question;
+******************************************** ********************************************
+2025-03-04 12:22:55 
+ SELECT COUNT(*) AS nombre_de_questions
+FROM question;
+******************************************** ********************************************
+2025-03-04 17:54:30 
+ SELECT COUNT(*) AS nombre_questions
+FROM question;
+******************************************** ********************************************
+2025-03-04 17:55:03 
+ SELECT u.first_name, u.last_name
+FROM user u
+JOIN resultat r ON u.id = r.id
+ORDER BY r.score DESC
+LIMIT 1;
+******************************************** ********************************************
+2025-03-04 17:55:18 
+ SELECT title, description, duration, capacity
+FROM formation;
+******************************************** ********************************************
+2025-03-04 17:55:36 
+ SELECT u.id, u.first_name, u.last_name
+FROM user u
+JOIN formation_user fu ON u.id = fu.user_id
+JOIN formation f ON fu.formation_id = f.id
+WHERE f.title = 'Java';
+******************************************** ********************************************
+2025-03-04 17:56:09 
+ SELECT u.first_name, u.last_name
+FROM user u
+JOIN response r ON u.id = r.user_id
+JOIN resultat res ON r.resultat_id = res.id
+ORDER BY res.score DESC
+LIMIT 1;
+******************************************** ********************************************
