@@ -100,7 +100,7 @@ public class PDFGenerator {
 
                     // Create images
                     Image approvedImage = new Image(approvedData).scaleToFit(150, 150);  // Resize stamp
-                    Image signatureImage = new Image(signatureData).scaleToFit(100, 50); // Resize signature
+                    Image signatureImage = new Image(signatureData).scaleToFit(150, 100); // Resize signature
 
                     // Set positions (absolute positioning)
                     float xPosition = 350; // X coordinate
