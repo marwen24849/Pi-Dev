@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.pidevrh.leave.LeaveRequestController"
+            stylesheets="@leave_request.css">
+
+    <!-- Main Content -->
+    <VBox alignment="CENTER" spacing="20.0"
+          AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <!-- Title -->
+        <Label styleClass="title-label" text="Demande de Congé" />
+
+        <!-- Form -->
+        <GridPane styleClass="form-container" hgap="15.0" vgap="15.0">
+            <columnConstraints>
+                <ColumnConstraints minWidth="150.0" halignment="RIGHT" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <!-- Leave Type -->
+            <Label styleClass="form-label" text="Type de Congé :" />
+            <ComboBox fx:id="congeComboBox" styleClass="input-field" GridPane.columnIndex="1"
+                      promptText="Sélectionnez le type de congé" onAction="#handleCongeSelection" />
+
+            <!-- Other Leave Type -->
+            <Label styleClass="form-label" text="Autre Type :" GridPane.rowIndex="1" />
+            <TextField fx:id="autreCongeField" styleClass="input-field disabled-field" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                       promptText="Spécifiez le type de congé" disable="true" />
+
+            <!-- Start Date -->
+            <Label styleClass="form-label" text="Date de Début :" GridPane.rowIndex="2" />
+            <DatePicker fx:id="startDatePicker" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <!-- End Date -->
+            <Label styleClass="form-label" text="Date de Fin :" GridPane.rowIndex="3" />
+            <DatePicker fx:id="endDatePicker" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+            <!-- Justification -->
+            <Label styleClass="form-label" text="Justification :" GridPane.rowIndex="4" />
+            <TextArea fx:id="justificationField" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                      prefRowCount="3" promptText="Expliquez la raison (optionnel)" />
+
+            <!-- Upload Button -->
+            <Button fx:id="uploadButton" styleClass="btn-secondary" text="Télécharger Certificat"
+                    GridPane.rowIndex="5" GridPane.columnIndex="1" onAction="#handleUpload" />
+        </GridPane>
+
+        <!-- Submit Button -->
+        <Button fx:id="submitButton" styleClass="btn-primary" text="Soumettre la Demande"
+                onAction="#handleSubmit" />
+    </VBox>
+</AnchorPane>

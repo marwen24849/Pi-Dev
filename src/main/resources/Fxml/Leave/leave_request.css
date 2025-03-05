@@ -1,0 +1,101 @@
+/* leave_request.css */
+
+/* Base Styling */
+.root {
+    -fx-background-color: #F8FAFC;
+    -fx-font-family: 'Segoe UI';
+}
+
+/* Title Styling */
+.title-label {
+    -fx-text-fill: #2D3640;
+    -fx-font-size: 28px;
+    -fx-font-weight: 600;
+    -fx-padding: 0 0 20px 0;
+}
+
+/* Form Container */
+.form-container {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E0E4E7;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-padding: 25px;
+}
+
+/* Form Labels */
+.form-label {
+    -fx-text-fill: #3A4045;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+/* Input Fields */
+.input-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D1D9E0;
+    -fx-border-radius: 6px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2D3640;
+}
+
+.input-field:focused {
+    -fx-border-color: #6FB2FF;
+    -fx-border-width: 1.5px;
+}
+
+/* Date Picker */
+.date-picker {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D1D9E0;
+    -fx-border-radius: 6px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #F5F6FA;
+}
+
+/* Text Area */
+.text-area {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D1D9E0;
+    -fx-border-radius: 6px;
+    -fx-padding: 10px;
+}
+
+/* Buttons */
+.btn-primary {
+    -fx-background-color: #6FB2FF;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 25px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #5AA6FF;
+}
+
+.btn-secondary {
+    -fx-background-color: #3A4045;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 500;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 25px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #4A5255;
+}
+
+/* Disabled Field */
+.disabled-field {
+    -fx-background-color: #F5F6FA;
+    -fx-text-fill: #A8B0B8;
+}

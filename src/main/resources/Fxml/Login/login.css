@@ -1,0 +1,44 @@
+.btn-login {
+    -fx-background-color: #2196f3;
+    -fx-font-family: Tahoma;
+    -fx-font-size: 22px;
+    -fx-text-fill: #FFF;
+    -fx-background-radius: 20px
+}
+
+.btn-login:hover {
+    -fx-cursor: hand;
+    -fx-border-color: #2196f3;
+    -fx-border-width: 3px;
+    -fx-border-radius: 20px;
+    -fx-background-color: #FFF;
+    -fx-text-fill: #2196f3;
+    -fx-font-weight: bold
+}
+
+.btn-login:pressed {
+    -fx-rotate: 12
+}
+
+.jfx-snackbar-content {
+    -fx-background-color: #F00;
+    -fx-pref-width: 430
+}
+.jfx-snackbar-toast {
+    -fx-text-fill: #FFF;
+    -fx-font-size: 18px;
+    -fx-font-family: Tahoma
+}
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2196f3; /* Blue color like a link */
+    -fx-underline: true;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-cursor: hand; /* Show hand cursor on hover */
+}
+
+.link-button:hover {
+    -fx-text-fill: #1565c0; /* Darker blue on hover */
+}
+

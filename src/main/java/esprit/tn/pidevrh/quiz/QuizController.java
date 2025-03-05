@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class QuizController {
 
+
     @FXML
     private TextField titleField;
 
@@ -26,6 +27,8 @@ public class QuizController {
 
     @FXML
     private TextField questionCountField;
+    @FXML
+    public TextField quizTime;
 
     @FXML
     public void initialize() {
@@ -35,15 +38,20 @@ public class QuizController {
         listDifeculter();
         categoryComboBox.valueProperty().addListener((obs, oldValue, newValue) -> updateQuestionCount());
         difficultyLevelField.valueProperty().addListener((obs, oldValue, newValue) -> updateQuestionCount());
-        // Remplir la liste des pourcentages
         for (int i = 50; i <= 100; i += 10) {
             percentageComboBox.getItems().add(String.valueOf(i));
         }
         if(!this.categoryComboBox.getItems().isEmpty())
             questionCountField.setText(String.valueOf(nbQuestion(categoryComboBox.getValue(),difficultyLevelField.getValue())));
-
-        // Initialiser le champ questionCountField à zéro
         questionCountField.setText("0");
+    }
+
+    private void initChamps() {
+        this.quizTime.setText("");
+        this.questionCountField.setText("");
+        this.titleField.setText("");
+        this.categoryComboBox.setValue(null);
+        this.percentageComboBox.setValue(null);
     }
 
     @FXML
@@ -52,17 +60,18 @@ public class QuizController {
         String category = categoryComboBox.getValue();
         String percentage = percentageComboBox.getValue();
         String selectedDifficulty = difficultyLevelField.getValue();
+        String time = quizTime.getText();
         if (title.isEmpty() || category == null || percentage == null) {
             showAlert("Erreur", "Les champs doit non vide ");
             return;
         }
-        Long idQuiz= addQuiz(title, category, selectedDifficulty, Integer.parseInt(percentage));
+        Long idQuiz= addQuiz(title, category, selectedDifficulty, Integer.parseInt(percentage), Integer.parseInt(time));
         if(idQuiz == -1)
             showAlert("Erreur SQL", "Erreur lors de l'ajout de la quiz dans la base de données.");
         else{
             affecterQuestionQuiz(idQuiz, questionRandom(category,selectedDifficulty, questionCountField.getText()));
             showAlert("INFO", "Ajout Terminer");
-            initialize();
+            initChamps();
         }
 
     }
@@ -87,8 +96,8 @@ public class QuizController {
         }
     }
 
-    private Long addQuiz(String title, String category, String difficulty, int percentage) {
-        String sql = "INSERT INTO quiz (title, category, difficultylevel, minimum_success_percentage, passer) VALUES (?, ?, ?, ?, ?)";
+    private Long addQuiz(String title, String category, String difficulty, int percentage, int time) {
+        String sql = "INSERT INTO quiz (title, category, difficultylevel, minimum_success_percentage, passer, quizTime) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = DatabaseConnection.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, title);
@@ -96,12 +105,13 @@ public class QuizController {
             ps.setString(3, difficulty);
             ps.setInt(4, percentage);
             ps.setBoolean(5,false);
+            ps.setInt(6,time);
 
             int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                    return rs.getLong(1); // Récupérer l'ID généré
+                    return rs.getLong(1);
                 }
             }
         } catch (SQLException e) {

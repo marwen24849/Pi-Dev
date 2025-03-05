@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.pidevrh.session.SessionController">
+
+    <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+
+        <!-- Titre -->
+        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 10px;" text="Ajouter une Session" />
+
+        <!-- Formulaire -->
+        <GridPane hgap="15.0" style="-fx-padding: 20px; -fx-background-color: #f7f9fc; -fx-border-color: #d1dce5; -fx-border-radius: 10px; -fx-background-radius: 10px;" vgap="15.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="150.0" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+
+
+            <!-- Session Date -->
+            <Label style="-fx-font-size: 14px;" text="Session Date :" GridPane.rowIndex="1" />
+            <DatePicker fx:id="date" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <!-- Session Type (Radio Buttons) -->
+            <Label style="-fx-font-size: 14px;" text="Type de Session :" />
+            <HBox spacing="10" GridPane.columnIndex="1">
+                <RadioButton fx:id="presentielRadio" text="Présentielle" onAction="#handleSessionTypeChange" />
+                <RadioButton fx:id="onlineRadio" text="En ligne" onAction="#handleSessionTypeChange" />
+            </HBox>
+
+
+
+            <!-- Salle (Room) -->
+            <Label fx:id="salleLabel" style="-fx-font-size: 14px;" text="Salle :" GridPane.rowIndex="2" />
+            <TextField fx:id="salle" style="-fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2" visible="false" />
+        </GridPane>
+
+        <!-- Bouton -->
+        <Button fx:id="addSession" onAction="#handleAddSession" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px;" text="Ajouter Session" />
+        <ProgressIndicator fx:id="loadingIndicator" visible="false" />
+    </VBox>
+
+</AnchorPane>

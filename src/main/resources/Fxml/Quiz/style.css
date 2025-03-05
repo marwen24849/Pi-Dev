@@ -1,0 +1,48 @@
+/* Style général de la pagination */
+.pagination {
+    -fx-page-information-visible: false; /* Cache l'affichage du numéro de page */
+    -fx-arrows-visible: true; /* Affiche les flèches */
+    -fx-background-color: transparent;
+}
+
+/* Style des boutons de la pagination */
+.pagination .button {
+    -fx-background-color: #2D3640; /* Couleur de fond */
+    -fx-text-fill: white; /* Couleur du texte */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px; /* Arrondi */
+    -fx-padding: 8px 12px;
+    -fx-border-color: transparent;
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.0, 0, 2);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Effet au survol */
+.pagination .button:hover {
+    -fx-background-color: #92e038; /* Changement de couleur au hover */
+    -fx-text-fill: white;
+}
+
+/* Bouton sélectionné (page active) */
+.pagination .button:selected {
+    -fx-background-color: #92e038;
+    -fx-text-fill: white;
+    -fx-border-color: #2D3640;
+}
+
+/* Style des flèches de navigation */
+.pagination .increment-arrow,
+.pagination .decrement-arrow {
+    -fx-background-color: #2D3640;
+    -fx-text-fill: white;
+    -fx-background-radius: 50%;
+    -fx-padding: 5px;
+}
+
+.pagination .increment-arrow:hover,
+.pagination .decrement-arrow:hover {
+    -fx-background-color: #92e038;
+}

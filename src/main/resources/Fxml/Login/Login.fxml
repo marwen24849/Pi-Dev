@@ -9,7 +9,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="860.0" stylesheets="@/Css/login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.login.LoginController">
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="860.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.login.LoginController">
     <children>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="430.0" style="-fx-background-color: #2196f3;" HBox.hgrow="ALWAYS">
             <children>
@@ -46,8 +47,7 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="418.0" spacing="10.0">
                     <children>
-
-                        <TextField fx:id="usernameField"  prefHeight="45.0" prefWidth="305.0" promptText="Username">
+                        <TextField fx:id="emailField" prefHeight="45.0" prefWidth="305.0" promptText="Email">
                             <font>
                                 <Font name="Tahoma" size="25.0" />
                             </font>
@@ -56,7 +56,6 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="418.0" spacing="5.0">
                     <children>
-
                         <PasswordField fx:id="passwordField" prefHeight="25.0" prefWidth="308.0" promptText="Password">
                             <font>
                                 <Font name="Tahoma" size="25.0" />
@@ -66,10 +65,16 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                     <children>
-                        <Button  prefHeight="55.0" prefWidth="180.0" styleClass="btn-login" text="Login" />
+                        <Button prefHeight="55.0" prefWidth="180.0" styleClass="btn-login" fx:id="loginButton" text="Login" onAction="#handleLoginClick"/>
                         <Button prefHeight="55.0" prefWidth="180.0" styleClass="btn-login" text="Exit" />
                     </children>
                 </HBox>
+                <HBox spacing="10">
+                    <Button text="Forgot Password?" styleClass="link-button" fx:id="forgotPasswordButton" onAction="#handleForgotPasswordClick"/>
+                    <Button text="Sign Up" styleClass="link-button" fx:id="signUpButton" onAction="#handleSignUpClick"/>
+                </HBox>
+
+
             </children>
             <padding>
                 <Insets left="40.0" />

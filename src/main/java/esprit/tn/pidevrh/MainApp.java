@@ -4,6 +4,7 @@ import esprit.tn.pidevrh.Poste.Poste;
 import esprit.tn.pidevrh.Poste.PosteService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -34,7 +35,6 @@ public class MainApp extends Application {
         stage.show();
 
     }
-    //test
 
     public static void main(String[] args) {
         launch(args);

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.session.SessionListController" stylesheets="@session-list.css">
+    <Label text="Sessions pour la formation sélectionnée" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #B8860B; -fx-font-family: 'Arial', sans-serif; -fx-padding: 10px 15px; -fx-background-color: #F4F6F9; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #DEB887; -fx-border-width: 2px; -fx-alignment: center; -fx-effect: dropshadow(gaussian, #A1B2C3, 5, 0, 1, 1);" />
+
+    <!-- Replace TableView with ListView -->
+    <ListView fx:id="sessionListView" prefWidth="282.0" styleClass="list-view" />
+
+    <Button onAction="#openAddSession" text="Ajouter Session" style="-fx-background-color: #2c3e50; -fx-text-fill: white " />
+</VBox>

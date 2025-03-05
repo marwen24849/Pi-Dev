@@ -7,6 +7,8 @@
     <!-- Titre du Quiz -->
     <Label text="Titre du Quiz :"/>
     <TextField fx:id="titleField" GridPane.columnIndex="1"/>
+    <Label text="durée du Quiz :"/>
+    <TextField fx:id="quizTime" GridPane.columnIndex="1"/>
 
     <Label text="Pourcentage de Succès Minimum :" GridPane.rowIndex="3"/>
     <ComboBox fx:id="percentageComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3"

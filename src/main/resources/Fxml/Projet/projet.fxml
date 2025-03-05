@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.pidevrh.projet.ProjetController"
+            style="-fx-background-color: #f9fafc;">
+
+    <VBox alignment="CENTER" spacing="20.0" AnchorPane.topAnchor="50.0"
+          AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+
+        <Label text="Ajouter un Nouveau Projet"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+        <GridPane hgap="15.0" vgap="15.0"
+                  style="-fx-padding: 20px; -fx-background-color: #ffffff;
+                         -fx-border-color: #dce4ec; -fx-border-radius: 12px;
+                         -fx-background-radius: 12px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+            <columnConstraints>
+                <ColumnConstraints minWidth="150.0" halignment="RIGHT" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <Label text="Nom du Projet:" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="nomProjetField" GridPane.columnIndex="1"/>
+
+            <Label text="Équipe:" GridPane.rowIndex="1" style="-fx-font-size: 16px;"/>
+            <ComboBox fx:id="equipeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Responsable:" GridPane.rowIndex="2" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="responsableField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label text="Date de Début:" GridPane.rowIndex="3" style="-fx-font-size: 16px;"/>
+            <DatePicker fx:id="dateDebutPicker" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label text="Date de Fin:" GridPane.rowIndex="4" style="-fx-font-size: 16px;"/>
+            <DatePicker fx:id="dateFinPicker" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        </GridPane>
+
+        <Button fx:id="addProjectButton" text="Ajouter Projet" onAction="#handleAddProject"
+                style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-size: 16px;"/>
+
+
+        <!-- Labels above the ListView -->
+        <HBox alignment="CENTER_LEFT" spacing="20.0">
+            <Label text=" List Des Projets" style="-fx-font-size: 30px; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <!-- Filters for the ListView -->
+        <HBox spacing="10.0">
+            <Label text="Mois:"/>
+            <ComboBox fx:id="monthComboBox"/>
+            <Label text="Année:"/>
+            <ComboBox fx:id="yearComboBox"/>
+            <CheckBox fx:id="statusCheckBox" text="Afficher seulement les projets en cours"/>
+            <Button text="Réinitialiser les Filtres" onAction="#handleResetFilters"
+                    style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        </HBox>
+        <!-- ListView for displaying projects -->
+        <ListView fx:id="projectListView" prefHeight="200.0" prefWidth="750.0" style="-fx-background-color: #ffffff; -fx-border-radius: 12px; -fx-border-color: #dce4ec; -fx-padding: 10px;">
+            <items>
+                <!-- Items will be dynamically populated from the controller -->
+            </items>
+        </ListView>
+    </VBox>
+</AnchorPane>
