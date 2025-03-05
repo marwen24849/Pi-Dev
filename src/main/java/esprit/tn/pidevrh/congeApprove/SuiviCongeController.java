@@ -56,7 +56,7 @@ public class SuiviCongeController {
                 if (today.isBefore(startDate)) {
                     // Leave has not started yet
                     remainingDaysText = "📅 En attente";
-                } else if ((today.isBefore(endDate) || today.equals(endDate)) && startDate.isBefore(today)) {
+                } else if ((today.isBefore(endDate) && startDate.isBefore(today) || today.equals(startDate) || today.equals(endDate))) {
                     // Leave has started but not ended
                     long remainingDays = ChronoUnit.DAYS.between(today, endDate);
                     remainingDaysText = "⏳ " + remainingDays + " jours restants";
