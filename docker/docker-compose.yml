@@ -9,6 +9,7 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_DATABASE: RH
       MYSQL_ROOT_PASSWORD: root
+      command: --max_allowed_packet=64M
     volumes:
       - Rh-and-mysql-volume:/var/lib/mysql
 

@@ -25,8 +25,5 @@
         <Button text="Add Team" onAction="#handleAddTeam" styleClass="modern-button"/>
     </HBox>
 
-    <!-- Optional: Filter input field -->
-    <HBox spacing="10" styleClass="input-box">
-        <TextField fx:id="filterInput" promptText="Filter Teams" styleClass="modern-textfield"/>
-    </HBox>
+
 </VBox>

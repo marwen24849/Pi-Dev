@@ -96,7 +96,6 @@ public class SQLProcessorAI {
                 ResultSet rs = stmt.executeQuery(query);
                 ResultSetMetaData metaData = rs.getMetaData();
                 int columnCount = metaData.getColumnCount();
-
                 List<Map<String, Object>> results = new ArrayList<>();
                 while (rs.next()) {
                     Map<String, Object> row = new HashMap<>();

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0"
+            xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@leave_request.css"
+            fx:controller="esprit.tn.pidevrh.congeApprove.SuiviCongeController">
+
+    <!-- Title -->
+    <Label text="Suivi des Congés Approuvés"
+           styleClass="title-label"
+           AnchorPane.leftAnchor="20.0"
+           AnchorPane.topAnchor="40.0" />
+
+    <!-- Leave Requests List -->
+    <ListView fx:id="congeListView"
+              styleClass="list-view"
+              AnchorPane.leftAnchor="20.0"
+              AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="100.0"
+              AnchorPane.bottomAnchor="80.0" />
+
+    <!-- Refresh Button -->
+    <Button text="🔄 Rafraîchir" fx:id="refreshButton"
+            onAction="#handleRefresh"
+            styleClass="btn-refresh"
+            AnchorPane.leftAnchor="20.0"
+            AnchorPane.bottomAnchor="20.0" />
+
+</AnchorPane>

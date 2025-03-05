@@ -4,6 +4,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import esprit.tn.pidevrh.connection.DatabaseConnection;
+import esprit.tn.pidevrh.email.EmailService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,6 +20,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+
+import java.io.ByteArrayOutputStream;
+import javafx.embed.swing.SwingFXUtils;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.util.Base64;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,126 +78,126 @@ public class ProjetController {
     @FXML private CheckBox statusCheckBox;
 
     //@FXML private TableView<Projet> projectTableView;
-   // @FXML private TableColumn<Projet, String> nomColumn;
-   // @FXML private TableColumn<Projet, String> equipeColumn;
-   // @FXML private TableColumn<Projet, String> responsableColumn;
-   // @FXML private TableColumn<Projet, LocalDateTime> dateDebutColumn;
-   // @FXML private TableColumn<Projet, LocalDateTime> dateFinColumn;
+    // @FXML private TableColumn<Projet, String> nomColumn;
+    // @FXML private TableColumn<Projet, String> equipeColumn;
+    // @FXML private TableColumn<Projet, String> responsableColumn;
+    // @FXML private TableColumn<Projet, LocalDateTime> dateDebutColumn;
+    // @FXML private TableColumn<Projet, LocalDateTime> dateFinColumn;
 
     private ObservableList<Projet> projetList = FXCollections.observableArrayList();
 
-   /* @FXML
+    /* @FXML
+     public void initialize() {
+         // Initialize columns
+         nomColumn.setCellValueFactory(new PropertyValueFactory<>("nomProjet"));
+         equipeColumn.setCellValueFactory(new PropertyValueFactory<>("equipe"));
+         responsableColumn.setCellValueFactory(new PropertyValueFactory<>("responsable"));
+         dateDebutColumn.setCellValueFactory(new PropertyValueFactory<>("dateDebut"));
+         dateFinColumn.setCellValueFactory(new PropertyValueFactory<>("dateFin"));
+
+         // Load data
+         loadProjects();
+         projectTableView.setItems(projetList);
+         loadAvailableTeams();
+     }
+ */
+    @FXML
     public void initialize() {
-        // Initialize columns
-        nomColumn.setCellValueFactory(new PropertyValueFactory<>("nomProjet"));
-        equipeColumn.setCellValueFactory(new PropertyValueFactory<>("equipe"));
-        responsableColumn.setCellValueFactory(new PropertyValueFactory<>("responsable"));
-        dateDebutColumn.setCellValueFactory(new PropertyValueFactory<>("dateDebut"));
-        dateFinColumn.setCellValueFactory(new PropertyValueFactory<>("dateFin"));
+        // Initialize month and year ComboBoxes
+        monthComboBox.setItems(FXCollections.observableArrayList(
+                "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+                "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+        ));
+        yearComboBox.setItems(FXCollections.observableArrayList(
+                "2023", "2024", "2025", "2026", "2027"
+        ));
 
-        // Load data
+        // Load projects and available teams
         loadProjects();
-        projectTableView.setItems(projetList);
         loadAvailableTeams();
+
+        // Add listeners to filters
+        monthComboBox.setOnAction(event -> loadProjects());
+        yearComboBox.setOnAction(event -> loadProjects());
+        statusCheckBox.setOnAction(event -> loadProjects());
+
+        // Use a cell factory to customize the ListView with buttons for each item
+        projectListView.setCellFactory(param -> new ListCell<String>() {
+            private final VBox cardContainer = new VBox(10);
+            private final Label projectNameLabel = new Label();
+            private final Label teamIdLabel = new Label();
+            private final Label projectManagerLabel = new Label();
+            private final Label dateLabel = new Label();
+            private final Button deleteButton = new Button("Delete");
+            private final Button updateButton = new Button("Update");
+            private final Button addToCalendarButton = new Button("Add to Calendar");
+            private final HBox buttonContainer = new HBox(10);
+
+            {
+                // Styling for the card
+                cardContainer.setStyle("-fx-background-color: #f9fafc; -fx-border-color: #dfe4ea; -fx-border-radius: 5px; -fx-padding: 10px;");
+                cardContainer.setPrefHeight(120);
+
+                // Styling for labels
+                projectNameLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50;");
+                teamIdLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
+                projectManagerLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
+                dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
+
+                // Styling for buttons
+                deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-border-radius: 5px;");
+                updateButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-border-radius: 5px;");
+                addToCalendarButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-border-radius: 5px;");
+                buttonContainer.setAlignment(Pos.CENTER);
+                buttonContainer.getChildren().addAll(updateButton, deleteButton, addToCalendarButton);
+
+                // Add all components to the card
+                cardContainer.getChildren().addAll(
+                        projectNameLabel,
+                        teamIdLabel,
+                        projectManagerLabel,
+                        dateLabel,
+                        buttonContainer
+                );
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    // Parse the project details from the string
+                    String[] parts = item.split(" - ");
+                    if (parts.length >= 4) {
+                        String projectName = parts[0];
+                        String teamName = parts[1];
+                        String projectManager = parts[2];
+                        String dates = parts[3];
+
+                        // Set the text for each label
+                        projectNameLabel.setText("Project Name: " + projectName);
+                        teamIdLabel.setText("Team ID: " + teamName);
+                        projectManagerLabel.setText("Project Manager: " + projectManager);
+                        dateLabel.setText("Dates: " + dates);
+
+                        // Add action to delete button
+                        deleteButton.setOnAction(event -> handleDeleteProject(projectName));
+
+                        // Add action to update button
+                        updateButton.setOnAction(event -> handleUpdateProject(item));
+
+                        // Add action to add to calendar button
+                        addToCalendarButton.setOnAction(event -> handleAddToCalendar(projectName, projectManager, dates));
+
+                        // Set the card as the graphic for the list cell
+                        setGraphic(cardContainer);
+                    }
+                }
+            }
+        });
     }
-*/
-   @FXML
-   public void initialize() {
-       // Initialize month and year ComboBoxes
-       monthComboBox.setItems(FXCollections.observableArrayList(
-               "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
-               "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
-       ));
-       yearComboBox.setItems(FXCollections.observableArrayList(
-               "2023", "2024", "2025", "2026", "2027"
-       ));
-
-       // Load projects and available teams
-       loadProjects();
-       loadAvailableTeams();
-
-       // Add listeners to filters
-       monthComboBox.setOnAction(event -> loadProjects());
-       yearComboBox.setOnAction(event -> loadProjects());
-       statusCheckBox.setOnAction(event -> loadProjects());
-
-       // Use a cell factory to customize the ListView with buttons for each item
-       projectListView.setCellFactory(param -> new ListCell<String>() {
-           private final VBox cardContainer = new VBox(10);
-           private final Label projectNameLabel = new Label();
-           private final Label teamIdLabel = new Label();
-           private final Label projectManagerLabel = new Label();
-           private final Label dateLabel = new Label();
-           private final Button deleteButton = new Button("Delete");
-           private final Button updateButton = new Button("Update");
-           private final Button addToCalendarButton = new Button("Add to Calendar");
-           private final HBox buttonContainer = new HBox(10);
-
-           {
-               // Styling for the card
-               cardContainer.setStyle("-fx-background-color: #f9fafc; -fx-border-color: #dfe4ea; -fx-border-radius: 5px; -fx-padding: 10px;");
-               cardContainer.setPrefHeight(120);
-
-               // Styling for labels
-               projectNameLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50;");
-               teamIdLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
-               projectManagerLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
-               dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #5d6d7e;");
-
-               // Styling for buttons
-               deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-border-radius: 5px;");
-               updateButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-border-radius: 5px;");
-               addToCalendarButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-border-radius: 5px;");
-               buttonContainer.setAlignment(Pos.CENTER);
-               buttonContainer.getChildren().addAll(updateButton, deleteButton, addToCalendarButton);
-
-               // Add all components to the card
-               cardContainer.getChildren().addAll(
-                       projectNameLabel,
-                       teamIdLabel,
-                       projectManagerLabel,
-                       dateLabel,
-                       buttonContainer
-               );
-           }
-
-           @Override
-           protected void updateItem(String item, boolean empty) {
-               super.updateItem(item, empty);
-
-               if (empty || item == null) {
-                   setGraphic(null);
-               } else {
-                   // Parse the project details from the string
-                   String[] parts = item.split(" - ");
-                   if (parts.length >= 4) {
-                       String projectName = parts[0];
-                       String teamName = parts[1];
-                       String projectManager = parts[2];
-                       String dates = parts[3];
-
-                       // Set the text for each label
-                       projectNameLabel.setText("Project Name: " + projectName);
-                       teamIdLabel.setText("Team ID: " + teamName);
-                       projectManagerLabel.setText("Project Manager: " + projectManager);
-                       dateLabel.setText("Dates: " + dates);
-
-                       // Add action to delete button
-                       deleteButton.setOnAction(event -> handleDeleteProject(projectName));
-
-                       // Add action to update button
-                       updateButton.setOnAction(event -> handleUpdateProject(item));
-
-                       // Add action to add to calendar button
-                       addToCalendarButton.setOnAction(event -> handleAddToCalendar(projectName, projectManager, dates));
-
-                       // Set the card as the graphic for the list cell
-                       setGraphic(cardContainer);
-                   }
-               }
-           }
-       });
-   }
 
 
 
@@ -283,18 +291,8 @@ public class ProjetController {
         }
     }
 
-    /*private void handleAddToCalendar(String projectName, String projectManager, String dates) {
-        String[] dateParts = dates.split(" to ");
-        LocalDateTime startDate = LocalDate.parse(dateParts[0]).atStartOfDay();
-        LocalDateTime endDate = LocalDate.parse(dateParts[1]).atStartOfDay();
 
-        try {
-            GoogleCalendarService.addEvent(projectName, "Managed by: " + projectManager, startDate, endDate);
-            showAlert("Succès", "Projet ajouté au calendrier Google avec succès!", Alert.AlertType.INFORMATION);
-        } catch (GeneralSecurityException | IOException e) {
-            showAlert("Erreur", "Erreur lors de l'ajout du projet au calendrier Google: " + e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }*/
+
     private void handleAddToCalendar(String projectName, String projectManager, String dates) {
         String[] dateParts = dates.split(" to ");
         LocalDateTime startDate = LocalDate.parse(dateParts[0]).atStartOfDay();
@@ -315,8 +313,51 @@ public class ProjetController {
                     "Projet ajouté au calendrier Google avec succès!",
                     meetLink
             );
+
+            // Fetch the email addresses of the team members
+            List<String> teamMemberEmails = getTeamMemberEmails(projectName);
+
+
+
+            // Send email to team members
+            String emailBody = "Project Name: " + projectName + "\n" +
+                    "Project Manager: " + projectManager + "\n" +
+                    "Dates: " + dates + "\n" +
+                    "Google Meet Link: " + meetLink + "\n" ;
+            for (String email : teamMemberEmails) {
+                EmailService.sendEmail(email, "Project Details and Google Meet Link", emailBody);
+            }
         } catch (GeneralSecurityException | IOException e) {
             showAlert("Erreur", "Erreur lors de l'ajout du projet au calendrier Google: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private List<String> getTeamMemberEmails(String projectName) {
+        List<String> emails = new ArrayList<>();
+        String query = "SELECT email FROM user WHERE id_equipe = (SELECT equipe FROM projet WHERE nom_projet = ?)";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, projectName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                emails.add(resultSet.getString("email"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emails;
+    }
+
+    private String convertImageToBase64(Image image) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+            ImageIO.write(bufferedImage, "png", outputStream);
+            byte[] imageBytes = outputStream.toByteArray();
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -384,14 +425,14 @@ public class ProjetController {
 
     private int getTeamId(String teamName, Connection connection) throws SQLException {
 
-            String query = "SELECT id FROM equipe WHERE name = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, teamName);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        String query = "SELECT id FROM equipe WHERE name = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, teamName);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                return resultSet.getInt("id");
-            }
+        if (resultSet.next()) {
+            return resultSet.getInt("id");
+        }
 
         return -1;  // If no matching team found, return -1
     }

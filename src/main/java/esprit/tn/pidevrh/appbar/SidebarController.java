@@ -11,9 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 
-import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -48,6 +47,8 @@ public class SidebarController {
     public VBox gestionFormationContainer;
     public VBox inscritformation;
     public VBox gestionFormationMenu;
+    public VBox gestionCongeContainer;
+    public VBox gestionCongeMenu;
     @FXML
     private VBox sidebarWrapper, gestionQuestionsMenu, gestionQuizMenu, demandeCongeMenu, userQuizMenu;
     @FXML
@@ -99,6 +100,9 @@ public class SidebarController {
         gestionFormationContainer.setVisible(roleTest);
         gestionFormationContainer.setManaged(roleTest);
 
+        gestionCongeContainer.setVisible(roleTest);
+        gestionCongeContainer.setManaged(roleTest);
+
 
         userQuizContainer.setVisible(!roleTest);
         userQuizContainer.setManaged(!roleTest);
@@ -107,6 +111,8 @@ public class SidebarController {
 
         demandeCongeContainer.setVisible(!roleTest);
         demandeCongeContainer.setManaged(!roleTest);
+
+
 
         reclamation.setVisible(!roleTest);
         reclamation.setManaged(!roleTest);
@@ -312,5 +318,28 @@ public class SidebarController {
 
     public void handleInscriptionFormation(ActionEvent actionEvent) {
         loadContent("/Fxml/Formation/inscriptionFormation.fxml");
+    }
+
+    public void toggleGestionCongeMenu(ActionEvent actionEvent) {
+        toggleMenuVisibility(gestionCongeMenu, !gestionCongeMenu.isVisible());
+    }
+
+    public void handleListConge(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/LeaveManagement.fxml");
+    }
+
+    public void handleSuiviConge(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/suivi_conge.fxml");
+    }
+
+    public void handleALisDemande(ActionEvent actionEvent) {
+        loadContent("/Fxml/Leave/ListRequest.fxml");
+    }
+
+    public void handleImageClick(MouseEvent actionEvent) {
+        if(roleTest)
+            loadContent("/Fxml/Dashboard/admin_dashboard.fxml");
+        else
+            loadContent("/Fxml/Dashboard/UserDashboard.fxml");
     }
 }

@@ -254,4 +254,66 @@ JOIN response r ON u.id = r.user_id
 JOIN resultat res ON r.resultat_id = res.id
 ORDER BY res.score DESC
 LIMIT 1;
+2025-03-04 14:33:20 
+ SELECT * FROM user;
+******************************************** ********************************************
+2025-03-05 06:17:15 
+ SELECT 
+  c.id, 
+  c.start_date, 
+  c.end_date, 
+  dc.id AS demande_conge_id, 
+  dc.type_congé, 
+  dc.autre, 
+  dc.justification, 
+  dc.status, 
+  dc.date_debut, 
+  dc.date_fin, 
+  dc.certificate 
+FROM 
+  conge c 
+  LEFT JOIN demande_conge dc ON c.user_id = dc.user_id 
+WHERE 
+  c.user_id = (SELECT id FROM user WHERE first_name = 'Marwen');
+******************************************** ********************************************
+2025-03-05 09:23:22 
+ SELECT * 
+FROM demande_conge 
+WHERE user_id = (SELECT id FROM user WHERE first_name = 'Marwen');
+******************************************** ********************************************
+2025-03-05 09:23:46 
+ SELECT * FROM demande_conge WHERE user_id = (SELECT id FROM user WHERE first_name = 'Sirine');
+******************************************** ********************************************
+2025-03-05 09:24:26 
+ SELECT u.first_name, u.last_name
+FROM user u
+JOIN formation_user fu ON u.id = fu.user_id
+JOIN formation f ON fu.formation_id = f.id
+WHERE f.title = 'Java';
+******************************************** ********************************************
+2025-03-05 10:23:39 
+ SELECT *
+FROM user
+WHERE role = 'admin' AND email LIKE '%@espanol%';
+******************************************** ********************************************
+2025-03-05 10:24:28 
+ SELECT COUNT(DISTINCT u.id) 
+FROM user u 
+JOIN formation_user fu ON u.id = fu.user_id 
+JOIN formation f ON fu.formation_id = f.id 
+WHERE f.title = 'Java Course';
+******************************************** ********************************************
+2025-03-05 10:24:43 
+ SELECT * FROM post WHERE content = 'okay mate keep it up';
+******************************************** ********************************************
+2025-03-05 10:24:57 
+ SELECT u.id, u.first_name, u.last_name
+FROM user u
+JOIN formation_user fu ON u.id = fu.user_id
+JOIN formation f ON fu.formation_id = f.id
+WHERE f.title = 'Java';
+******************************************** ********************************************
+2025-03-05 10:26:15 
+ SELECT COUNT(*) AS nombre_de_séances
+FROM session;
 ******************************************** ********************************************

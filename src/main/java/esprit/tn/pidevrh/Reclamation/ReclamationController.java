@@ -97,7 +97,7 @@ public class ReclamationController {
             conn.setRequestProperty("Authorization", "Bearer " + apiKey);
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
-            String prompt = "Je vais soumettre une réclamation via l'application de l'entreprise. Peux-tu rédiger un message professionnel et poli basé sur le texte suivant : " + text + " ? Assure-toi qu'il soit clair, bien structuré et adapté à une communication formelle et en  français et ne me donne que la reclamation que je vais l envoyer.";
+            String prompt = "Je vais soumettre une réclamation via l'application de l'entreprise. Peux-tu rédiger un message professionnel et poli en français basé sur le texte suivant : " + text + " ? Assure-toi qu'il soit clair, bien structuré et adapté à une communication formelle. Réponds uniquement avec la réclamation que je vais envoyer, sans aucune explication préalable.Ne me donne que la réclamation et évite toute répétition.";
 
 
 
