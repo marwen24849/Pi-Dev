@@ -21,18 +21,31 @@
 }
 
 .message-bubble {
-    -fx-background-radius: 15px;
-    -fx-padding: 10px;
+    -fx-background-radius: 18px;
+    -fx-padding: 12px 16px;
     -fx-wrap-text: true;
     -fx-max-width: 400px;
     -fx-font-size: 14px;
+    -fx-background-color: #1E1E1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0.2, 2, 3);
 }
 
-.user-message {
-    -fx-background-color: #4CAF50;
-    -fx-text-fill: white;
-    -fx-alignment: center-right;
-}
+
+
+
+    .user-message {
+        -fx-background-color: white;
+        -fx-text-fill: white;
+        -fx-alignment: CENTER_RIGHT;
+        -fx-background-radius: 18px 18px 0px 18px;
+        -fx-padding: 12px 16px;
+        -fx-wrap-text: true;
+        -fx-max-width: 400px;
+        -fx-font-size: 14px;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.3, 2, 4);
+    }
+
+
 
 .assistant-message {
     -fx-background-color: #E5E5E5;

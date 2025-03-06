@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="600" prefWidth="800" spacing="10" style="-fx-background-color: #f0f0f0;" stylesheets="@chat.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.pidevrh.chat.ChatController">
+<VBox prefHeight="600" prefWidth="800" spacing="10"
+      style="-fx-background-color: #ffffff; -fx-font-family: 'Segoe UI', sans-serif; -fx-text-fill: #333333;"
+      xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@chat.css" fx:controller="esprit.tn.pidevrh.chat.ChatController">
 
-    <!-- Zone de chat -->
-    <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background: #ffffff; -fx-border-color: #cccccc;">
-        <VBox fx:id="chatBox" prefHeight="870.0" prefWidth="795.0" spacing="10" style="-fx-background-color: #ffffff;">
+
+    <ScrollPane fitToHeight="true" fitToWidth="true"
+                style="-fx-background: #ffffff; -fx-border-color: #E5E7EB; -fx-border-width: 1; -fx-background-radius: 8;">
+        <VBox fx:id="chatBox" prefHeight="870.0" prefWidth="795.0" spacing="10"
+              style="-fx-background-color: #f9f9f9; -fx-background-radius: 8; -fx-padding: 15;">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets top="10" right="15" bottom="10" left="15" />
             </padding>
         </VBox>
     </ScrollPane>
 
-    <!-- Barre de saisie -->
-    <HBox spacing="10" style="-fx-background-color: #ffffff; -fx-padding: 10;">
-        <TextField fx:id="messageField" promptText="Écrivez votre message..." style="-fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 5 10;" HBox.hgrow="ALWAYS" />
-        <Button fx:id="sendButton" style="-fx-background-radius: 15px; -fx-padding: 5 15;" text="Envoyer">
+
+    <HBox spacing="10"
+          style="-fx-background-color: #ffffff; -fx-padding: 12 16 12 16; -fx-border-color: #E5E7EB; -fx-border-width: 1 0 0 0; -fx-alignment: center;">
+        <TextField fx:id="messageField" promptText="Send a message..."
+                   style="-fx-background-color: #F3F4F6; -fx-text-fill: #333333; -fx-prompt-text-fill: #9CA3AF; -fx-background-radius: 25; -fx-border-radius: 25; -fx-padding: 12 18; -fx-border-color: transparent; -fx-font-size: 14px;"
+                   HBox.hgrow="ALWAYS" />
+        <Button fx:id="sendButton" text="→ Envoyer"
+                style="-fx-background-color: #2D3640; -fx-text-fill: #ffffff; -fx-background-radius: 25; -fx-padding: 12 20; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;">
             <graphic>
                 <ImageView fitHeight="20" fitWidth="20" />
             </graphic>

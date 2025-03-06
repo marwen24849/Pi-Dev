@@ -1,44 +1,88 @@
-.btn-login {
-    -fx-background-color: #2196f3;
-    -fx-font-family: Tahoma;
-    -fx-font-size: 22px;
-    -fx-text-fill: #FFF;
-    -fx-background-radius: 20px
+
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #333333;
 }
 
-.btn-login:hover {
-    -fx-cursor: hand;
-    -fx-border-color: #2196f3;
-    -fx-border-width: 3px;
-    -fx-border-radius: 20px;
-    -fx-background-color: #FFF;
-    -fx-text-fill: #2196f3;
-    -fx-font-weight: bold
+.hbox {
+    -fx-pref-width: 860;
+    -fx-pref-height: 588;
 }
 
-.btn-login:pressed {
-    -fx-rotate: 12
+
+.hbox > .vbox {
+    -fx-background-color: #3f3f3f;
+    -fx-alignment: CENTER;
+    -fx-spacing: 10;
+    -fx-padding: 40 20;
+
+    -fx-text-fill: #ffffff;
 }
 
-.jfx-snackbar-content {
-    -fx-background-color: #F00;
-    -fx-pref-width: 430
+.hbox > .vbox .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
 }
-.jfx-snackbar-toast {
-    -fx-text-fill: #FFF;
-    -fx-font-size: 18px;
-    -fx-font-family: Tahoma
+
+
+#rightBox {
+    -fx-background-color: #ffffff;
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 30;
+    -fx-padding: 40 50;
 }
-.link-button {
+
+
+#rightBox .label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 16px;
+}
+
+.text-field, .password-field {
     -fx-background-color: transparent;
-    -fx-text-fill: #2196f3; /* Blue color like a link */
-    -fx-underline: true;
-    -fx-padding: 0;
-    -fx-border-width: 0;
-    -fx-cursor: hand; /* Show hand cursor on hover */
+    -fx-border-color: #333333;
+    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: #333333;
+    -fx-prompt-text-fill: #999999;
+    -fx-font-size: 16px;
+    -fx-padding: 5 0 5 0;
 }
 
-.link-button:hover {
-    -fx-text-fill: #1565c0; /* Darker blue on hover */
+.button.btn-login {
+    -fx-background-color: #3f3f3f;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 2);
+}
+.button.btn-login:hover {
+    -fx-background-color: #5c5c5c;
+}
+
+.button.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3f3f3f;
+    -fx-font-size: 14px;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+.button.link-button:hover {
+    -fx-text-fill: #666666;
+}
+
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 2);
+}
+.header-label {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 150px;
+    -fx-font-weight: bold;
+    -fx-text-fill: linear-gradient(from 0% 0% to 100% 0%, #00bcd4, #009688);
+
 }
 
