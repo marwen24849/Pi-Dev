@@ -3,39 +3,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane prefHeight="600.0" prefWidth="800.0"
+            xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="@../../Css/ActionStyle.css"
             fx:controller="esprit.tn.pidevrh.leave.LeaveDisplayController">
 
-    <Label style="-fx-font-size: 28px; -fx-text-fill: #34495E; -fx-font-weight: bold;"
-           text="Liste des Congés"
-           AnchorPane.leftAnchor="20.0"
-           AnchorPane.topAnchor="80.0" />
+    <Label text="Liste des Congés" styleClass="title-label"
+           AnchorPane.leftAnchor="40.0"
+           AnchorPane.topAnchor="40.0" />
 
-    <HBox spacing="10.0" alignment="CENTER_LEFT"
-          AnchorPane.leftAnchor="20.0"
-          AnchorPane.topAnchor="120.0"
-          AnchorPane.rightAnchor="20.0">
-        <Label text="Filtrer par statut :" style="-fx-font-size: 14px; -fx-text-fill: #34495E;" />
-        <ComboBox fx:id="statusFilter" promptText="Choisir un statut" style="-fx-font-size: 14px; -fx-padding: 5px;" />
-        <Button text="Filtrer" fx:id="filterButton"
-                style="-fx-background-color: #92e038; -fx-text-fill: white;
-                       -fx-font-size: 14px; -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
+
+    <HBox styleClass="filter-container"
+          spacing="15.0" alignment="CENTER_LEFT"
+          AnchorPane.leftAnchor="40.0"
+          AnchorPane.topAnchor="100.0"
+          AnchorPane.rightAnchor="40.0">
+
+        <Label text="Filtrer par statut :" style="-fx-text-fill: #333333;"/>
+        <ComboBox fx:id="statusFilter" styleClass="filter-combo"
+                  promptText="Choisir un statut"/>
+        <Button text="Filtrer" fx:id="filterButton" styleClass="action-button"/>
     </HBox>
 
-    <ListView fx:id="leaveListView"
-              AnchorPane.leftAnchor="20.0"
-              AnchorPane.rightAnchor="20.0"
+    <ListView fx:id="leaveListView" styleClass="list-container"
+              AnchorPane.leftAnchor="40.0"
+              AnchorPane.rightAnchor="40.0"
               AnchorPane.topAnchor="160.0"
-              AnchorPane.bottomAnchor="100.0"
-              style="-fx-font-size: 14px; -fx-padding: 5px;" />
+              AnchorPane.bottomAnchor="120.0"/>
 
-    <Pagination fx:id="pagination"
-                AnchorPane.leftAnchor="20.0"
-                AnchorPane.rightAnchor="20.0"
-                AnchorPane.bottomAnchor="20.0"
-                pageCount="10"
-                currentPageIndex="0"
-                style="-fx-font-size: 14px;" />
+    <Pagination fx:id="pagination" styleClass="pagination"
+                pageCount="10" currentPageIndex="0"
+                AnchorPane.leftAnchor="40.0"
+                AnchorPane.rightAnchor="40.0"
+                AnchorPane.bottomAnchor="40.0"/>
 
 </AnchorPane>

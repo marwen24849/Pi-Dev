@@ -4,89 +4,55 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane prefHeight="600.0" prefWidth="800.0"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="esprit.tn.pidevrh.leave.LeaveRequestController"
-            style="-fx-background-color: #f9fafc;">
+            stylesheets="@leave_request.css">
 
-    <VBox alignment="CENTER" spacing="20.0" AnchorPane.topAnchor="50.0"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <VBox alignment="CENTER" spacing="30"
+          AnchorPane.topAnchor="40" AnchorPane.bottomAnchor="40"
+          AnchorPane.leftAnchor="40" AnchorPane.rightAnchor="40">
 
-        <Label text="Demande de Congé"
-               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+        <Label text="Demande de Congé" styleClass="title-label" />
 
-        <GridPane hgap="15.0" vgap="15.0"
-                  style="-fx-padding: 20px; -fx-background-color: #ffffff;
-                         -fx-border-color: #dce4ec; -fx-border-radius: 12px;
-                         -fx-background-radius: 12px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+        <GridPane hgap="20" vgap="20" styleClass="form-container">
             <columnConstraints>
-                <ColumnConstraints minWidth="150.0" halignment="RIGHT" />
+                <ColumnConstraints minWidth="150" halignment="RIGHT" />
                 <ColumnConstraints hgrow="ALWAYS" />
             </columnConstraints>
 
-            <Label text="Type de Congé :" style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
-            <ComboBox fx:id="congeComboBox" GridPane.columnIndex="1"
-                      onAction="#handleCongeSelection"
-                      promptText="Sélectionnez le type de congé"
-                      style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                             -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                             -fx-padding: 8px;" />
+            <Label text="Type de Congé :" />
+            <ComboBox fx:id="congeComboBox" styleClass="input-field" />
 
-            <Label text="Autre Type :" GridPane.rowIndex="1"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
+            <Label text="Autre Type :" GridPane.rowIndex="1" />
             <TextField fx:id="autreCongeField" GridPane.columnIndex="1" GridPane.rowIndex="1"
-                       promptText="Spécifiez le type de congé"
-                       style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                              -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                              -fx-padding: 8px;" disable="true" />
+                       styleClass="input-field" disable="true" />
 
-            <Label text="Date de Début :" GridPane.rowIndex="2"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
+            <Label text="Date de Début :" GridPane.rowIndex="2" />
             <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"
-                        style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                               -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                               -fx-padding: 8px;" />
+                        styleClass="date-picker" />
 
-            <Label text="Date de Fin :" GridPane.rowIndex="3"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
+            <Label text="Date de Fin :" GridPane.rowIndex="3" />
             <DatePicker fx:id="endDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3"
-                        style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                               -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                               -fx-padding: 8px;" />
+                        styleClass="date-picker" />
 
-            <Label text="Justification :" GridPane.rowIndex="4"
-                   style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
+            <Label text="Justification :" GridPane.rowIndex="4" />
             <TextArea fx:id="justificationField" GridPane.columnIndex="1" GridPane.rowIndex="4"
-                      prefRowCount="3" promptText="Expliquez la raison (optionnel)"
-                      style="-fx-font-size: 14px; -fx-background-color: #f5f8fa;
-                             -fx-border-color: #dce4ec; -fx-border-radius: 8px;
-                             -fx-padding: 8px;" />
+                      styleClass="text-area" />
 
-            <!-- FIX: HBox (Container for Buttons) -->
-            <HBox fx:id="buttonContainer" spacing="10" GridPane.rowIndex="5" GridPane.columnIndex="1">
+            <HBox fx:id="buttonContainer" spacing="15" GridPane.rowIndex="5" GridPane.columnIndex="1">
                 <Button fx:id="checkHolidayButton" text="Check Holiday"
-                        onAction="#handleCheckHolidays"
-                        style="-fx-background-color: #f39c12; -fx-text-fill: white;
-                               -fx-font-size: 14px; -fx-font-weight: bold;
-                               -fx-padding: 8px 16px; -fx-background-radius: 8px;" />
-
+                        styleClass="action-button, accent-button" />
                 <Button fx:id="extractTextButton" text="Extract Text 🖹"
-                        onAction="#handleExtractText"
-                        style="-fx-background-color: #27ae60; -fx-text-fill: white;
-                               -fx-font-size: 14px; -fx-font-weight: bold;
-                               -fx-padding: 8px 16px; -fx-background-radius: 8px;" />
+                        styleClass="action-button, accent-button" />
             </HBox>
 
-            <Button fx:id="uploadButton" text="Télécharger Certificat" GridPane.rowIndex="6" GridPane.columnIndex="1"
-                    onAction="#handleUpload"
-                    style="-fx-background-color: #3498db; -fx-text-fill: white;
-                           -fx-font-size: 14px; -fx-font-weight: bold;
-                           -fx-padding: 8px 16px; -fx-background-radius: 8px;" />
+            <Button fx:id="uploadButton" text="Télécharger Certificat"
+                    GridPane.rowIndex="6" GridPane.columnIndex="1"
+                    styleClass="action-button, upload-button" />
         </GridPane>
 
         <Button fx:id="submitButton" text="Soumettre la Demande"
-                onAction="#handleSubmit"
-                style="-fx-background-color: #4caf50; -fx-text-fill: white;
-                       -fx-font-size: 16px; -fx-font-weight: bold;
-                       -fx-padding: 12px 24px; -fx-background-radius: 8px;" />
+                styleClass="action-button" />
     </VBox>
 </AnchorPane>
